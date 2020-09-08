@@ -7,15 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35756C9F2507BC3300DA2C11 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756C9E2507BC3300DA2C11 /* PlaylistViewController.swift */; };
+		35756CA12507BD4A00DA2C11 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA02507BD4A00DA2C11 /* Playlist.swift */; };
+		35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
+		35756CA52507EF8F00DA2C11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
+		35756CA92508091F00DA2C11 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35756CA82508091F00DA2C11 /* SpotifyiOS.framework */; };
 		7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484725052C8B0063F4E8 /* AppDelegate.swift */; };
 		7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484925052C8B0063F4E8 /* SceneDelegate.swift */; };
 		7E47484C25052C8B0063F4E8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484B25052C8B0063F4E8 /* ViewController.swift */; };
 		7E47484F25052C8B0063F4E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E47484D25052C8B0063F4E8 /* Main.storyboard */; };
 		7E47485125052C930063F4E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E47485025052C930063F4E8 /* Assets.xcassets */; };
 		7E47485425052C930063F4E8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7E47485225052C930063F4E8 /* LaunchScreen.storyboard */; };
+		7E47487925065C5D0063F4E8 /* Spotify.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47487825065C5D0063F4E8 /* Spotify.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35756C9E2507BC3300DA2C11 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		35756CA02507BD4A00DA2C11 /* Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		35756CA22507EC7F00DA2C11 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
+		35756CA42507EF8F00DA2C11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		35756CA82508091F00DA2C11 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		7E47484425052C8B0063F4E8 /* shufflescreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shufflescreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E47484725052C8B0063F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7E47484925052C8B0063F4E8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +35,8 @@
 		7E47485025052C930063F4E8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7E47485325052C930063F4E8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7E47485525052C930063F4E8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7E47485D2505325B0063F4E8 /* shufflescreen-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "shufflescreen-Bridging-Header.h"; sourceTree = "<group>"; };
+		7E47487825065C5D0063F4E8 /* Spotify.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spotify.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,15 +44,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35756CA92508091F00DA2C11 /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		35756CA62507EFFF00DA2C11 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				7E47487825065C5D0063F4E8 /* Spotify.swift */,
+				35756CA72507F01100DA2C11 /* JSON */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		35756CA72507F01100DA2C11 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				35756CA22507EC7F00DA2C11 /* Recommendations.swift */,
+				35756CA42507EF8F00DA2C11 /* User.swift */,
+				35756CA02507BD4A00DA2C11 /* Playlist.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
 		7E47483B25052C8B0063F4E8 = {
 			isa = PBXGroup;
 			children = (
+				7E47485D2505325B0063F4E8 /* shufflescreen-Bridging-Header.h */,
 				7E47484625052C8B0063F4E8 /* shufflescreen */,
 				7E47484525052C8B0063F4E8 /* Products */,
 			);
@@ -59,12 +93,23 @@
 				7E47484725052C8B0063F4E8 /* AppDelegate.swift */,
 				7E47484925052C8B0063F4E8 /* SceneDelegate.swift */,
 				7E47484B25052C8B0063F4E8 /* ViewController.swift */,
+				35756C9E2507BC3300DA2C11 /* PlaylistViewController.swift */,
 				7E47484D25052C8B0063F4E8 /* Main.storyboard */,
+				35756CA62507EFFF00DA2C11 /* Classes */,
 				7E47485025052C930063F4E8 /* Assets.xcassets */,
 				7E47485225052C930063F4E8 /* LaunchScreen.storyboard */,
 				7E47485525052C930063F4E8 /* Info.plist */,
+				7E47485F25053D710063F4E8 /* Frameworks */,
 			);
 			path = shufflescreen;
+			sourceTree = "<group>";
+		};
+		7E47485F25053D710063F4E8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				35756CA82508091F00DA2C11 /* SpotifyiOS.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +183,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E47487925065C5D0063F4E8 /* Spotify.swift in Sources */,
+				35756C9F2507BC3300DA2C11 /* PlaylistViewController.swift in Sources */,
 				7E47484C25052C8B0063F4E8 /* ViewController.swift in Sources */,
 				7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */,
+				35756CA52507EF8F00DA2C11 /* User.swift in Sources */,
+				35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */,
 				7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */,
+				35756CA12507BD4A00DA2C11 /* Playlist.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,13 +336,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/shufflescreen/Framework",
+					"$(PROJECT_DIR)/shufflescreen/Frameworks",
+				);
 				INFOPLIST_FILE = shufflescreen/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "shufflescreen-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -304,13 +362,21 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/shufflescreen/Framework",
+					"$(PROJECT_DIR)/shufflescreen/Frameworks",
+				);
 				INFOPLIST_FILE = shufflescreen/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "shufflescreen-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
