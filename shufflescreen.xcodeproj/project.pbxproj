@@ -18,6 +18,8 @@
 		357EEA8C25091BB500F1DEF7 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8B25091BB500F1DEF7 /* Reachability.swift */; };
 		357EEA8E2509234300F1DEF7 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8D2509234300F1DEF7 /* Album.swift */; };
 		357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8F2509290C00F1DEF7 /* Support Classes.swift */; };
+		357EEA922509393B00F1DEF7 /* DisconnectedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 357EEA912509393B00F1DEF7 /* DisconnectedView.xib */; };
+		357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */; };
 		35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F09D4D2508703E00E68251 /* HomeViewController.swift */; };
 		7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484725052C8B0063F4E8 /* AppDelegate.swift */; };
 		7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484925052C8B0063F4E8 /* SceneDelegate.swift */; };
@@ -39,6 +41,8 @@
 		357EEA8B25091BB500F1DEF7 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		357EEA8D2509234300F1DEF7 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		357EEA8F2509290C00F1DEF7 /* Support Classes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support Classes.swift"; sourceTree = "<group>"; };
+		357EEA912509393B00F1DEF7 /* DisconnectedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DisconnectedView.xib; sourceTree = "<group>"; };
+		357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		35F09D4D2508703E00E68251 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7E47484425052C8B0063F4E8 /* shufflescreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shufflescreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E47484725052C8B0063F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +81,15 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
+		357EEA9525093B2A00F1DEF7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				357EEA912509393B00F1DEF7 /* DisconnectedView.xib */,
+				357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		35F09D4F2508726400E68251 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +125,7 @@
 				7E47484925052C8B0063F4E8 /* SceneDelegate.swift */,
 				357EEA8B25091BB500F1DEF7 /* Reachability.swift */,
 				7E47484D25052C8B0063F4E8 /* Main.storyboard */,
+				357EEA9525093B2A00F1DEF7 /* Views */,
 				35F09D4F2508726400E68251 /* ViewControllers */,
 				35756CA62507EFFF00DA2C11 /* Classes */,
 				7E47485025052C930063F4E8 /* Assets.xcassets */,
@@ -191,6 +205,7 @@
 				7E47485425052C930063F4E8 /* LaunchScreen.storyboard in Resources */,
 				7E47485125052C930063F4E8 /* Assets.xcassets in Resources */,
 				7E47484F25052C8B0063F4E8 /* Main.storyboard in Resources */,
+				357EEA922509393B00F1DEF7 /* DisconnectedView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +224,7 @@
 				35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */,
 				35756CA52507EF8F00DA2C11 /* User.swift in Sources */,
 				357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */,
+				357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */,
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,
 				357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */,
 				357EEA8A25090EA200F1DEF7 /* TopTrackList.swift in Sources */,

@@ -10,29 +10,19 @@ import UIKit
 
 
 class LoginViewController: BaseViewController {
-    
-    @IBOutlet weak var disconnectedView: UIView!
+        
+    @IBOutlet weak var loadingActivityIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        disconnectedView.isHidden = true
+        loadingActivityIndicator.stopAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(segueFromLogin), name: NSNotification.Name(rawValue: "sessionConnected"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(showDisconnectedView), name: NSNotification.Name(rawValue: "deviceIsDisconnected"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(hideDisconnectedView), name: NSNotification.Name(rawValue: "deviceIsConnected"), object: nil)
-        
-    }
-    @objc func showDisconnectedView(){
-        disconnectedView.isHidden = false
-    }
-    
-    @objc func hideDisconnectedView(){
-        disconnectedView.isHidden = true
     }
     
     @IBAction func loginTapped(_ sender: Any) {
+        loadingActivityIndicator.startAnimating()
         NotificationCenter.default.post(name: Notification.Name("loginButtonPressed"), object: nil)
         
     }

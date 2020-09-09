@@ -138,7 +138,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
         }
         if let _ = self.appRemote.connectionParameters.accessToken {
             print("push it")
-            print(self.appRemote.connectionParameters.accessToken)
+            //print(self.appRemote.connectionParameters.accessToken)
             self.appRemote.connect()
             
         }
@@ -170,6 +170,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
         if reachability.connection != .unavailable {
             
             NotificationCenter.default.post(name: Notification.Name("deviceIsConnected"), object: nil)
+            
             if reachability.connection == .wifi {
                 print("Conectado via WiFi")
             } else {
@@ -192,6 +193,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     func sceneWillEnterForeground(_ scene: UIScene) {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
+        NotificationCenter.default.post(name: Notification.Name.reachabilityChanged, object: reachability)
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
