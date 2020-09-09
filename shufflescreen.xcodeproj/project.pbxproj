@@ -10,7 +10,7 @@
 		35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
 		35756CA52507EF8F00DA2C11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
 		35756CA92508091F00DA2C11 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35756CA82508091F00DA2C11 /* SpotifyiOS.framework */; };
-		3576D82B250884990063BB8E /* UIViewController+resetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576D82A250884990063BB8E /* UIViewController+resetWindow.swift */; };
+		3576D82B250884990063BB8E /* UIViewController+appRemoteSD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576D82A250884990063BB8E /* UIViewController+appRemoteSD.swift */; };
 		35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F09D4D2508703E00E68251 /* HomeViewController.swift */; };
 		7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484725052C8B0063F4E8 /* AppDelegate.swift */; };
 		7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484925052C8B0063F4E8 /* SceneDelegate.swift */; };
@@ -25,7 +25,7 @@
 		35756CA22507EC7F00DA2C11 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 		35756CA42507EF8F00DA2C11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		35756CA82508091F00DA2C11 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
-		3576D82A250884990063BB8E /* UIViewController+resetWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+resetWindow.swift"; sourceTree = "<group>"; };
+		3576D82A250884990063BB8E /* UIViewController+appRemoteSD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+appRemoteSD.swift"; sourceTree = "<group>"; };
 		35F09D4D2508703E00E68251 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7E47484425052C8B0063F4E8 /* shufflescreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shufflescreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E47484725052C8B0063F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 			children = (
 				7E47484725052C8B0063F4E8 /* AppDelegate.swift */,
 				7E47484925052C8B0063F4E8 /* SceneDelegate.swift */,
-				3576D82A250884990063BB8E /* UIViewController+resetWindow.swift */,
+				3576D82A250884990063BB8E /* UIViewController+appRemoteSD.swift */,
 				7E47484D25052C8B0063F4E8 /* Main.storyboard */,
 				35F09D4F2508726400E68251 /* ViewControllers */,
 				35756CA62507EFFF00DA2C11 /* Classes */,
@@ -183,7 +183,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3576D82B250884990063BB8E /* UIViewController+resetWindow.swift in Sources */,
+				3576D82B250884990063BB8E /* UIViewController+appRemoteSD.swift in Sources */,
 				7E47487925065C5D0063F4E8 /* Spotify.swift in Sources */,
 				7E47484C25052C8B0063F4E8 /* LoginViewController.swift in Sources */,
 				7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */,
