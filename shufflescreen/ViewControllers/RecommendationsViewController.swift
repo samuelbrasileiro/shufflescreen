@@ -30,21 +30,31 @@ class RecommendationsViewController: BaseViewController {
     
     
     @IBAction func discoverButtonAction(_ sender: UIButton) {
-        fetchTopTracks(){topTracksList in
-            print(topTracksList!)
-            print(topTracksList!.items!.count)
-            
-            var index = 1
-            self.topTextView.text = ""
-            
-            for item in topTracksList!.items!{
-                self.topTextView.text.append(contentsOf: "\(index): " + item.name! + "\n")
-                index += 1
+        fetchTopTracks(){result in
+            if let topTracksList = result as? TopTracksList{
+                var index = 0
+                self.topTextView.text = ""
+                
+                for item in topTracksList.items!{
+                    index += 1
+                    self.topTextView.text.append(contentsOf: "\(index): " + item.name! + "\n")
+                }
+                
+            } else if let topArtistsList = result as? TopArtistsList{
+                var index = 0
+                self.topTextView.text = ""
+                
+                for item in topArtistsList.items!{
+                    index += 1
+                    self.topTextView.text.append(contentsOf: "\(index): " + item.name! + "\n")
+                }
             }
+            
+            
         }
     }
     
-    func fetchTopTracks(completion: @escaping (TopTracksList?) -> Void){
+    func fetchTopTracks(completion: @escaping (Any?) -> Void){
         let defaults = UserDefaults.standard
         
         var components = URLComponents()
@@ -52,8 +62,8 @@ class RecommendationsViewController: BaseViewController {
         components.host = "api.spotify.com"
         components.path = "/v1/me/top/" + queryType
         components.queryItems = [
-        URLQueryItem(name: "time_range", value: queryTimeRange),
-        URLQueryItem(name: "limit", value: queryLimit)
+            URLQueryItem(name: "time_range", value: queryTimeRange),
+            URLQueryItem(name: "limit", value: queryLimit)
         ]
         var request = URLRequest(url: components.url!)
         request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
@@ -61,13 +71,19 @@ class RecommendationsViewController: BaseViewController {
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
             do {
-                let topTracksList = try JSONDecoder().decode(TopTracksList.self, from: data)
-                //print(user.displayName ?? "nada")
-                
-                DispatchQueue.main.async {
-                    completion(topTracksList)
-                    //completion(recommendations)
+                if self.queryType == "tracks"{
+                    let topTracksList = try JSONDecoder().decode(TopTracksList.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(topTracksList)
+                    }
                 }
+                else{
+                    let topArtistsList = try JSONDecoder().decode(TopArtistsList.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(topArtistsList)
+                    }
+                }
+                
                 
                 
             } catch let error {
@@ -110,5 +126,5 @@ class RecommendationsViewController: BaseViewController {
         }
     }
     
-
+    
 }

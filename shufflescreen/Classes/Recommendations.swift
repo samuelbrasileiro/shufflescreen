@@ -35,11 +35,3 @@ class Seed: Codable {
     }
 }
 
-// MARK: - ExternalUrls
-class ExternalUrls: Codable {
-    let spotify: String?
-
-    init(spotify: String?) {
-        self.spotify = spotify
-    }
-}

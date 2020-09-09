@@ -11,20 +11,35 @@ import Foundation
 // MARK: - Artist
 class Artist: Codable {
     let externalUrls: ExternalUrls?
+    let followers: Followers?
+    let genres: [String]?
     let href: String?
-    let id, name, type, uri: String?
+    let id: String?
+    let images: [Image]?
+    let name: String?
+    let popularity: Int?
+    let type: TypeEnum?
+    let uri: String?
 
     enum CodingKeys: String, CodingKey {
         case externalUrls = "external_urls"
-        case href, id, name, type, uri
+        case followers, genres, href, id, images, name, popularity, type, uri
     }
 
-    init(externalUrls: ExternalUrls?, href: String?, id: String?, name: String?, type: String?, uri: String?) {
+    init(externalUrls: ExternalUrls?, followers: Followers?, genres: [String]?, href: String?, id: String?, images: [Image]?, name: String?, popularity: Int?, type: TypeEnum?, uri: String?) {
         self.externalUrls = externalUrls
+        self.followers = followers
+        self.genres = genres
         self.href = href
         self.id = id
+        self.images = images
         self.name = name
+        self.popularity = popularity
         self.type = type
         self.uri = uri
     }
+}
+
+enum TypeEnum: String, Codable {
+    case artist = "artist"
 }
