@@ -9,21 +9,27 @@
 import UIKit
 
 
-class LoginViewController: UIViewController {
+class LoginViewController: BaseViewController {
     
-    var sceneDelegate: SceneDelegate?{
-        get{return (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)}
-    }
-    var appRemote: SPTAppRemote? {
-        get {sceneDelegate?.appRemote}
-    }
-    var sessionManager: SPTSessionManager? {
-        get {sceneDelegate?.sessionManager}
-    }
+    @IBOutlet weak var disconnectedView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        disconnectedView.isHidden = true
         NotificationCenter.default.addObserver(self, selector: #selector(segueFromLogin), name: NSNotification.Name(rawValue: "sessionConnected"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(showDisconnectedView), name: NSNotification.Name(rawValue: "deviceIsDisconnected"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(hideDisconnectedView), name: NSNotification.Name(rawValue: "deviceIsConnected"), object: nil)
+        
+    }
+    @objc func showDisconnectedView(){
+        disconnectedView.isHidden = false
+    }
+    
+    @objc func hideDisconnectedView(){
+        disconnectedView.isHidden = true
     }
     
     @IBAction func loginTapped(_ sender: Any) {

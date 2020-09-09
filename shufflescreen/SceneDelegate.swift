@@ -11,6 +11,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, SPTSessionManagerDelegate {
     
     var window: UIWindow?
+    var reachability: Reachability!
     
     static private let kAccessTokenKey = "access-token-key"
     static private let kRefreshTokenKey = "refresh-token-key"
@@ -19,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     
     lazy var configuration: SPTConfiguration = {
         let configuration = SPTConfiguration(clientID: SpotifyClientID, redirectURL: SpotifyRedirectURL)
-                
+        
         return configuration
     }()
     
@@ -56,7 +57,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-
+        
         guard let url = URLContexts.first?.url else {
             return
         }
@@ -68,7 +69,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
         print("bummer")
     }
-
+    
     func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
         print("sweet")
     }
@@ -76,7 +77,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
         appRemote.connectionParameters.accessToken = session.accessToken
         appRemote.connect()
-                
+        
         self.accessToken = session.accessToken
         self.refreshToken = session.refreshToken
         appRemote.connectionParameters.accessToken = session.accessToken
@@ -85,16 +86,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     }
     
     @objc func createSession(){
-        let scope: SPTScope = [.appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
-        //sessionManager.alwaysShowAuthorizationDialog = false
-        if #available(iOS 11, *) {
-            // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
+        if reachability.connection != .unavailable {
             
-            sessionManager.initiateSession(with: scope, options: .clientOnly)
+            let scope: SPTScope = [.appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
+            //sessionManager.alwaysShowAuthorizationDialog = false
+            if #available(iOS 11, *) {
+                // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
+                
+                sessionManager.initiateSession(with: scope, options: .clientOnly)
+            } else {
+                // Use this on iOS versions < 11 to use SFSafariViewController
+                sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
+            }
+            
+            if reachability.connection == .wifi {
+                print("Conectado via WiFi")
+            } else {
+                print("Conectado via Celular")
+            }
         } else {
-            // Use this on iOS versions < 11 to use SFSafariViewController
-            sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
+            print("Desconectado da internet")
         }
+        
+        
     }
     
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
@@ -118,11 +132,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
+        
         if self.appRemote.isConnected{
             return
         }
         if let _ = self.appRemote.connectionParameters.accessToken {
             print("push it")
+            
             self.appRemote.connect()
             
         }
@@ -134,13 +150,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
             //self.appRemote.disconnect()
         }
     }
-
-    
-    
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         //scene did begin
+        
+        do {
+            try reachability = Reachability()
+            NotificationCenter.default.addObserver(self, selector: #selector(self.reachabilityChanged(_:)), name: Notification.Name.reachabilityChanged, object: reachability)
+            try reachability.startNotifier()
+        } catch {
+            print("This is not working.")
+        }
+        
         NotificationCenter.default.addObserver(self, selector: #selector(createSession), name: NSNotification.Name(rawValue: "loginButtonPressed"), object: nil)
+    }
+    
+    @objc func reachabilityChanged(_ note: NSNotification) {
+        let reachability = note.object as! Reachability
+        if reachability.connection != .unavailable {
+            
+            NotificationCenter.default.post(name: Notification.Name("deviceIsConnected"), object: nil)
+            if reachability.connection == .wifi {
+                print("Conectado via WiFi")
+            } else {
+                print("Conectado via Celular")
+            }
+            
+        } else {
+            print("Desconectado da internet")
+            NotificationCenter.default.post(name: Notification.Name("deviceIsDisconnected"), object: nil)
+        }
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {

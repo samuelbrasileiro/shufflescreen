@@ -9,11 +9,18 @@
 import UIKit
 
 // extension for resetting the window on a UIKit application
-extension UIViewController {
-    var appRemoteSD: SPTAppRemote {
+class BaseViewController: UIViewController {
+
+    var sceneDelegate: SceneDelegate{
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
             fatalError("could not get scene delegate ")
         }
+        return sceneDelegate
+    }
+    var appRemote: SPTAppRemote {
         return sceneDelegate.appRemote
+    }
+    var sessionManager: SPTSessionManager{
+        return sceneDelegate.sessionManager
     }
 }

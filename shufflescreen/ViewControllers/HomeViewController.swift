@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: BaseViewController {
     
     @IBOutlet weak var displayNameLabel: UILabel!
     
@@ -73,7 +73,7 @@ class HomeViewController: UIViewController {
 }
 extension HomeViewController{
     @objc func updatePlayerState() {
-        appRemoteSD.playerAPI?.getPlayerState(){ result, error in
+        appRemote.playerAPI?.getPlayerState(){ result, error in
             guard let playerState = result as? SPTAppRemotePlayerState else{
                 print("Could not catch PlayerState")
                 return
