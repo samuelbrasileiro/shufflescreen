@@ -9,7 +9,7 @@
 import UIKit
 
 class AppRemoteViewController: BaseViewController {
-
+    
     @IBOutlet weak var currentSongStatusLabel: UILabel!
     
     @IBOutlet weak var currentSongLabel: UILabel!
@@ -17,6 +17,9 @@ class AppRemoteViewController: BaseViewController {
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var connectToAppRemoteButton: UIButton!
+    
+    @IBOutlet weak var albumImageView: UIImageView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +37,7 @@ class AppRemoteViewController: BaseViewController {
         else{
             currentSongStatusLabel.isHidden = true
             currentSongLabel.isHidden = true
-            
+            albumImageView.isHidden = true
         }
         
         
@@ -50,20 +53,75 @@ class AppRemoteViewController: BaseViewController {
                 print("Could not catch PlayerState")
                 return
             }
+            
             if playerState.isPaused{
                 self.currentSongStatusLabel?.text = "Currently paused:"
             }
             else{
                 self.currentSongStatusLabel?.text = "Currently playing:"
             }
-            self.currentSongLabel?.text = playerState.track.name
+            if self.currentSongLabel?.text != playerState.track.name{
+                self.currentSongLabel?.text = playerState.track.name
+                
+                
+                let trackURI = playerState.track.uri
+                let trackID = String(trackURI.split(separator: ":").last!)
+                
+                self.fetchTrack(trackID: trackID){ track in
+                    if let images = track!.album!.images{
+                        for image in images{
+                            if image.height == 300{
+                                
+                                let request = URLRequest(url: URL(string: image.url!)!)
+                                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                                guard let data = data else { return }
+                                    DispatchQueue.main.async {
+                                        self.albumImageView.image = UIImage(data: data)
+                                    }
+                                }.resume()
+                            }
+                        }
+                    }
+                    
+                }
+                
+                
+            }
+            
         }
+        
+        
     }
+    
+    func fetchTrack(trackID: String, completion: @escaping (Track?) -> Void){
+        let defaults = UserDefaults.standard
+        let url = URL(string: "https://api.spotify.com/v1/tracks/" + trackID)!
+        var request = URLRequest(url: url)
+        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let track = try JSONDecoder().decode(Track.self, from: data)
+                
+                DispatchQueue.main.async {
+                    completion(track)
+                }
+                
+                
+            } catch let error {
+                print(error)
+                completion(nil)
+            }
+        }.resume()
+    }
+    
     @objc func connectedToAppRemote(){
         warningLabel.isHidden = true
         connectToAppRemoteButton.isHidden = true
         currentSongStatusLabel.isHidden = false
         currentSongLabel.isHidden = false
+        albumImageView.isHidden = false
     }
     
     @objc func disconnectedFromAppRemote(){
@@ -76,6 +134,7 @@ class AppRemoteViewController: BaseViewController {
         connectToAppRemoteButton.isHidden = false
         currentSongStatusLabel.isHidden = true
         currentSongLabel.isHidden = true
+        albumImageView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,13 +152,13 @@ class AppRemoteViewController: BaseViewController {
         }
     }
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
