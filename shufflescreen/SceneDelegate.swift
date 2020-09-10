@@ -138,7 +138,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
         }
         if let _ = self.appRemote.connectionParameters.accessToken {
             print("push it")
-            //print(self.appRemote.connectionParameters.accessToken)
+            print(self.appRemote.connectionParameters.accessToken)
             self.appRemote.connect()
             
         }

@@ -18,15 +18,14 @@ class Artist: Codable {
     let images: [Image]?
     let name: String?
     let popularity: Int?
-    let type: TypeEnum?
     let uri: String?
 
     enum CodingKeys: String, CodingKey {
         case externalUrls = "external_urls"
-        case followers, genres, href, id, images, name, popularity, type, uri
+        case followers, genres, href, id, images, name, popularity, uri
     }
 
-    init(externalUrls: ExternalUrls?, followers: Followers?, genres: [String]?, href: String?, id: String?, images: [Image]?, name: String?, popularity: Int?, type: TypeEnum?, uri: String?) {
+    init(externalUrls: ExternalUrls?, followers: Followers?, genres: [String]?, href: String?, id: String?, images: [Image]?, name: String?, popularity: Int?, uri: String?) {
         self.externalUrls = externalUrls
         self.followers = followers
         self.genres = genres
@@ -35,11 +34,7 @@ class Artist: Codable {
         self.images = images
         self.name = name
         self.popularity = popularity
-        self.type = type
         self.uri = uri
     }
 }
 
-enum TypeEnum: String, Codable {
-    case artist = "artist"
-}

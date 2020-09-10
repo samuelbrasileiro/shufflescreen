@@ -30,6 +30,7 @@ class RecommendationsViewController: BaseViewController {
     
     
     @IBAction func discoverButtonAction(_ sender: UIButton) {
+        
         fetchTopTracks(){result in
             if let topTracksList = result as? TopTracksList{
                 var index = 0
@@ -126,5 +127,42 @@ class RecommendationsViewController: BaseViewController {
         }
     }
     
-    
+    @IBAction func createPlaylistButton(_ sender: Any) {
+        
+            queryType = "tracks"
+            queryTimeRange = "medium_term"
+            queryLimit = "10"
+            var topTracksIDs: [String] = []
+            fetchTopTracks(){result in
+                
+                if let topTracksList = result as? TopTracksList{
+                    print("adubadebadu")
+                    print(topTracksList.items!.count)
+                    topTracksIDs = topTracksList.items!.map({$0.id!})
+                }
+                
+                self.queryType = "artists"
+                self.queryTimeRange = "medium_term"
+                self.queryLimit = "10"
+                var topArtistsIDs: [String] = []
+                
+                self.fetchTopTracks(){result in
+                    if let topArtistsList = result as? TopArtistsList{
+                        topArtistsIDs = topArtistsList.items!.map({$0.id!})
+                        
+                        print(topTracksIDs.count)
+                        
+                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PlaylistViewController") as? PlaylistViewController{
+                            print(topArtistsIDs)
+                            vc.artistsSeeds = topArtistsIDs
+                            vc.tracksSeeds = topTracksIDs
+                            self.navigationController?.pushViewController(vc, animated: true)
+                        }
+                        
+                    }
+                }
+                
+            }
+            
+    }
 }

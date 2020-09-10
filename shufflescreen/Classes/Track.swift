@@ -25,7 +25,7 @@ class Track: Codable {
     let popularity: Int?
     let previewURL: String?
     let trackNumber: Int?
-    let type, uri: String?
+    let uri: String?
 
     enum CodingKeys: String, CodingKey {
         case album, artists
@@ -40,10 +40,10 @@ class Track: Codable {
         case name, popularity
         case previewURL = "preview_url"
         case trackNumber = "track_number"
-        case type, uri
+        case uri
     }
 
-    init(album: Album?, artists: [Artist]?, availableMarkets: [String]?, discNumber: Int?, durationMS: Int?, explicit: Bool?, externalIDS: ExternalIDS?, externalUrls: ExternalUrls?, href: String?, id: String?, isLocal: Bool?, name: String?, popularity: Int?, previewURL: String?, trackNumber: Int?, type: String?, uri: String?) {
+    init(album: Album?, artists: [Artist]?, availableMarkets: [String]?, discNumber: Int?, durationMS: Int?, explicit: Bool?, externalIDS: ExternalIDS?, externalUrls: ExternalUrls?, href: String?, id: String?, isLocal: Bool?, name: String?, popularity: Int?, previewURL: String?, trackNumber: Int?, uri: String?) {
         self.album = album
         self.artists = artists
         self.availableMarkets = availableMarkets
@@ -59,7 +59,6 @@ class Track: Codable {
         self.popularity = popularity
         self.previewURL = previewURL
         self.trackNumber = trackNumber
-        self.type = type
         self.uri = uri
     }
 }

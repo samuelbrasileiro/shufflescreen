@@ -49,3 +49,18 @@ class ExternalUrls: Codable {
         self.spotify = spotify
     }
 }
+
+struct PlaylistInput: Codable {
+    var name: String
+    var description: String = "Playlist criada baseado no seu gosto por Samuel :)"
+    var isPublic: Bool = true
+    enum CodingKeys: String, CodingKey {
+        case name
+        case description
+        case isPublic = "public"
+    }
+}
+
+struct PlaylistOutput: Codable {
+    var id: String
+}
