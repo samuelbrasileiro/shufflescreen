@@ -21,6 +21,9 @@
 		357EEA922509393B00F1DEF7 /* DisconnectedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 357EEA912509393B00F1DEF7 /* DisconnectedView.xib */; };
 		357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */; };
 		357EEA972509B5B100F1DEF7 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA962509B5B100F1DEF7 /* PlaylistViewController.swift */; };
+		357EEA99250AB56600F1DEF7 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA98250AB56600F1DEF7 /* BaseNavigationController.swift */; };
+		357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA9A250AB7FD00F1DEF7 /* AppRemoteViewController.swift */; };
+		357EEA9D250AB97600F1DEF7 /* LateralButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA9C250AB97600F1DEF7 /* LateralButton.swift */; };
 		35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F09D4D2508703E00E68251 /* HomeViewController.swift */; };
 		7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484725052C8B0063F4E8 /* AppDelegate.swift */; };
 		7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484925052C8B0063F4E8 /* SceneDelegate.swift */; };
@@ -45,6 +48,9 @@
 		357EEA912509393B00F1DEF7 /* DisconnectedView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DisconnectedView.xib; sourceTree = "<group>"; };
 		357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisconnectedView.swift; sourceTree = "<group>"; };
 		357EEA962509B5B100F1DEF7 /* PlaylistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		357EEA98250AB56600F1DEF7 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
+		357EEA9A250AB7FD00F1DEF7 /* AppRemoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRemoteViewController.swift; sourceTree = "<group>"; };
+		357EEA9C250AB97600F1DEF7 /* LateralButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LateralButton.swift; sourceTree = "<group>"; };
 		35F09D4D2508703E00E68251 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7E47484425052C8B0063F4E8 /* shufflescreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shufflescreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E47484725052C8B0063F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +94,7 @@
 			children = (
 				357EEA912509393B00F1DEF7 /* DisconnectedView.xib */,
 				357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */,
+				357EEA9C250AB97600F1DEF7 /* LateralButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -95,11 +102,13 @@
 		35F09D4F2508726400E68251 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				357EEA98250AB56600F1DEF7 /* BaseNavigationController.swift */,
 				3576D82A250884990063BB8E /* BaseViewController.swift */,
 				35F09D4D2508703E00E68251 /* HomeViewController.swift */,
 				7E47484B25052C8B0063F4E8 /* LoginViewController.swift */,
 				357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */,
 				357EEA962509B5B100F1DEF7 /* PlaylistViewController.swift */,
+				357EEA9A250AB7FD00F1DEF7 /* AppRemoteViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -227,14 +236,17 @@
 				35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */,
 				35756CA52507EF8F00DA2C11 /* User.swift in Sources */,
 				357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */,
+				357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */,
 				357EEA972509B5B100F1DEF7 /* PlaylistViewController.swift in Sources */,
 				357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */,
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,
 				357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */,
 				357EEA8A25090EA200F1DEF7 /* TopTrackList.swift in Sources */,
 				35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */,
+				357EEA99250AB56600F1DEF7 /* BaseNavigationController.swift in Sources */,
 				357EEA88250909F900F1DEF7 /* Artist.swift in Sources */,
 				7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */,
+				357EEA9D250AB97600F1DEF7 /* LateralButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

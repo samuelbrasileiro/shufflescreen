@@ -23,8 +23,6 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(updatePlayerState), name: NSNotification.Name(rawValue: "updatePlayerState"), object: nil)
-        updatePlayerState()
         fetchUser(){user in
             guard let user = user else{
                 print("Could not fetch user.")
@@ -60,32 +58,5 @@ class HomeViewController: BaseViewController {
         }.resume()
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
-extension HomeViewController{
-    @objc func updatePlayerState() {
-        appRemote.playerAPI?.getPlayerState(){ result, error in
-            guard let playerState = result as? SPTAppRemotePlayerState else{
-                print("Could not catch PlayerState")
-                return
-            }
-            if playerState.isPaused{
-                self.currentSongStatusLabel?.text = "Currently paused:"
-            }
-            else{
-                self.currentSongStatusLabel?.text = "Currently playing:"
-            }
-            self.currentSongLabel?.text = playerState.track.name
-        }
-        
-    }
-}
+

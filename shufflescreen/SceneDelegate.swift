@@ -12,7 +12,7 @@ class Keys{
     static let kRefreshTokenKey = "refresh-token-key"
     static let kSessionKey = "session-key"
 }
-class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, SPTSessionManagerDelegate {
+class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelegate {
     
     var window: UIWindow?
     var reachability: Reachability!
@@ -94,9 +94,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
         NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
     }
     
-    
-    
-    
     @objc func createSession(){
         if reachability.connection != .unavailable {
             
@@ -110,30 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
                 // Use this on iOS versions < 11 to use SFSafariViewController
                 sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
             }
-            
         }
-        
-        
-    }
-    
-    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
-        // Connection was successful, you can begin issuing commands
-        print("Connected App Remote")
-        self.appRemote.playerAPI?.delegate = self
-        self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
-            //            if let error = error {
-            //                debugPrint(error.localizedDescription)
-            //            }
-            
-        })
-        
-        
-    }
-    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
-        print("Disconnected App Remote")
-    }
-    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
-        print("Failed Connection to App Remote")
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -240,8 +214,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     }
 }
 
-extension SceneDelegate: SPTAppRemotePlayerStateDelegate{
+extension SceneDelegate: SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate{
     
+    func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
+        // Connection was successful, you can begin issuing commands
+        print("Connected App Remote")
+        self.appRemote.playerAPI?.delegate = self
+        self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
+            //            if let error = error {
+            //                debugPrint(error.localizedDescription)
+            //            }
+        })
+        NotificationCenter.default.post(name: Notification.Name("connectedToAppRemote"), object: nil)
+    }
+    
+    func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
+        print("Disconnected App Remote")
+        NotificationCenter.default.post(name: Notification.Name("disconnectedFromAppRemote"), object: nil)
+    }
+    func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
+        print("Failed Connection to App Remote")
+        NotificationCenter.default.post(name: Notification.Name("couldNotConnectToAppRemote"), object: nil)
+    }
     
     func playerStateDidChange(_ playerState: SPTAppRemotePlayerState) {
         print("Track name: ", playerState.track.name)
