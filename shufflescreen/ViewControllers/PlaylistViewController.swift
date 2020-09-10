@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PlaylistViewController: UIViewController {
+class PlaylistViewController: BaseViewController {
     
     var artistsSeeds: [String]?
     var tracksSeeds: [String]?
@@ -33,17 +33,15 @@ class PlaylistViewController: UIViewController {
         nameTextField.text = ""
         nameTextField.placeholder = "Write your playlist name"
         
-        artistsSeeds!.shuffle()
-        
+        artistsSeeds!.shuffle()        
         tracksSeeds!.shuffle()
-        print(artistsSeeds!)
+
         if tracksSeeds!.count == 0 || artistsSeeds!.count == 0{
             return
         }
         fetchRecommendations(artists: Array(artistsSeeds![0...2]), tracks: Array(tracksSeeds![0...1])){ result in
             if let recommendations = result as? Recommendations{
                 self.recommendedTracks.append(contentsOf: recommendations.tracks!)
-                
                 
                 self.hasCreated.0 = true
             }

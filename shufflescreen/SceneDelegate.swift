@@ -147,7 +147,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     func sceneWillResignActive(_ scene: UIScene) {
         if self.appRemote.isConnected {
             print("pull it")
-            //self.appRemote.disconnect()
+            self.appRemote.disconnect()
         }
     }
     
@@ -159,7 +159,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
             NotificationCenter.default.addObserver(self, selector: #selector(self.reachabilityChanged(_:)), name: Notification.Name.reachabilityChanged, object: reachability)
             try reachability.startNotifier()
         } catch {
-            print("This is not working.")
+            print("It's not possible to access reachability.")
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(createSession), name: NSNotification.Name(rawValue: "loginButtonPressed"), object: nil)
