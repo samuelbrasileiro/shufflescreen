@@ -7,20 +7,28 @@
 //
 
 import UIKit
-
+class Keys{
+    static let kAccessTokenKey = "access-token-key"
+    static let kRefreshTokenKey = "refresh-token-key"
+    static let kSessionKey = "session-key"
+}
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, SPTSessionManagerDelegate {
     
     var window: UIWindow?
     var reachability: Reachability!
     
-    static private let kAccessTokenKey = "access-token-key"
-    static private let kRefreshTokenKey = "refresh-token-key"
     let SpotifyClientID = "c7e5c5b3c1164878aaf84f3c14187411"
     let SpotifyRedirectURL = URL(string: "shufflescreen://spotify-login-callback")!
     
     lazy var configuration: SPTConfiguration = {
         let configuration = SPTConfiguration(clientID: SpotifyClientID, redirectURL: SpotifyRedirectURL)
-        
+        configuration.playURI = ""
+        if let tokenSwapURL = URL(string: "https://shufflescreen.herokuapp.com/api/token"),
+            let tokenRefreshURL = URL(string: "https://shufflescreen.herokuapp.com/api/refresh_token") {
+            configuration.tokenSwapURL = tokenSwapURL
+            configuration.tokenRefreshURL = tokenRefreshURL
+            
+        }
         return configuration
     }()
     
@@ -37,24 +45,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     }()
     
     lazy var appRemote: SPTAppRemote = {
-        let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .info)
-        appRemote.connectionParameters.accessToken = self.accessToken
+        let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .error)
+        
+        appRemote.connectionParameters.accessToken = UserDefaults.standard.string(forKey: Keys.kAccessTokenKey)
         appRemote.delegate = self
         return appRemote
     }()
-    
-    var accessToken = UserDefaults.standard.string(forKey: kAccessTokenKey) {
-        didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(accessToken, forKey: SceneDelegate.kAccessTokenKey)
-        }
-    }
-    var refreshToken = UserDefaults.standard.string(forKey: kRefreshTokenKey) {
-        didSet {
-            let defaults = UserDefaults.standard
-            defaults.set(refreshToken, forKey: SceneDelegate.kRefreshTokenKey)
-        }
-    }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         
@@ -67,23 +63,39 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     }
     
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
-        print("bummer")
+        DispatchQueue.main.async {
+            print("Não foi possível estabelecer uma sessão.", error)
+        }
     }
     
     func sessionManager(manager: SPTSessionManager, didRenew session: SPTSession) {
-        print("sweet")
+        DispatchQueue.main.async {
+            //self.appRemote.authorizeAndPlayURI(self.configuration.playURI!)
+            
+            self.appRemote.connectionParameters.accessToken = session.accessToken
+            self.appRemote.connect()
+            
+            print("renewed", session)
+            
+            self.archiveSession(session)
+            
+            NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
+        }
     }
     
     func sessionManager(manager: SPTSessionManager, didInitiate session: SPTSession) {
         appRemote.connectionParameters.accessToken = session.accessToken
         appRemote.connect()
         
-        self.accessToken = session.accessToken
-        self.refreshToken = session.refreshToken
-        appRemote.connectionParameters.accessToken = session.accessToken
+        print("Access token: \(session.accessToken), expires at \(session.expirationDate)")
         
-        //NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
+        archiveSession(session)
+        
+        NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
     }
+    
+    
+    
     
     @objc func createSession(){
         if reachability.connection != .unavailable {
@@ -99,13 +111,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
                 sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
             }
             
-            if reachability.connection == .wifi {
-                print("Conectado via WiFi")
-            } else {
-                print("Conectado via Celular")
-            }
-        } else {
-            print("Desconectado da internet")
         }
         
         
@@ -113,22 +118,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
     
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
         // Connection was successful, you can begin issuing commands
-        print("connected")
+        print("Connected App Remote")
         self.appRemote.playerAPI?.delegate = self
         self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
-            if let error = error {
-                debugPrint(error.localizedDescription)
-            }
+            //            if let error = error {
+            //                debugPrint(error.localizedDescription)
+            //            }
             
         })
         
-        NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
+        
     }
     func appRemote(_ appRemote: SPTAppRemote, didDisconnectWithError error: Error?) {
-        print("disconnected")
+        print("Disconnected App Remote")
     }
     func appRemote(_ appRemote: SPTAppRemote, didFailConnectionAttemptWithError error: Error?) {
-        print("failed")
+        print("Failed Connection to App Remote")
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
@@ -136,23 +141,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
         if self.appRemote.isConnected{
             return
         }
+        
         if let _ = self.appRemote.connectionParameters.accessToken {
-            print("push it")
-            print(self.appRemote.connectionParameters.accessToken)
+            print("Connecting to App Remote")
             self.appRemote.connect()
-            
         }
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
         if self.appRemote.isConnected {
-            print("pull it")
+            print("Disconnecting from App Remote")
             self.appRemote.disconnect()
         }
     }
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         //scene did begin
+        restoreSession()
+        sessionManager.renewSession()
         
         do {
             try reachability = Reachability()
@@ -183,28 +189,47 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTAppRemoteDelegate, S
         }
     }
     
+    func archiveSession(_ session: SPTSession) {
+        do {
+            
+            UserDefaults.standard.set(session.accessToken, forKey: Keys.kAccessTokenKey)
+            UserDefaults.standard.set(session.refreshToken, forKey: Keys.kRefreshTokenKey)
+            
+            let sessionData = try NSKeyedArchiver.archivedData(withRootObject: session, requiringSecureCoding: true)
+            UserDefaults.standard.set(sessionData, forKey: Keys.kSessionKey)
+            
+            
+        } catch {
+            print("Failed to archive session: \(error)")
+        }
+    }
+    
+    private func restoreSession() {
+        guard let sessionData = UserDefaults.standard.data(forKey: Keys.kSessionKey) else { return }
+        do {
+            let session = try NSKeyedUnarchiver.unarchivedObject(ofClass: SPTSession.self, from: sessionData)
+            print("saved")
+            sessionManager.session = session
+        } catch {
+            print("error unarchiving session: \(error)")
+        }
+    }
+    
+    
     func sceneDidDisconnect(_ scene: UIScene) {
-        // Called as the scene is being released by the system.
-        // This occurs shortly after the scene enters the background, or when its session is discarded.
-        // Release any resources associated with this scene that can be re-created the next time the scene connects.
-        // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+        
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        // Called as the scene transitions from the background to the foreground.
-        // Use this method to undo the changes made on entering the background.
         NotificationCenter.default.post(name: Notification.Name.reachabilityChanged, object: reachability)
     }
     
     func sceneDidEnterBackground(_ scene: UIScene) {
-        // Called as the scene transitions from the foreground to the background.
-        // Use this method to save data, release shared resources, and store enough scene-specific state information
-        // to restore the scene back to its current state.
+        
     }
     
     var viewController: UIViewController {
         get {
-            print("hehe")
             if let navController = self.window?.rootViewController as? UINavigationController{
                 return navController.topViewController!
             }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-// extension for resetting the window on a UIKit application
+// base view controller after loging
 class BaseViewController: UIViewController {
     
     
@@ -42,7 +42,6 @@ class BaseViewController: UIViewController {
     }
     
     @objc func hideDisconnectedView(){
-        //disconnectedView.isHidden = true
         disconnectedView.removeFromSuperview()
     }
 }
