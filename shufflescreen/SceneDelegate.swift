@@ -72,6 +72,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
         DispatchQueue.main.async {
             print("Não foi possível estabelecer uma sessão.", error)
+            LoadingOverlay.shared.hideOverlayView()
         }
     }
     
@@ -107,7 +108,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         if reachability.connection != .unavailable {
             
             let scope: SPTScope = [.appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
-            //sessionManager.alwaysShowAuthorizationDialog = false
+
             if #available(iOS 11, *) {
                 // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
                 
@@ -119,7 +120,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         }
     }
     
-    //abriu o app
+    //AO BOTAR NO FOREGROUND
     func sceneDidBecomeActive(_ scene: UIScene) {
         
         if self.appRemote.isConnected{
@@ -167,6 +168,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             
             NotificationCenter.default.post(name: Notification.Name("deviceIsConnected"), object: nil)
             
+            if didRenewSession{
+                LoadingOverlay.shared.hideOverlayView()
+            }
             if reachability.connection == .wifi {
                 print("Conectado via WiFi")
             } else {
@@ -175,6 +179,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             
         } else {
             print("Desconectado da internet")
+            
+            LoadingOverlay.shared.showOverlay(view: self.window!)
             NotificationCenter.default.post(name: Notification.Name("deviceIsDisconnected"), object: nil)
         }
     }
@@ -198,7 +204,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         guard let sessionData = UserDefaults.standard.data(forKey: Keys.kSessionKey) else { return }
         do {
             let session = try NSKeyedUnarchiver.unarchivedObject(ofClass: SPTSession.self, from: sessionData)
-            print("saved")
             sessionManager.session = session
         } catch {
             print("error unarchiving session: \(error)")
