@@ -20,6 +20,8 @@ class AppRemoteViewController: BaseViewController {
     
     @IBOutlet weak var albumImageView: UIImageView!
     
+    private var connectionIndicatorView = ConnectionStatusIndicatorView()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,18 +35,54 @@ class AppRemoteViewController: BaseViewController {
             updatePlayerState()
             warningLabel.isHidden = true
             connectToAppRemoteButton.isHidden = true
+            print("App Remote is connected")
+            
         }
         else{
             currentSongStatusLabel.isHidden = true
             currentSongLabel.isHidden = true
             albumImageView.isHidden = true
+            print("App Remote is disconnected")
         }
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionIndicatorView)
+        connectionIndicatorView.frame = CGRect(origin: CGPoint(), size: CGSize(width: 20,height: 20))
         
         
     }
     @IBAction func connectToAppRemote(_ sender: UIButton) {
+        connectionIndicatorView.state = .connecting
+        
+        
         appRemote.authorizeAndPlayURI("")
         appRemote.connect()
+    }
+    @IBAction func shuffleSongButton(_ sender: UIButton) {
+
+        TopTracksList.fetch(timeRange: "medium_term", limit: "5"){ topTracksList in
+            
+            guard let topTracksList = topTracksList else{ return}
+            
+            Recommendations.fetch(artists: [], tracks: topTracksList.items!.map({$0.id!}), genres: [], limit: "10"){ recommendations in
+                guard let recommendations = recommendations else{ return}
+                for track in recommendations.tracks!{
+                    print(track.name ?? "")
+                }
+                let track = recommendations.tracks!.randomElement()
+                if self.appRemote.isConnected{
+
+                    self.appRemote.playerAPI!.play(track!.uri!, asRadio: true){ result, error in
+                        if let error = error{
+                            print(error)
+                        }
+                    }
+                }
+                else{
+                    self.connectionIndicatorView.state = .connecting
+                    self.appRemote.authorizeAndPlayURI(track!.uri!)
+                    self.appRemote.connect()
+                }
+            }
+        }
     }
     
     @objc func updatePlayerState(){
@@ -60,63 +98,30 @@ class AppRemoteViewController: BaseViewController {
             else{
                 self.currentSongStatusLabel?.text = "Currently playing:"
             }
+            
+            let trackURI = playerState.track.uri
+            if trackURI == ""{
+                return
+            }
+
             if self.currentSongLabel?.text != playerState.track.name{
                 self.currentSongLabel?.text = playerState.track.name
-                
-                
-                let trackURI = playerState.track.uri
+
                 let trackID = String(trackURI.split(separator: ":").last!)
                 
-                self.fetchTrack(trackID: trackID){ track in
+                Track.fetch(trackID: trackID){ track in
                     if let images = track!.album!.images{
-                        for image in images{
-                            if image.height == 300{
-                                
-                                let request = URLRequest(url: URL(string: image.url!)!)
-                                URLSession.shared.dataTask(with: request) { (data, response, error) in
-                                guard let data = data else { return }
-                                    DispatchQueue.main.async {
-                                        self.albumImageView.image = UIImage(data: data)
-                                    }
-                                }.resume()
-                            }
+                        Album.fetchAlbumImage(scale: 300, images: images){ image in
+                            self.albumImageView.image = image
                         }
                     }
-                    
                 }
-                
-                
             }
-            
         }
-        
-        
-    }
-    
-    func fetchTrack(trackID: String, completion: @escaping (Track?) -> Void){
-        let defaults = UserDefaults.standard
-        let url = URL(string: "https://api.spotify.com/v1/tracks/" + trackID)!
-        var request = URLRequest(url: url)
-        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
-            do {
-                let track = try JSONDecoder().decode(Track.self, from: data)
-                
-                DispatchQueue.main.async {
-                    completion(track)
-                }
-                
-                
-            } catch let error {
-                print(error)
-                completion(nil)
-            }
-        }.resume()
     }
     
     @objc func connectedToAppRemote(){
+        connectionIndicatorView.state = .connected
         warningLabel.isHidden = true
         connectToAppRemoteButton.isHidden = true
         currentSongStatusLabel.isHidden = false
@@ -125,11 +130,13 @@ class AppRemoteViewController: BaseViewController {
     }
     
     @objc func disconnectedFromAppRemote(){
+        connectionIndicatorView.state = .disconnected
         //warningLabel.isHidden = false
         //connectToAppRemoteButton.isHidden = false
     }
     
     @objc func couldNotConnectToAppRemote(){
+        connectionIndicatorView.state = .disconnected
         warningLabel.isHidden = false
         connectToAppRemoteButton.isHidden = false
         currentSongStatusLabel.isHidden = true
@@ -149,16 +156,15 @@ class AppRemoteViewController: BaseViewController {
             if let nc = parent as? BaseNavigationController{
                 nc.appRemoteButton.isHidden = false
             }
+            
         }
     }
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    
+}
+
+class Fetch{
+    
+    
     
 }

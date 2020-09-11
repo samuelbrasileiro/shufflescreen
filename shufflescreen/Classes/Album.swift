@@ -48,4 +48,19 @@ class Album: Codable {
         self.type = type
         self.uri = uri
     }
+    
+    class func fetchAlbumImage(scale: Int, images: [Image], completion: @escaping (UIImage?) -> Void){
+        for image in images{
+            if image.height == scale{
+                
+                let request = URLRequest(url: URL(string: image.url!)!)
+                URLSession.shared.dataTask(with: request) { (data, response, error) in
+                    guard let data = data else { return }
+                    DispatchQueue.main.async {
+                        completion(UIImage(data: data))
+                    }
+                }.resume()
+            }
+        }
+    }
 }

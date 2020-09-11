@@ -60,7 +60,7 @@ class PlaylistViewController: BaseViewController {
     
     func fetchRecommendations(artists: [String], tracks: [String], completion: @escaping (Any?) -> Void){
         if artists.count + tracks.count > 5{
-            completion(nil)
+            print("Overpassed limit of five seeds to recommend")
             return
         }
         let defaults = UserDefaults.standard
@@ -77,7 +77,7 @@ class PlaylistViewController: BaseViewController {
             URLQueryItem(name: "seed_tracks", value: joinedTracks)
         ]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
@@ -89,11 +89,11 @@ class PlaylistViewController: BaseViewController {
                 }
             }
             catch {
-            print(error)
-            completion(nil)
-        }
-    }.resume()
-}
+                print(error)
+                completion(nil)
+            }
+        }.resume()
+    }
     
     @IBAction func createPlaylistButtonAction(_ sender: UIButton) {
         if hasCreated != (true,true){
@@ -101,8 +101,8 @@ class PlaylistViewController: BaseViewController {
             return
         }
         
-        fetchUserID { (id) in
-            guard let id = id else { return }
+        fetchUser { user in
+            guard let id = user?.id else { return }
             
             var text = "Shufflescreen Playlist"
             DispatchQueue.main.async {
@@ -112,8 +112,8 @@ class PlaylistViewController: BaseViewController {
             }
             
             let playlist = PlaylistInput(name: text)
-            self.createNewPlaylist(id: id, playlist: playlist) { (playlistid) in
-                guard let playlistid = playlistid else { return }
+            self.createNewPlaylist(id: id, playlist: playlist) { playlistOutput in
+                guard let playlistid = playlistOutput?.id else { return }
                 self.addSongs(id: playlistid) {
                     print("songs added")
                     DispatchQueue.main.async {
@@ -139,18 +139,20 @@ class PlaylistViewController: BaseViewController {
     
     // MARK: - Network Requests
     
-    func fetchUserID(completion: @escaping (String?) -> Void) {
+    func fetchUser(completion: @escaping (User?) -> Void) {
         let defaults = UserDefaults.standard
         let url = URL(string: "https://api.spotify.com/v1/me")!
         
         var request = URLRequest(url: url)
-        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }
             do {
                 let user = try JSONDecoder().decode(User.self, from: data)
-                completion(user.id)
+                DispatchQueue.main.async {
+                    completion(user)
+                }
             } catch {
                 print("error")
                 completion(nil)
@@ -158,12 +160,12 @@ class PlaylistViewController: BaseViewController {
         }.resume()
     }
     
-    func createNewPlaylist(id: String, playlist: PlaylistInput, completion: @escaping (String?) -> Void) {
+    func createNewPlaylist(id: String, playlist: PlaylistInput, completion: @escaping (PlaylistOutput?) -> Void) {
         let defaults = UserDefaults.standard
         let url = URL(string: "https://api.spotify.com/v1/users/\(id)/playlists")!
         var request = URLRequest(url: url)
         
-        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         do {
@@ -178,7 +180,7 @@ class PlaylistViewController: BaseViewController {
                 }
                 do {
                     let playlist = try JSONDecoder().decode(PlaylistOutput.self, from: data)
-                    completion(playlist.id)
+                    completion(playlist)
                 } catch {
                     print("error decoding playlist id")
                     completion(nil)
@@ -199,7 +201,7 @@ class PlaylistViewController: BaseViewController {
         let joinedTracksURIs = recommendedTracks.map({$0.uri!}).joined(separator: ",")
         components.queryItems = [URLQueryItem(name: "uris", value: joinedTracksURIs)]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse else { return }

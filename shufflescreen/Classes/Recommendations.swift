@@ -17,6 +17,46 @@ class Recommendations: Codable {
         self.tracks = tracks
         self.seeds = seeds
     }
+    
+    class func fetch(artists: [String], tracks: [String], genres: [String], limit: String, completion: @escaping (Recommendations?) -> Void){
+        if artists.count + tracks.count + genres.count > 5{
+            print("Overpassed limit of five seeds to recommend")
+            return
+        }
+        let defaults = UserDefaults.standard
+        
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.spotify.com"
+        components.path = "/v1/recommendations"
+        let joinedArtists = artists.joined(separator: ",")
+        let joinedTracks = tracks.joined(separator: ",")
+        let joinedGenres = genres.joined(separator: ",")
+        components.queryItems = [
+            URLQueryItem(name: "limit", value: limit),
+            URLQueryItem(name: "seed_artists", value: joinedArtists),
+            URLQueryItem(name: "seed_tracks", value: joinedTracks),
+            URLQueryItem(name: "genre_tracks", value: joinedGenres)
+        ]
+        var request = URLRequest(url: components.url!)
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                
+                let recommendations = try JSONDecoder().decode(Recommendations.self, from: data)
+                DispatchQueue.main.async {
+                    completion(recommendations)
+                }
+            }
+            catch {
+                print(error)
+                completion(nil)
+            }
+        }.resume()
+    }
+    
 }
 
 // MARK: - Seed

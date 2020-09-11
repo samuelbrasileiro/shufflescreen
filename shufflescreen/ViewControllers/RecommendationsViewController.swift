@@ -67,7 +67,7 @@ class RecommendationsViewController: BaseViewController {
             URLQueryItem(name: "limit", value: queryLimit)
         ]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: "access-token-key")!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else { return }

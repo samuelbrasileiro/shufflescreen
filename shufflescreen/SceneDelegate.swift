@@ -52,6 +52,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         return appRemote
     }()
     
+    var didRenewSession: Bool = false{
+        didSet{
+            if didRenewSession == true{
+                LoadingOverlay.shared.hideOverlayView()
+            }
+        }
+    }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         
         guard let url = URLContexts.first?.url else {
@@ -77,6 +84,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             
             print("renewed", session)
             
+            self.didRenewSession = true
             self.archiveSession(session)
             
             NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
@@ -89,6 +97,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         
         print("Access token: \(session.accessToken), expires at \(session.expirationDate)")
         
+        self.didRenewSession = true
         archiveSession(session)
         
         NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
@@ -110,13 +119,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         }
     }
     
+    //abriu o app
     func sceneDidBecomeActive(_ scene: UIScene) {
         
         if self.appRemote.isConnected{
             return
         }
-        
-        if let _ = self.appRemote.connectionParameters.accessToken {
+        if sessionManager.session == nil{
+            return
+        }
+        if !didRenewSession || self.sessionManager.session!.isExpired{
+            LoadingOverlay.shared.showOverlay(view: self.window!)
+            return
+        }
+        else if let _ = self.appRemote.connectionParameters.accessToken {
             print("Connecting to App Remote")
             self.appRemote.connect()
         }
@@ -204,12 +220,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     
     var viewController: UIViewController {
         get {
-            if let navController = self.window?.rootViewController as? UINavigationController{
-                return navController.topViewController!
-            }
-            else{
-                return (self.window?.rootViewController)!
-            }
+            let navController = self.window?.rootViewController?.children[0] as! UINavigationController
+            return navController.topViewController!
         }
     }
 }

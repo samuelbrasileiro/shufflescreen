@@ -39,5 +39,28 @@ class User: Codable {
         self.type = type
         self.uri = uri
     }
+    
+    
+    class func fetch(completion: @escaping (User?) -> Void) {
+        let defaults = UserDefaults.standard
+        let url = URL(string: "https://api.spotify.com/v1/me")!
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard let data = data else { return }
+            do {
+                let user = try JSONDecoder().decode(User.self, from: data)
+                DispatchQueue.main.async {
+                    completion(user)
+                }
+            } catch {
+                print("error")
+                completion(nil)
+            }
+        }.resume()
+    }
+    
 }
 

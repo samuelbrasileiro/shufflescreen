@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		35129477250BA02D00B7479D /* ConnectionStatusIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */; };
+		35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35129478250BF6CB00B7479D /* LoadingOverlay.swift */; };
 		35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
 		35756CA52507EF8F00DA2C11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
 		35756CA92508091F00DA2C11 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35756CA82508091F00DA2C11 /* SpotifyiOS.framework */; };
@@ -14,7 +16,7 @@
 		357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */; };
 		357EEA86250909D800F1DEF7 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA85250909D800F1DEF7 /* Track.swift */; };
 		357EEA88250909F900F1DEF7 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA87250909F900F1DEF7 /* Artist.swift */; };
-		357EEA8A25090EA200F1DEF7 /* TopTrackList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8925090EA200F1DEF7 /* TopTrackList.swift */; };
+		357EEA8A25090EA200F1DEF7 /* TopList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8925090EA200F1DEF7 /* TopList.swift */; };
 		357EEA8C25091BB500F1DEF7 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8B25091BB500F1DEF7 /* Reachability.swift */; };
 		357EEA8E2509234300F1DEF7 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8D2509234300F1DEF7 /* Album.swift */; };
 		357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8F2509290C00F1DEF7 /* Support Classes.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusIndicatorView.swift; sourceTree = "<group>"; };
+		35129478250BF6CB00B7479D /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		35756CA22507EC7F00DA2C11 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 		35756CA42507EF8F00DA2C11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		35756CA82508091F00DA2C11 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
@@ -41,7 +45,7 @@
 		357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewController.swift; sourceTree = "<group>"; };
 		357EEA85250909D800F1DEF7 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		357EEA87250909F900F1DEF7 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
-		357EEA8925090EA200F1DEF7 /* TopTrackList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopTrackList.swift; sourceTree = "<group>"; };
+		357EEA8925090EA200F1DEF7 /* TopList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopList.swift; sourceTree = "<group>"; };
 		357EEA8B25091BB500F1DEF7 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		357EEA8D2509234300F1DEF7 /* Album.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Album.swift; sourceTree = "<group>"; };
 		357EEA8F2509290C00F1DEF7 /* Support Classes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support Classes.swift"; sourceTree = "<group>"; };
@@ -80,7 +84,7 @@
 			children = (
 				35756CA22507EC7F00DA2C11 /* Recommendations.swift */,
 				357EEA87250909F900F1DEF7 /* Artist.swift */,
-				357EEA8925090EA200F1DEF7 /* TopTrackList.swift */,
+				357EEA8925090EA200F1DEF7 /* TopList.swift */,
 				357EEA85250909D800F1DEF7 /* Track.swift */,
 				357EEA8D2509234300F1DEF7 /* Album.swift */,
 				35756CA42507EF8F00DA2C11 /* User.swift */,
@@ -95,6 +99,8 @@
 				357EEA912509393B00F1DEF7 /* DisconnectedView.xib */,
 				357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */,
 				357EEA9C250AB97600F1DEF7 /* LateralButton.swift */,
+				35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */,
+				35129478250BF6CB00B7479D /* LoadingOverlay.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -234,14 +240,16 @@
 				357EEA8C25091BB500F1DEF7 /* Reachability.swift in Sources */,
 				7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */,
 				35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */,
+				35129477250BA02D00B7479D /* ConnectionStatusIndicatorView.swift in Sources */,
 				35756CA52507EF8F00DA2C11 /* User.swift in Sources */,
 				357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */,
 				357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */,
 				357EEA972509B5B100F1DEF7 /* PlaylistViewController.swift in Sources */,
+				35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */,
 				357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */,
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,
 				357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */,
-				357EEA8A25090EA200F1DEF7 /* TopTrackList.swift in Sources */,
+				357EEA8A25090EA200F1DEF7 /* TopList.swift in Sources */,
 				35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */,
 				357EEA99250AB56600F1DEF7 /* BaseNavigationController.swift in Sources */,
 				357EEA88250909F900F1DEF7 /* Artist.swift in Sources */,
