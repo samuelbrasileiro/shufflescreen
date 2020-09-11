@@ -23,7 +23,7 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        fetchUser(){user in
+        User.fetch{ user in
             guard let user = user else{
                 print("Could not fetch user.")
                 return
@@ -32,30 +32,6 @@ class HomeViewController: BaseViewController {
             
             self.followersCountLabel.text = String(user.followers!.total!) + " followers, wow."
         }
-    }
-    
-    func fetchUser(completion: @escaping (User?) -> Void){
-        let defaults = UserDefaults.standard
-        let url = URL(string: "https://api.spotify.com/v1/me")!
-        var request = URLRequest(url: url)
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
-            do {
-                let user = try JSONDecoder().decode(User.self, from: data)
-                print(user.displayName ?? "nada")
-                
-                DispatchQueue.main.async {
-                    completion(user)
-                }
-                
-                
-            } catch let error {
-                print(error)
-                completion(nil)
-            }
-        }.resume()
     }
     
 }
