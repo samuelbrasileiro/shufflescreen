@@ -129,8 +129,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         if sessionManager.session == nil{
             return
         }
-        if !didRenewSession || self.sessionManager.session!.isExpired{
-            LoadingOverlay.shared.showOverlay(view: self.window!)
+        if self.sessionManager.session!.isExpired{
+            
             return
         }
         else if let _ = self.appRemote.connectionParameters.accessToken {
