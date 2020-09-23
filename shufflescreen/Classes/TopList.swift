@@ -26,8 +26,8 @@ class TopTracksList: Codable {
     }
     
     class func fetch(timeRange: String, limit: String, completion: @escaping (TopTracksList?) -> Void){
-        let defaults = UserDefaults.standard
-        
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spotify.com"
@@ -73,8 +73,8 @@ class TopArtistsList: Codable {
     }
     
     class func fetch(timeRange: String, limit: String, completion: @escaping (TopArtistsList?) -> Void){
-        let defaults = UserDefaults.standard
-        
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spotify.com"

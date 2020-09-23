@@ -64,7 +64,7 @@ class Track: Codable {
     
     
     class func fetch(trackID: String, completion: @escaping (Track?) -> Void){
-        let defaults = UserDefaults.standard
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         let url = URL(string: "https://api.spotify.com/v1/tracks/" + trackID)!
         var request = URLRequest(url: url)
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")

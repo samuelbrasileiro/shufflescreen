@@ -42,7 +42,7 @@ class User: Codable {
     
     
     class func fetch(completion: @escaping (User?) -> Void) {
-        let defaults = UserDefaults.standard
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         let url = URL(string: "https://api.spotify.com/v1/me")!
         
         var request = URLRequest(url: url)

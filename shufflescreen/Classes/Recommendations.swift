@@ -23,8 +23,8 @@ class Recommendations: Codable {
             print("Overpassed limit of five seeds to recommend")
             return
         }
-        let defaults = UserDefaults.standard
-        
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spotify.com"

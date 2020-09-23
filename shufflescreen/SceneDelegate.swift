@@ -7,11 +7,15 @@
 //
 
 import UIKit
+import WidgetKit
+
 class Keys{
     static let kAccessTokenKey = "access-token-key"
     static let kRefreshTokenKey = "refresh-token-key"
     static let kSessionKey = "session-key"
 }
+let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelegate {
     
     var window: UIWindow?
@@ -47,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     lazy var appRemote: SPTAppRemote = {
         let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .error)
         
-        appRemote.connectionParameters.accessToken = UserDefaults.standard.string(forKey: Keys.kAccessTokenKey)
+        appRemote.connectionParameters.accessToken = defaults.string(forKey: Keys.kAccessTokenKey)
         appRemote.delegate = self
         return appRemote
     }()
@@ -107,7 +111,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     @objc func createSession(){
         if reachability.connection != .unavailable {
             
-            let scope: SPTScope = [.appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
+            let scope: SPTScope = [.userReadPlaybackState, .userReadCurrentlyPlaying, .appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
 
             if #available(iOS 11, *) {
                 // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
@@ -122,6 +126,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     
     //AO BOTAR NO FOREGROUND
     func sceneDidBecomeActive(_ scene: UIScene) {
+        
+        WidgetCenter.shared.reloadAllTimelines()
         
         if self.appRemote.isConnected{
             return
@@ -148,6 +154,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         //scene did begin
+
         restoreSession()
         sessionManager.renewSession()
         
@@ -188,11 +195,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     func archiveSession(_ session: SPTSession) {
         do {
             
-            UserDefaults.standard.set(session.accessToken, forKey: Keys.kAccessTokenKey)
-            UserDefaults.standard.set(session.refreshToken, forKey: Keys.kRefreshTokenKey)
+            defaults.set(session.accessToken, forKey: Keys.kAccessTokenKey)
+            defaults.set(session.refreshToken, forKey: Keys.kRefreshTokenKey)
             
             let sessionData = try NSKeyedArchiver.archivedData(withRootObject: session, requiringSecureCoding: true)
-            UserDefaults.standard.set(sessionData, forKey: Keys.kSessionKey)
+            defaults.set(sessionData, forKey: Keys.kSessionKey)
             
             
         } catch {
@@ -201,7 +208,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     }
     
     private func restoreSession() {
-        guard let sessionData = UserDefaults.standard.data(forKey: Keys.kSessionKey) else { return }
+        guard let sessionData = defaults.data(forKey: Keys.kSessionKey) else { return }
         do {
             let session = try NSKeyedUnarchiver.unarchivedObject(ofClass: SPTSession.self, from: sessionData)
             sessionManager.session = session

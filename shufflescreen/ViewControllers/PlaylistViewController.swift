@@ -105,7 +105,8 @@ class PlaylistViewController: BaseViewController {
     // MARK: - Create Playlist Requests
     
     func createNewPlaylist(id: String, playlist: PlaylistInput, completion: @escaping (PlaylistOutput?) -> Void) {
-        let defaults = UserDefaults.standard
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+
         let url = URL(string: "https://api.spotify.com/v1/users/\(id)/playlists")!
         var request = URLRequest(url: url)
         
@@ -137,7 +138,7 @@ class PlaylistViewController: BaseViewController {
         
     }
     func addSongs(id: String, completion: @escaping () -> Void) {
-        let defaults = UserDefaults.standard
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.spotify.com"
