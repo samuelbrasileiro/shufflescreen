@@ -6,24 +6,26 @@
 //  Based on Cocoa version by Panic Inc. - Portland
 //
 #if os(OSX)
-    import AppKit
-    public typealias UIImage = NSImage
-    public typealias UIColor = NSColor
+import AppKit
+public typealias UIImage = NSImage
+public typealias UIColor = NSColor
 #else
-    import UIKit
+import UIKit
 #endif
 
-public struct UIImageColors {
+
+public class UIImageColors {
+    
     public var background: UIColor!
     public var primary: UIColor!
     public var secondary: UIColor!
     public var detail: UIColor!
-  
+    
     public init(background: UIColor, primary: UIColor, secondary: UIColor, detail: UIColor) {
-      self.background = background
-      self.primary = primary
-      self.secondary = secondary
-      self.detail = detail
+        self.background = background
+        self.primary = primary
+        self.secondary = secondary
+        self.detail = detail
     }
 }
 
@@ -44,10 +46,10 @@ fileprivate struct UIImageColorsCounter {
 }
 
 /*
-    Extension on double that replicates UIColor methods. We DO NOT want these
-    exposed outside of the library because they don't make sense outside of the
-    context of UIImageColors.
-*/
+ Extension on double that replicates UIColor methods. We DO NOT want these
+ exposed outside of the library because they don't make sense outside of the
+ context of UIImageColors.
+ */
 fileprivate extension Double {
     
     private var r: Double {
@@ -77,7 +79,7 @@ fileprivate extension Double {
         let o_r = other.r
         let o_g = other.g
         let o_b = other.b
-
+        
         return (fabs(_r-o_r) > 63.75 || fabs(_g-o_g) > 63.75 || fabs(_b-o_b) > 63.75)
             && !(fabs(_r-_g) < 7.65 && fabs(_r-_b) < 7.65 && fabs(o_r-o_g) < 7.65 && fabs(o_r-o_b) < 7.65)
     }
@@ -177,32 +179,32 @@ fileprivate extension Double {
 
 extension UIImage {
     #if os(OSX)
-        private func resizeForUIImageColors(newSize: CGSize) -> UIImage? {
-                let frame = CGRect(origin: .zero, size: newSize)
-                guard let representation = bestRepresentation(for: frame, context: nil, hints: nil) else {
-                    return nil
-                }
-                let result = NSImage(size: newSize, flipped: false, drawingHandler: { (_) -> Bool in
-                    return representation.draw(in: frame)
-                })
-
-                return result
+    private func resizeForUIImageColors(newSize: CGSize) -> UIImage? {
+        let frame = CGRect(origin: .zero, size: newSize)
+        guard let representation = bestRepresentation(for: frame, context: nil, hints: nil) else {
+            return nil
         }
+        let result = NSImage(size: newSize, flipped: false, drawingHandler: { (_) -> Bool in
+            return representation.draw(in: frame)
+        })
+        
+        return result
+    }
     #else
-        private func resizeForUIImageColors(newSize: CGSize) -> UIImage? {
-                UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-                defer {
-                    UIGraphicsEndImageContext()
-                }
-                self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
-                guard let result = UIGraphicsGetImageFromCurrentImageContext() else {
-                    fatalError("UIImageColors.resizeForUIImageColors failed: UIGraphicsGetImageFromCurrentImageContext returned nil.")
-                }
-
-                return result
+    private func resizeForUIImageColors(newSize: CGSize) -> UIImage? {
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        defer {
+            UIGraphicsEndImageContext()
         }
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        guard let result = UIGraphicsGetImageFromCurrentImageContext() else {
+            fatalError("UIImageColors.resizeForUIImageColors failed: UIGraphicsGetImageFromCurrentImageContext returned nil.")
+        }
+        
+        return result
+    }
     #endif
-
+    
     public func getColors(quality: UIImageColorsQuality = .high, _ completion: @escaping (UIImageColors?) -> Void) {
         DispatchQueue.global().async {
             let result = self.getColors(quality: quality)
@@ -211,7 +213,7 @@ extension UIImage {
             }
         }
     }
-
+    
     public func getColors(quality: UIImageColorsQuality = .high) -> UIImageColors? {
         var scaleDownSize: CGSize = self.size
         if quality != .highest {
@@ -225,11 +227,11 @@ extension UIImage {
         }
         
         guard let resizedImage = self.resizeForUIImageColors(newSize: scaleDownSize) else { return nil }
-
+        
         #if os(OSX)
-            guard let cgImage = resizedImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return nil }
+        guard let cgImage = resizedImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else { return nil }
         #else
-            guard let cgImage = resizedImage.cgImage else { return nil }
+        guard let cgImage = resizedImage.cgImage else { return nil }
         #endif
         
         let width: Int = cgImage.width
@@ -251,7 +253,7 @@ extension UIImage {
                 }
             }
         }
-
+        
         let sortedColorComparator: Comparator = { (main, other) -> ComparisonResult in
             let m = main as! UIImageColorsCounter, o = other as! UIImageColorsCounter
             if m.count < o.count {
@@ -272,7 +274,7 @@ extension UIImage {
             }
         }
         sortedColors.sort(comparator: sortedColorComparator)
-
+        
         var proposedEdgeColor: UIImageColorsCounter
         if 0 < sortedColors.count {
             proposedEdgeColor = sortedColors.object(at: 0) as! UIImageColorsCounter
@@ -294,7 +296,7 @@ extension UIImage {
             }
         }
         proposed[0] = proposedEdgeColor.color
-
+        
         enumerator = imageColors.objectEnumerator()
         sortedColors.removeAllObjects()
         sortedColors = NSMutableArray(capacity: imageColors.count)
@@ -344,4 +346,38 @@ extension UIImage {
             detail: proposed[3].uicolor
         )
     }
+}
+
+extension UIColor {
+    func toHex() -> String {
+        var r:CGFloat = 0
+        var g:CGFloat = 0
+        var b:CGFloat = 0
+        var a:CGFloat = 0
+        
+        getRed(&r, green: &g, blue: &b, alpha: &a)
+        
+        let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
+        
+        return String(format:"#%06x", rgb)
+    }
+    
+    convenience init?(hex: String) {
+        let hexString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        let scanner = Scanner(string: hexString)
+        if (hexString.hasPrefix("#")) {
+            scanner.scanLocation = 1
+        }
+        var color: UInt32 = 0
+        scanner.scanHexInt32(&color)
+        let mask = 0x000000FF
+        let r = Int(color >> 16) & mask
+        let g = Int(color >> 8) & mask
+        let b = Int(color) & mask
+        let red   = CGFloat(r) / 255.0
+        let green = CGFloat(g) / 255.0
+        let blue  = CGFloat(b) / 255.0
+        self.init(red:red, green:green, blue:blue, alpha:1)
+    }
+    
 }

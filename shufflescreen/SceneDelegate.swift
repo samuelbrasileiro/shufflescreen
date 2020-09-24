@@ -37,12 +37,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     }()
     
     lazy var sessionManager: SPTSessionManager = {
-        if let tokenSwapURL = URL(string: "https://shufflescreen.herokuapp.com/api/token"),
-            let tokenRefreshURL = URL(string: "https://shufflescreen.herokuapp.com/api/refresh_token") {
-            self.configuration.tokenSwapURL = tokenSwapURL
-            self.configuration.tokenRefreshURL = tokenRefreshURL
-            self.configuration.playURI = ""
-        }
+        
         let manager = SPTSessionManager(configuration: self.configuration, delegate: self)
         
         return manager
@@ -136,7 +131,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             return
         }
         if self.sessionManager.session!.isExpired{
-            
+            sessionManager.renewSession()
             return
         }
         else if let _ = self.appRemote.connectionParameters.accessToken {

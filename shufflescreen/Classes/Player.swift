@@ -53,7 +53,10 @@ class Player: Codable {
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
             do {
                 let player = try JSONDecoder().decode(Player.self, from: data)
                 print(data)
@@ -63,7 +66,7 @@ class Player: Codable {
                 
                 
             } catch let error {
-                print(error)
+                print("ERROROROR + \(error)")
                 completion(.failure(error))
             }
         }.resume()

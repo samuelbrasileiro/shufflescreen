@@ -20,9 +20,10 @@
 		352174BD251BE5A700AAE095 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
 		352174C1251BE7FC00AAE095 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174C0251BE7FC00AAE095 /* Player.swift */; };
 		352174C2251BE7FC00AAE095 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174C0251BE7FC00AAE095 /* Player.swift */; };
+		354ABC14251C348E00635D50 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
+		354ABC15251C348E00635D50 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
 		35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
 		35756CA52507EF8F00DA2C11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
-		35756CA92508091F00DA2C11 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35756CA82508091F00DA2C11 /* SpotifyiOS.framework */; };
 		3576D82B250884990063BB8E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576D82A250884990063BB8E /* BaseViewController.swift */; };
 		357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */; };
 		357EEA86250909D800F1DEF7 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA85250909D800F1DEF7 /* Track.swift */; };
@@ -83,9 +84,9 @@
 		3521748F251BD8E000AAE095 /* shufflescreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shufflescreen.entitlements; sourceTree = "<group>"; };
 		352174B2251BE1D400AAE095 /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		352174C0251BE7FC00AAE095 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		354ABC13251C348E00635D50 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		35756CA22507EC7F00DA2C11 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 		35756CA42507EF8F00DA2C11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		35756CA82508091F00DA2C11 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
 		3576D82A250884990063BB8E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewController.swift; sourceTree = "<group>"; };
 		357EEA85250909D800F1DEF7 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
@@ -125,6 +126,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				357FA251251BD3CE00702498 /* SwiftUI.framework in Frameworks */,
+				354ABC15251C348E00635D50 /* SpotifyiOS.framework in Frameworks */,
 				357FA24F251BD3CE00702498 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,7 +135,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35756CA92508091F00DA2C11 /* SpotifyiOS.framework in Frameworks */,
+				354ABC14251C348E00635D50 /* SpotifyiOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,13 +172,14 @@
 		357FA24D251BD3CE00702498 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				354ABC13251C348E00635D50 /* SpotifyiOS.framework */,
 				357FA24E251BD3CE00702498 /* WidgetKit.framework */,
 				357FA250251BD3CE00702498 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		357FA252251BD3CE00702498 /* songWidget */ = {
+		357FA252251BD3CE00702498 /* SongWidget */ = {
 			isa = PBXGroup;
 			children = (
 				357FA253251BD3CE00702498 /* songWidget.swift */,
@@ -184,7 +187,7 @@
 				357FA256251BD3D000702498 /* Assets.xcassets */,
 				357FA258251BD3D000702498 /* Info.plist */,
 			);
-			path = songWidget;
+			path = SongWidget;
 			sourceTree = "<group>";
 		};
 		35F09D4F2508726400E68251 /* ViewControllers */ = {
@@ -206,7 +209,7 @@
 			children = (
 				7E47485D2505325B0063F4E8 /* shufflescreen-Bridging-Header.h */,
 				7E47484625052C8B0063F4E8 /* shufflescreen */,
-				357FA252251BD3CE00702498 /* songWidget */,
+				357FA252251BD3CE00702498 /* SongWidget */,
 				357FA24D251BD3CE00702498 /* Frameworks */,
 				7E47484525052C8B0063F4E8 /* Products */,
 			);
@@ -236,17 +239,8 @@
 				7E47485025052C930063F4E8 /* Assets.xcassets */,
 				7E47485225052C930063F4E8 /* LaunchScreen.storyboard */,
 				7E47485525052C930063F4E8 /* Info.plist */,
-				7E47485F25053D710063F4E8 /* Frameworks */,
 			);
 			path = shufflescreen;
-			sourceTree = "<group>";
-		};
-		7E47485F25053D710063F4E8 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				35756CA82508091F00DA2C11 /* SpotifyiOS.framework */,
-			);
-			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -436,6 +430,11 @@
 				CODE_SIGN_ENTITLEMENTS = songWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/shufflescreen/Frameworks",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = songWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -460,6 +459,11 @@
 				CODE_SIGN_ENTITLEMENTS = songWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/shufflescreen/Frameworks",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = songWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
