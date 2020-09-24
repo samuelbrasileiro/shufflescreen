@@ -289,7 +289,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1170;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Samuel Brasileiro";
 				TargetAttributes = {
 					357FA24B251BD3CE00702498 = {
@@ -432,7 +432,6 @@
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/shufflescreen/Frameworks",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = songWidget/Info.plist;
@@ -461,7 +460,6 @@
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/shufflescreen/Frameworks",
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = songWidget/Info.plist;
@@ -505,6 +503,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -565,6 +564,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -604,8 +604,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/shufflescreen/Framework",
-					"$(PROJECT_DIR)/shufflescreen/Frameworks",
 				);
 				INFOPLIST_FILE = shufflescreen/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -633,8 +631,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/shufflescreen/Framework",
-					"$(PROJECT_DIR)/shufflescreen/Frameworks",
 				);
 				INFOPLIST_FILE = shufflescreen/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
