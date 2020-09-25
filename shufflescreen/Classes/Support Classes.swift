@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Image
-class Image: Codable {
+class AlbumImage: Codable {
     let height: Int?
     let url: String?
     let width: Int?

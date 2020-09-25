@@ -17,7 +17,7 @@ class Album: Codable {
     let externalUrls: ExternalUrls?
     let href: String?
     let id: String?
-    let images: [Image]?
+    let images: [AlbumImage]?
     let name, releaseDate, releaseDatePrecision: String?
     let totalTracks: Int?
     let type, uri: String?
@@ -34,7 +34,7 @@ class Album: Codable {
         case type, uri
     }
 
-    init(albumType: String?, artists: [Artist]?, availableMarkets: [String]?, externalUrls: ExternalUrls?, href: String?, id: String?, images: [Image]?, name: String?, releaseDate: String?, releaseDatePrecision: String?, totalTracks: Int?, type: String?, uri: String?) {
+    init(albumType: String?, artists: [Artist]?, availableMarkets: [String]?, externalUrls: ExternalUrls?, href: String?, id: String?, images: [AlbumImage]?, name: String?, releaseDate: String?, releaseDatePrecision: String?, totalTracks: Int?, type: String?, uri: String?) {
         self.albumType = albumType
         self.artists = artists
         self.availableMarkets = availableMarkets
@@ -50,7 +50,7 @@ class Album: Codable {
         self.uri = uri
     }
     
-    class func fetchAlbumImage(scale: Int, images: [Image], completion: @escaping (UIImage?) -> Void){
+    class func fetchAlbumImage(scale: Int, images: [AlbumImage], completion: @escaping (UIImage?) -> Void){
         for image in images{
             if image.height == scale{
                 

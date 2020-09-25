@@ -15,7 +15,7 @@ class Artist: Codable {
     let genres: [String]?
     let href: String?
     let id: String?
-    let images: [Image]?
+    let images: [AlbumImage]?
     let name: String?
     let popularity: Int?
     let uri: String?
@@ -25,7 +25,7 @@ class Artist: Codable {
         case followers, genres, href, id, images, name, popularity, uri
     }
 
-    init(externalUrls: ExternalUrls?, followers: Followers?, genres: [String]?, href: String?, id: String?, images: [Image]?, name: String?, popularity: Int?, uri: String?) {
+    init(externalUrls: ExternalUrls?, followers: Followers?, genres: [String]?, href: String?, id: String?, images: [AlbumImage]?, name: String?, popularity: Int?, uri: String?) {
         self.externalUrls = externalUrls
         self.followers = followers
         self.genres = genres

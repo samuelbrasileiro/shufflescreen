@@ -17,6 +17,7 @@ class Keys{
     static let kWidgetMessage = "widget-message"
     static let kWidgetAuthor = "widget-author"
     static let kWidgetDate = "widget-date"
+    static let kWidgetImage = "widget-image"
     
     static let kWidgetImageColorBackground = "widget-image-color-background"
     static let kWidgetImageColorPrimary = "widget-image-color-primary"

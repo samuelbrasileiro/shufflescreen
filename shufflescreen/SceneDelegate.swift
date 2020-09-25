@@ -125,10 +125,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         if sessionManager.session == nil{
             return
         }
-        if self.sessionManager.session!.isExpired{
-            sessionManager.renewSession()
-            return
-        }
+        //if didRenewSession && self.sessionManager.session!.isExpired{
+            
+        //    return
+        //}
         else if let _ = self.appRemote.connectionParameters.accessToken {
             print("Connecting to App Remote")
             self.appRemote.connect()
@@ -232,7 +232,7 @@ extension SceneDelegate: SPTAppRemoteDelegate, SPTAppRemotePlayerStateDelegate{
     
     func appRemoteDidEstablishConnection(_ appRemote: SPTAppRemote) {
         // Connection was successful, you can begin issuing commands
-        print("Connected App Remote")
+        print("Connected to App Remote")
         self.appRemote.playerAPI?.delegate = self
         self.appRemote.playerAPI?.subscribe(toPlayerState: { (result, error) in
             //            if let error = error {
