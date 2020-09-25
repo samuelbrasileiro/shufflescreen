@@ -117,7 +117,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     //AO BOTAR NO FOREGROUND
     func sceneDidBecomeActive(_ scene: UIScene) {
         
-        WidgetCenter.shared.reloadAllTimelines()
+        
         
         if self.appRemote.isConnected{
             return
@@ -136,6 +136,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     }
     
     func sceneWillResignActive(_ scene: UIScene) {
+        WidgetCenter.shared.reloadAllTimelines()
         if self.appRemote.isConnected {
             print("Disconnecting from App Remote")
             self.appRemote.disconnect()

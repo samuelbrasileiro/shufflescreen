@@ -28,9 +28,9 @@ class HomeViewController: BaseViewController {
                 print("Could not fetch user.")
                 return
             }
-            self.displayNameLabel.text = "Hey, " + user.displayName! + "!"
+            self.displayNameLabel.text = "E aí, " + user.displayName!.split(separator: " ")[0] + "?"
             
-            self.followersCountLabel.text = String(user.followers!.total!) + " followers, wow."
+            self.followersCountLabel.text = "Tas com " + String(user.followers!.total!) + " seguidores!"
         }
     }
     

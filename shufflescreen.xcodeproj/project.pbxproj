@@ -45,6 +45,12 @@
 		351D4A43251E51840030A464 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA87250909F900F1DEF7 /* Artist.swift */; };
 		351D4A44251E51840030A464 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8D2509234300F1DEF7 /* Album.swift */; };
 		351D4A48251E51DA0030A464 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
+		351D4A56251E88400030A464 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
+		351D4A5B251E88470030A464 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
+		351D4A60251E890F0030A464 /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A5F251E890F0030A464 /* NowPlaying.swift */; };
+		351D4A61251E890F0030A464 /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A5F251E890F0030A464 /* NowPlaying.swift */; };
+		351D4A62251E890F0030A464 /* NowPlaying.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A5F251E890F0030A464 /* NowPlaying.swift */; };
+		351D4A66251E8D1F0030A464 /* ImageSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */; };
 		352174B3251BE1D400AAE095 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		352174C1251BE7FC00AAE095 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174C0251BE7FC00AAE095 /* Player.swift */; };
 		354ABC14251C348E00635D50 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
@@ -122,6 +128,7 @@
 		351D4A2D251E51630030A464 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		351D4A2F251E51630030A464 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		351D4A52251E58960030A464 /* AlbumImageWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlbumImageWidgetExtension.entitlements; sourceTree = "<group>"; };
+		351D4A5F251E890F0030A464 /* NowPlaying.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlaying.swift; sourceTree = "<group>"; };
 		3521748F251BD8E000AAE095 /* shufflescreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shufflescreen.entitlements; sourceTree = "<group>"; };
 		352174B2251BE1D400AAE095 /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		352174C0251BE7FC00AAE095 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -162,6 +169,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				351D49F3251E4EE40030A464 /* SwiftUI.framework in Frameworks */,
+				351D4A5B251E88470030A464 /* SpotifyiOS.framework in Frameworks */,
 				351D49F2251E4EE40030A464 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				351D4A28251E51610030A464 /* SwiftUI.framework in Frameworks */,
+				351D4A56251E88400030A464 /* SpotifyiOS.framework in Frameworks */,
 				351D4A27251E51610030A464 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -220,6 +229,7 @@
 				35756CA42507EF8F00DA2C11 /* User.swift */,
 				357EEA8F2509290C00F1DEF7 /* Support Classes.swift */,
 				352174C0251BE7FC00AAE095 /* Player.swift */,
+				351D4A5F251E890F0030A464 /* NowPlaying.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -446,6 +456,7 @@
 				351D4A09251E4F260030A464 /* Recommendations.swift in Sources */,
 				351D4A1B251E502B0030A464 /* ImageSwiftUI.swift in Sources */,
 				351D4A0D251E4F260030A464 /* User.swift in Sources */,
+				351D4A61251E890F0030A464 /* NowPlaying.swift in Sources */,
 				351D4A0A251E4F260030A464 /* Track.swift in Sources */,
 				351D4A0B251E4F260030A464 /* Support Classes.swift in Sources */,
 				351D4A0C251E4F260030A464 /* TopList.swift in Sources */,
@@ -466,6 +477,7 @@
 				351D4A41251E51840030A464 /* User.swift in Sources */,
 				351D4A3F251E51840030A464 /* Player.swift in Sources */,
 				351D4A2B251E51610030A464 /* AlbumImageWidget.swift in Sources */,
+				351D4A62251E890F0030A464 /* NowPlaying.swift in Sources */,
 				351D4A3B251E51840030A464 /* ImageSwiftUI.swift in Sources */,
 				351D4A42251E51840030A464 /* Support Classes.swift in Sources */,
 				351D4A43251E51840030A464 /* Artist.swift in Sources */,
@@ -491,6 +503,7 @@
 				357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */,
 				357EEA972509B5B100F1DEF7 /* PlaylistViewController.swift in Sources */,
 				35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */,
+				351D4A66251E8D1F0030A464 /* ImageSwiftUI.swift in Sources */,
 				357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */,
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,
 				351D49CD251E1C160030A464 /* Keys.swift in Sources */,
@@ -498,6 +511,7 @@
 				357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */,
 				357EEA8A25090EA200F1DEF7 /* TopList.swift in Sources */,
 				35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */,
+				351D4A60251E890F0030A464 /* NowPlaying.swift in Sources */,
 				357EEA99250AB56600F1DEF7 /* BaseNavigationController.swift in Sources */,
 				357EEA88250909F900F1DEF7 /* Artist.swift in Sources */,
 				7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */,
@@ -548,6 +562,10 @@
 				CODE_SIGN_ENTITLEMENTS = NowPlayingWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = NowPlayingWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -571,6 +589,10 @@
 				CODE_SIGN_ENTITLEMENTS = NowPlayingWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = NowPlayingWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -594,6 +616,10 @@
 				CODE_SIGN_ENTITLEMENTS = AlbumImageWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AlbumImageWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -617,6 +643,10 @@
 				CODE_SIGN_ENTITLEMENTS = AlbumImageWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = P63952MS7L;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = AlbumImageWidget/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (

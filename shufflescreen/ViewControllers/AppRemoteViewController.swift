@@ -7,24 +7,51 @@
 //
 
 import UIKit
+import SwiftUI
 
 class AppRemoteViewController: BaseViewController {
     
-    @IBOutlet weak var currentSongStatusLabel: UILabel!
-    
-    @IBOutlet weak var currentSongLabel: UILabel!
+
     
     @IBOutlet weak var warningLabel: UILabel!
     
     @IBOutlet weak var connectToAppRemoteButton: UIButton!
     
-    @IBOutlet weak var albumImageView: UIImageView!
+    @IBOutlet weak var shuffleButton: UIButton!
     
+    var nowPlayingView: NowPlayingView?
+    var child: UIHostingController<NowPlayingView>?
     private var connectionIndicatorView = ConnectionStatusIndicatorView()
     
+    var nowPlaying: NowPlaying?{
+        didSet{
+            self.view.backgroundColor = nowPlaying!.imageColors.background
+            shuffleButton.backgroundColor = nowPlaying!.imageColors.detail
+            shuffleButton.setTitleColor(nowPlaying!.imageColors.background, for: .normal)
+
+            nowPlayingView = NowPlayingView(nowPlaying: nowPlaying!)
+            child?.rootView = nowPlayingView!
+            
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        nowPlaying = NowPlaying.restore()
+        nowPlayingView = NowPlayingView(nowPlaying: nowPlaying!)
+        
+        child = UIHostingController(rootView: nowPlayingView!)
+        child!.view.translatesAutoresizingMaskIntoConstraints = false
+        child!.view.frame = CGRect(x: self.view.bounds.midX - 150, y: self.view.bounds.midY - 300, width: 300, height: 500)
+        self.view.addSubview(child!.view)
+        
+        
+        self.addChild(child!)
+        
+        shuffleButton.layer.masksToBounds = true
+        shuffleButton.layer.cornerRadius = 10
         
         NotificationCenter.default.addObserver(self, selector: #selector(updatePlayerState), name: NSNotification.Name(rawValue: "updatePlayerState"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectedToAppRemote), name: NSNotification.Name(rawValue: "connectedToAppRemote"), object: nil)
@@ -39,9 +66,7 @@ class AppRemoteViewController: BaseViewController {
             
         }
         else{
-            currentSongStatusLabel.isHidden = true
-            currentSongLabel.isHidden = true
-            albumImageView.isHidden = true
+
             print("App Remote is disconnected")
         }
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: connectionIndicatorView)
@@ -92,27 +117,25 @@ class AppRemoteViewController: BaseViewController {
                 return
             }
             
-            if playerState.isPaused{
-                self.currentSongStatusLabel?.text = "Currently paused:"
-            }
-            else{
-                self.currentSongStatusLabel?.text = "Currently playing:"
-            }
-            
             let trackURI = playerState.track.uri
             if trackURI == ""{
                 return
             }
 
-            if self.currentSongLabel?.text != playerState.track.name{
-                self.currentSongLabel?.text = playerState.track.name
+            if self.nowPlaying!.message != playerState.track.name{
 
                 let trackID = String(trackURI.split(separator: ":").last!)
                 
                 Track.fetch(trackID: trackID){ track in
                     if let images = track!.album!.images{
+                        
                         Album.fetchAlbumImage(scale: 300, images: images){ image in
-                            self.albumImageView.image = image
+                            let nowPlaying = NowPlaying(message: track!.name!, author: track!.artists![0].name!, date: track!.album!.releaseDate!, image: image, imageColors: image!.getColors()!)
+                            
+                            NowPlaying.archive(nowPlaying: nowPlaying)
+                            
+                            self.nowPlaying = nowPlaying
+
                         }
                     }
                 }
@@ -124,24 +147,16 @@ class AppRemoteViewController: BaseViewController {
         connectionIndicatorView.state = .connected
         warningLabel.isHidden = true
         connectToAppRemoteButton.isHidden = true
-        currentSongStatusLabel.isHidden = false
-        currentSongLabel.isHidden = false
-        albumImageView.isHidden = false
     }
     
     @objc func disconnectedFromAppRemote(){
         connectionIndicatorView.state = .disconnected
-        //warningLabel.isHidden = false
-        //connectToAppRemoteButton.isHidden = false
     }
     
     @objc func couldNotConnectToAppRemote(){
         connectionIndicatorView.state = .disconnected
         warningLabel.isHidden = false
         connectToAppRemoteButton.isHidden = false
-        currentSongStatusLabel.isHidden = true
-        currentSongLabel.isHidden = true
-        albumImageView.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -160,11 +175,50 @@ class AppRemoteViewController: BaseViewController {
         }
     }
     
-    
+    struct NowPlayingView : View {
+        var nowPlaying: NowPlaying
+        var body: some View {
+            
+            
+            VStack(alignment: .leading, spacing: 4) {
+                    
+                    Image(data: self.nowPlaying.image?.pngData())!
+                        .resizable()
+                        .frame(width: 240, height: 240, alignment: .center)
+                        .padding()
+                        .animation(.easeInOut(duration: 1))
+                    
+                    
+                    Text(self.nowPlaying.message)
+                        .font(.system(size: 28, weight: .bold, design: .rounded))
+                        .foregroundColor(Color(self.nowPlaying.imageColors.primary))
+                        .bold()
+                        .animation(.easeInOut(duration: 1))
+                    Text("by \(self.nowPlaying.author)")
+                        .font(.system(size: 18, weight: .light, design: .rounded))
+                        .foregroundColor(Color(self.nowPlaying.imageColors.secondary))
+                        .animation(.easeInOut(duration: 1))
+                    Text("Released: \(self.nowPlaying.date) ")
+                        .font(.system(.caption))
+                        .foregroundColor(Color(self.nowPlaying.imageColors.detail))
+                        .animation(.easeInOut(duration: 1))
+                    
+                        
+                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                
+                .background(Color(self.nowPlaying.imageColors.background))
+            
+                
+                
+            
+        }
+
+        static func formatHour(date: Date) -> String {
+
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter.string(from: date)
+        }
+    }
 }
 
-class Fetch{
-    
-    
-    
-}
