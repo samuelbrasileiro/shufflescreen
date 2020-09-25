@@ -5,7 +5,6 @@
 //  Created by Samuel Brasileiro on 25/09/20.
 //  Copyright © 2020 Samuel Brasileiro. All rights reserved.
 //
-
 import SwiftUI
 
 extension Image {
