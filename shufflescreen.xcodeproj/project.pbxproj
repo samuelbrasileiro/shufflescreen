@@ -28,6 +28,23 @@
 		351D4A11251E4F2F0030A464 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		351D4A17251E4F750030A464 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D49CC251E1C160030A464 /* Keys.swift */; };
 		351D4A1B251E502B0030A464 /* ImageSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */; };
+		351D4A27251E51610030A464 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FA24E251BD3CE00702498 /* WidgetKit.framework */; };
+		351D4A28251E51610030A464 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FA250251BD3CE00702498 /* SwiftUI.framework */; };
+		351D4A2B251E51610030A464 /* AlbumImageWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A2A251E51610030A464 /* AlbumImageWidget.swift */; };
+		351D4A2E251E51630030A464 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 351D4A2D251E51630030A464 /* Assets.xcassets */; };
+		351D4A30251E51630030A464 /* AlbumImageWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A2C251E51610030A464 /* AlbumImageWidget.intentdefinition */; };
+		351D4A34251E51630030A464 /* AlbumImageWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 351D4A26251E51610030A464 /* AlbumImageWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		351D4A3B251E51840030A464 /* ImageSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */; };
+		351D4A3C251E51840030A464 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
+		351D4A3D251E51840030A464 /* TopList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8925090EA200F1DEF7 /* TopList.swift */; };
+		351D4A3E251E51840030A464 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D49CC251E1C160030A464 /* Keys.swift */; };
+		351D4A3F251E51840030A464 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174C0251BE7FC00AAE095 /* Player.swift */; };
+		351D4A40251E51840030A464 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA85250909D800F1DEF7 /* Track.swift */; };
+		351D4A41251E51840030A464 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
+		351D4A42251E51840030A464 /* Support Classes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8F2509290C00F1DEF7 /* Support Classes.swift */; };
+		351D4A43251E51840030A464 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA87250909F900F1DEF7 /* Artist.swift */; };
+		351D4A44251E51840030A464 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8D2509234300F1DEF7 /* Album.swift */; };
+		351D4A48251E51DA0030A464 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		352174B3251BE1D400AAE095 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		352174C1251BE7FC00AAE095 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174C0251BE7FC00AAE095 /* Player.swift */; };
 		354ABC14251C348E00635D50 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
@@ -64,6 +81,13 @@
 			remoteGlobalIDString = 351D49F0251E4EE40030A464;
 			remoteInfo = NowPlayingWidgetExtension;
 		};
+		351D4A32251E51630030A464 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E47483C25052C8B0063F4E8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 351D4A25251E51610030A464;
+			remoteInfo = AlbumImageWidgetExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +97,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				351D4A34251E51630030A464 /* AlbumImageWidgetExtension.appex in Embed App Extensions */,
 				351D49FF251E4EE50030A464 /* NowPlayingWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
@@ -91,6 +116,12 @@
 		351D49FA251E4EE50030A464 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		351D4A14251E4F590030A464 /* NowPlayingWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NowPlayingWidgetExtension.entitlements; sourceTree = "<group>"; };
 		351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSwiftUI.swift; sourceTree = "<group>"; };
+		351D4A26251E51610030A464 /* AlbumImageWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = AlbumImageWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		351D4A2A251E51610030A464 /* AlbumImageWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumImageWidget.swift; sourceTree = "<group>"; };
+		351D4A2C251E51610030A464 /* AlbumImageWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = AlbumImageWidget.intentdefinition; sourceTree = "<group>"; };
+		351D4A2D251E51630030A464 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		351D4A2F251E51630030A464 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		351D4A52251E58960030A464 /* AlbumImageWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AlbumImageWidgetExtension.entitlements; sourceTree = "<group>"; };
 		3521748F251BD8E000AAE095 /* shufflescreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shufflescreen.entitlements; sourceTree = "<group>"; };
 		352174B2251BE1D400AAE095 /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		352174C0251BE7FC00AAE095 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -135,6 +166,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		351D4A23251E51610030A464 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351D4A28251E51610030A464 /* SwiftUI.framework in Frameworks */,
+				351D4A27251E51610030A464 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E47484125052C8B0063F4E8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -156,6 +196,17 @@
 				351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */,
 			);
 			path = NowPlayingWidget;
+			sourceTree = "<group>";
+		};
+		351D4A29251E51610030A464 /* AlbumImageWidget */ = {
+			isa = PBXGroup;
+			children = (
+				351D4A2A251E51610030A464 /* AlbumImageWidget.swift */,
+				351D4A2C251E51610030A464 /* AlbumImageWidget.intentdefinition */,
+				351D4A2D251E51630030A464 /* Assets.xcassets */,
+				351D4A2F251E51630030A464 /* Info.plist */,
+			);
+			path = AlbumImageWidget;
 			sourceTree = "<group>";
 		};
 		35756CA62507EFFF00DA2C11 /* Classes */ = {
@@ -212,10 +263,12 @@
 		7E47483B25052C8B0063F4E8 = {
 			isa = PBXGroup;
 			children = (
+				351D4A52251E58960030A464 /* AlbumImageWidgetExtension.entitlements */,
 				351D4A14251E4F590030A464 /* NowPlayingWidgetExtension.entitlements */,
 				7E47485D2505325B0063F4E8 /* shufflescreen-Bridging-Header.h */,
 				7E47484625052C8B0063F4E8 /* shufflescreen */,
 				351D49F4251E4EE40030A464 /* NowPlayingWidget */,
+				351D4A29251E51610030A464 /* AlbumImageWidget */,
 				357FA24D251BD3CE00702498 /* Frameworks */,
 				7E47484525052C8B0063F4E8 /* Products */,
 			);
@@ -226,6 +279,7 @@
 			children = (
 				7E47484425052C8B0063F4E8 /* shufflescreen.app */,
 				351D49F1251E4EE40030A464 /* NowPlayingWidgetExtension.appex */,
+				351D4A26251E51610030A464 /* AlbumImageWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,6 +324,23 @@
 			productReference = 351D49F1251E4EE40030A464 /* NowPlayingWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		351D4A25251E51610030A464 /* AlbumImageWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 351D4A35251E51630030A464 /* Build configuration list for PBXNativeTarget "AlbumImageWidgetExtension" */;
+			buildPhases = (
+				351D4A22251E51610030A464 /* Sources */,
+				351D4A23251E51610030A464 /* Frameworks */,
+				351D4A24251E51610030A464 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AlbumImageWidgetExtension;
+			productName = AlbumImageWidgetExtension;
+			productReference = 351D4A26251E51610030A464 /* AlbumImageWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		7E47484325052C8B0063F4E8 /* shufflescreen */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7E47485825052C930063F4E8 /* Build configuration list for PBXNativeTarget "shufflescreen" */;
@@ -283,6 +354,7 @@
 			);
 			dependencies = (
 				351D49FE251E4EE50030A464 /* PBXTargetDependency */,
+				351D4A33251E51630030A464 /* PBXTargetDependency */,
 			);
 			name = shufflescreen;
 			productName = shufflescreen;
@@ -300,6 +372,9 @@
 				ORGANIZATIONNAME = "Samuel Brasileiro";
 				TargetAttributes = {
 					351D49F0251E4EE40030A464 = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					351D4A25251E51610030A464 = {
 						CreatedOnToolsVersion = 12.0;
 					};
 					7E47484325052C8B0063F4E8 = {
@@ -322,6 +397,7 @@
 			targets = (
 				7E47484325052C8B0063F4E8 /* shufflescreen */,
 				351D49F0251E4EE40030A464 /* NowPlayingWidgetExtension */,
+				351D4A25251E51610030A464 /* AlbumImageWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -332,6 +408,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				351D49F9251E4EE50030A464 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		351D4A24251E51610030A464 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351D4A2E251E51630030A464 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +450,26 @@
 				351D4A0B251E4F260030A464 /* Support Classes.swift in Sources */,
 				351D4A0C251E4F260030A464 /* TopList.swift in Sources */,
 				351D4A0E251E4F260030A464 /* Album.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		351D4A22251E51610030A464 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				351D4A3D251E51840030A464 /* TopList.swift in Sources */,
+				351D4A3E251E51840030A464 /* Keys.swift in Sources */,
+				351D4A3C251E51840030A464 /* Recommendations.swift in Sources */,
+				351D4A48251E51DA0030A464 /* UIImageColors.swift in Sources */,
+				351D4A40251E51840030A464 /* Track.swift in Sources */,
+				351D4A30251E51630030A464 /* AlbumImageWidget.intentdefinition in Sources */,
+				351D4A41251E51840030A464 /* User.swift in Sources */,
+				351D4A3F251E51840030A464 /* Player.swift in Sources */,
+				351D4A2B251E51610030A464 /* AlbumImageWidget.swift in Sources */,
+				351D4A3B251E51840030A464 /* ImageSwiftUI.swift in Sources */,
+				351D4A42251E51840030A464 /* Support Classes.swift in Sources */,
+				351D4A43251E51840030A464 /* Artist.swift in Sources */,
+				351D4A44251E51840030A464 /* Album.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -408,6 +512,11 @@
 			isa = PBXTargetDependency;
 			target = 351D49F0251E4EE40030A464 /* NowPlayingWidgetExtension */;
 			targetProxy = 351D49FD251E4EE50030A464 /* PBXContainerItemProxy */;
+		};
+		351D4A33251E51630030A464 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 351D4A25251E51610030A464 /* AlbumImageWidgetExtension */;
+			targetProxy = 351D4A32251E51630030A464 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -470,6 +579,52 @@
 					"@executable_path/../../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.NowPlayingWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		351D4A36251E51630030A464 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AlbumImageWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P63952MS7L;
+				INFOPLIST_FILE = AlbumImageWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.AlbumImageWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		351D4A37251E51630030A464 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = AlbumImageWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = P63952MS7L;
+				INFOPLIST_FILE = AlbumImageWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.AlbumImageWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -655,6 +810,15 @@
 			buildConfigurations = (
 				351D4A00251E4EE50030A464 /* Debug */,
 				351D4A01251E4EE50030A464 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		351D4A35251E51630030A464 /* Build configuration list for PBXNativeTarget "AlbumImageWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				351D4A36251E51630030A464 /* Debug */,
+				351D4A37251E51630030A464 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
