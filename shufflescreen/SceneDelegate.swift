@@ -9,11 +9,6 @@
 import UIKit
 import WidgetKit
 
-class Keys{
-    static let kAccessTokenKey = "access-token-key"
-    static let kRefreshTokenKey = "refresh-token-key"
-    static let kSessionKey = "session-key"
-}
 let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelegate {

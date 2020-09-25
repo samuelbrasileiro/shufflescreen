@@ -10,27 +10,12 @@ import WidgetKit
 import SwiftUI
 import CoreData
 
-class Keys{
-    static let kAccessTokenKey = "access-token-key"
-    static let kRefreshTokenKey = "refresh-token-key"
-    static let kSessionKey = "session-key"
-    
-    static let kWidgetNowPlaying = "widget-now-playing"
-    static let kWidgetMessage = "widget-message"
-    static let kWidgetAuthor = "widget-author"
-    static let kWidgetDate = "widget-date"
-    
-    static let kWidgetImageColorBackground = "widget-image-color-background"
-    static let kWidgetImageColorPrimary = "widget-image-color-primary"
-    static let kWidgetImageColorSecondary = "widget-image-color-secondary"
-    static let kWidgetImageColorDetail = "widget-image-color-detail"
-}
 
 let defaultImageColors = UIImageColors(background: UIColor.black, primary: UIColor.white, secondary: UIColor.blue, detail: UIColor.purple)
 
 
 struct NowPlayingCheckerWidgetView : View {
-    let entry: LastNowPlayingEntry
+    var entry: LastNowPlayingEntry
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -44,10 +29,10 @@ struct NowPlayingCheckerWidgetView : View {
             Text("by \(entry.NowPlaying.author)")
                 .font(.system(.caption))
                 .foregroundColor(Color(entry.NowPlaying.imageColors.primary))
-            Text("Released: \(entry.NowPlaying.date)")
+            Text("Released: \(entry.NowPlaying.date) ")
                 .font(.system(.caption))
                 .foregroundColor(Color(entry.NowPlaying.imageColors.secondary))
-            Text("Updated at \(Self.format(date:entry.date))")
+            Text("Updated at \(Self.formatHour(date: entry.date))")
                 .font(.system(.caption2))
                 .foregroundColor(Color(entry.NowPlaying.imageColors.detail))
         }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
@@ -56,8 +41,9 @@ struct NowPlayingCheckerWidgetView : View {
         .animation(.easeInOut)
         
     }
-    
-    static func format(date: Date) -> String {
+
+    static func formatHour(date: Date) -> String {
+
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: date)
@@ -96,8 +82,7 @@ struct NowPlaying {
         let primary = defaults.string(forKey: Keys.kWidgetImageColorPrimary) ?? UIColor.white.toHex()
         let secondary = defaults.string(forKey: Keys.kWidgetImageColorSecondary) ?? UIColor.blue.toHex()
         let detail = defaults.string(forKey: Keys.kWidgetImageColorDetail) ?? UIColor.purple.toHex()
-        print(background)
-        print(message)
+
         let imageColors = UIImageColors(background: UIColor(hex: background)!, primary: UIColor(hex: primary)!, secondary: UIColor(hex: secondary)!, detail: UIColor(hex: detail)!)
         
         return NowPlaying(message: message, author: author, date: date, imageColors: imageColors)
@@ -129,7 +114,6 @@ var initialized: Bool = false
 class NowPlayingTimelineProvider: TimelineProvider {
     
     typealias Entry = LastNowPlayingEntry
-    /* protocol methods implemented below! */
     
     func placeholder(in context: Context) -> LastNowPlayingEntry {
         let fakeNowPlaying = NowPlaying(message: "Leãozinho", author: "Caetano Veloso", date: "2020-09-23", imageColors: defaultImageColors)
@@ -146,30 +130,26 @@ class NowPlayingTimelineProvider: TimelineProvider {
     
     public func getTimeline(in context: Context, completion: @escaping (Timeline<LastNowPlayingEntry>) -> ()) {
         
+        
         let currentDate = Date()
         let refreshDate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
-        print(currentDate)
-        print(refreshDate)
-        
-        
-        print("adobedabedo")
-        
+
         initialized = true
         newRefreshDate = refreshDate
         if !in_progress {
             in_progress = true
             Player.fetch { result in
-                print("hellow")
+
                 let nowplaying: NowPlaying
                 if case .success(let player) = result {
-                    
+
                     let songName = player.item!.name!
                     let artistName = player.item!.artists![0].name!
                     let date = player.item!.album!.releaseDate!
                     let url = player.item!.album!.images![0].url!
                     
                     let colors = getImageColors(url: URL(string: url)!)
-                    
+
                     nowplaying = NowPlaying(message: songName, author: artistName, date: date, imageColors: colors)
                     
                     NowPlaying.archive(nowPlaying: nowplaying)
@@ -178,18 +158,19 @@ class NowPlayingTimelineProvider: TimelineProvider {
                     nowplaying = NowPlaying.restore()!
                 }
                 let entry = LastNowPlayingEntry(date: currentDate, NowPlaying: nowplaying)
-                
                 let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
+                
                 currentNowPlaying = nowplaying
                 recent_NowPlaying = nowplaying
                 in_progress = false
-                
+
                 completion(timeline)
             }
         }
         else{
             //in_progress = false
             currentNowPlaying = NowPlaying.restore()!
+            
             let entry = LastNowPlayingEntry(date: currentDate, NowPlaying: currentNowPlaying)
             
             let timeline = Timeline(entries: [entry], policy: .after(refreshDate))
@@ -212,15 +193,13 @@ struct NowPlayingCheckerWidget: Widget {
     
     private let kind: String = "NowPlayingCheckerWidget"
     
-    
-    
     public var body: some WidgetConfiguration {
         
         StaticConfiguration(kind: kind, provider: NowPlayingTimelineProvider()) { entry in
             NowPlayingCheckerWidgetView(entry: entry)
         }
-        .configurationDisplayName("Now Playing by Samuel")
-        .description("Shows your Spotify's Now Playing!")
+        .configurationDisplayName("Show what you're playing")
+        .description("Shows what your spotify is playing!")
     }
 }
 

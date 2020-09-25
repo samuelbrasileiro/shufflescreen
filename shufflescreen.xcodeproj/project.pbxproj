@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		35129477250BA02D00B7479D /* ConnectionStatusIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */; };
 		35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35129478250BF6CB00B7479D /* LoadingOverlay.swift */; };
+		351D49CD251E1C160030A464 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D49CC251E1C160030A464 /* Keys.swift */; };
+		351D49CE251E1C160030A464 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D49CC251E1C160030A464 /* Keys.swift */; };
+		351D49D9251E1DEC0030A464 /* SessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D49D8251E1DEC0030A464 /* SessionManager.swift */; };
 		352174B3251BE1D400AAE095 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		352174B4251BE1D400AAE095 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		352174B7251BE5A700AAE095 /* Album.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8D2509234300F1DEF7 /* Album.swift */; };
@@ -81,6 +84,8 @@
 /* Begin PBXFileReference section */
 		35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusIndicatorView.swift; sourceTree = "<group>"; };
 		35129478250BF6CB00B7479D /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
+		351D49CC251E1C160030A464 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		351D49D8251E1DEC0030A464 /* SessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionManager.swift; sourceTree = "<group>"; };
 		3521748F251BD8E000AAE095 /* shufflescreen.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = shufflescreen.entitlements; sourceTree = "<group>"; };
 		352174B2251BE1D400AAE095 /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		352174C0251BE7FC00AAE095 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
@@ -231,6 +236,7 @@
 				3521748F251BD8E000AAE095 /* shufflescreen.entitlements */,
 				7E47484725052C8B0063F4E8 /* AppDelegate.swift */,
 				7E47484925052C8B0063F4E8 /* SceneDelegate.swift */,
+				351D49D8251E1DEC0030A464 /* SessionManager.swift */,
 				357EEA8B25091BB500F1DEF7 /* Reachability.swift */,
 				7E47484D25052C8B0063F4E8 /* Main.storyboard */,
 				357EEA9525093B2A00F1DEF7 /* Views */,
@@ -239,6 +245,7 @@
 				7E47485025052C930063F4E8 /* Assets.xcassets */,
 				7E47485225052C930063F4E8 /* LaunchScreen.storyboard */,
 				7E47485525052C930063F4E8 /* Info.plist */,
+				351D49CC251E1C160030A464 /* Keys.swift */,
 			);
 			path = shufflescreen;
 			sourceTree = "<group>";
@@ -349,6 +356,7 @@
 				352174C2251BE7FC00AAE095 /* Player.swift in Sources */,
 				352174BB251BE5A700AAE095 /* Recommendations.swift in Sources */,
 				352174BC251BE5A700AAE095 /* Support Classes.swift in Sources */,
+				351D49CE251E1C160030A464 /* Keys.swift in Sources */,
 				352174B4251BE1D400AAE095 /* UIImageColors.swift in Sources */,
 				357FA254251BD3CE00702498 /* songWidget.swift in Sources */,
 				357FA259251BD3D000702498 /* songWidget.intentdefinition in Sources */,
@@ -376,10 +384,12 @@
 				35756CA52507EF8F00DA2C11 /* User.swift in Sources */,
 				357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */,
 				357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */,
+				351D49D9251E1DEC0030A464 /* SessionManager.swift in Sources */,
 				357EEA972509B5B100F1DEF7 /* PlaylistViewController.swift in Sources */,
 				35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */,
 				357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */,
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,
+				351D49CD251E1C160030A464 /* Keys.swift in Sources */,
 				352174B3251BE1D400AAE095 /* UIImageColors.swift in Sources */,
 				357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */,
 				357EEA8A25090EA200F1DEF7 /* TopList.swift in Sources */,

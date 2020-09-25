@@ -10,14 +10,14 @@ import Foundation
 
 // MARK: - Player
 class Player: Codable {
-    let device: Device?
-    let shuffleState: Bool?
-    let repeatState: String?
-    let timestamp: Int?
+    let device: Device
+    let shuffleState: Bool
+    let repeatState: String
+    let timestamp: Int
     let context: PlayerContext?
     let progressMS: Int?
     let item: Track?
-    let currentlyPlayingType: String?
+    let currentlyPlayingType: String
     let actions: Actions?
     let isPlaying: Bool?
 
@@ -33,7 +33,7 @@ class Player: Codable {
         case isPlaying = "is_playing"
     }
 
-    init(device: Device?, shuffleState: Bool?, repeatState: String?, timestamp: Int?, context: PlayerContext?, progressMS: Int?, item: Track?, currentlyPlayingType: String?, actions: Actions?, isPlaying: Bool?) {
+    init(device: Device, shuffleState: Bool, repeatState: String, timestamp: Int, context: PlayerContext?, progressMS: Int?, item: Track?, currentlyPlayingType: String, actions: Actions?, isPlaying: Bool?) {
         self.device = device
         self.shuffleState = shuffleState
         self.repeatState = repeatState
