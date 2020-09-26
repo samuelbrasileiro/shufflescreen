@@ -99,7 +99,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     }
     
     @objc func createSession(){
-        if reachability.connection != .unavailable {
+        
             
             let scope: SPTScope = [.userReadPlaybackState, .userReadCurrentlyPlaying, .appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
 
@@ -111,7 +111,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
                 // Use this on iOS versions < 11 to use SFSafariViewController
                 sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
             }
-        }
     }
     
     //AO BOTAR NO FOREGROUND
@@ -125,10 +124,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         if sessionManager.session == nil{
             return
         }
-        //if didRenewSession && self.sessionManager.session!.isExpired{
+        if didRenewSession && self.sessionManager.session!.isExpired{
             
-        //    return
-        //}
+            return
+        }
         else if let _ = self.appRemote.connectionParameters.accessToken {
             print("Connecting to App Remote")
             self.appRemote.connect()
@@ -147,7 +146,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         //scene did begin
 
         restoreSession()
-        sessionManager.renewSession()
+        if sessionManager.session != nil{
+            sessionManager.renewSession()
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainNavigationController")
+            self.window!.rootViewController = vc
+        }
+        else{
+            let vc = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            self.window!.rootViewController = vc
+            NotificationCenter.default.addObserver(self, selector: #selector(createSession), name: NSNotification.Name(rawValue: "loginButtonPressed"), object: nil)
+        }
         
         do {
             try reachability = Reachability()
@@ -157,7 +165,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             print("It's not possible to access reachability.")
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(createSession), name: NSNotification.Name(rawValue: "loginButtonPressed"), object: nil)
+        
     }
     
     @objc func reachabilityChanged(_ note: NSNotification) {
@@ -178,8 +186,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         } else {
             print("Desconectado da internet")
             
-            LoadingOverlay.shared.showOverlay(view: self.window!)
-            NotificationCenter.default.post(name: Notification.Name("deviceIsDisconnected"), object: nil)
+            //LoadingOverlay.shared.showOverlay(view: self.window!)
+            //NotificationCenter.default.post(name: Notification.Name("deviceIsDisconnected"), object: nil)
         }
     }
     

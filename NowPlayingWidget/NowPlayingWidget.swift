@@ -24,11 +24,11 @@ struct NowPlayingWidgetView : View {
                 Text("Now Playing")
                     .font(.system(.title3))
                     .foregroundColor(Color(entry.NowPlaying.imageColors.primary))
-                Text(entry.NowPlaying.message)
+                Text(entry.NowPlaying.trackName)
                     .font(.system(.subheadline))
                     .foregroundColor(Color(entry.NowPlaying.imageColors.primary))
                     .bold()
-                Text("by \(entry.NowPlaying.author)")
+                Text("by \(entry.NowPlaying.artist)")
                     .font(.system(.caption))
                     .foregroundColor(Color(entry.NowPlaying.imageColors.primary))
                 Text("Released: \(entry.NowPlaying.date) ")
@@ -107,7 +107,7 @@ class NowPlayingTimelineProvider: TimelineProvider {
 
                 let colors = getImageColors(data: imageData)
 
-                nowplaying = NowPlaying(message: songName, author: artistName, date: date, image: image, imageColors: colors)
+                nowplaying = NowPlaying(trackName: songName, artist: artistName, date: date, image: image, imageColors: colors)
                 
                 NowPlaying.archive(nowPlaying: nowplaying)
                 
@@ -145,7 +145,7 @@ class NowPlayingTimelineProvider: TimelineProvider {
                     
                     let colors = getImageColors(data: imageData)
 
-                    nowplaying = NowPlaying(message: songName, author: artistName, date: date, image: image, imageColors: colors)
+                    nowplaying = NowPlaying(trackName: songName, artist: artistName, date: date, image: image, imageColors: colors)
                     
                     NowPlaying.archive(nowPlaying: nowplaying)
                     
@@ -192,7 +192,7 @@ struct NowPlayingCheckerWidget: Widget {
             NowPlayingWidgetView(entry: entry)
         }.supportedFamilies([.systemSmall,.systemMedium])
         .configurationDisplayName("Now Playing")
-        .description("Shows what your spotify is playing - by Shufflescreen")
+        .description("Shows what your spotify is playing - by Samuel")
     }
 }
 

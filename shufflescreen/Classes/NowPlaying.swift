@@ -10,8 +10,8 @@ import UIKit
 
 struct NowPlaying {
     
-    let message: String
-    let author: String
+    let trackName: String
+    let artist: String
     let date: String
     let image: UIImage?
     let imageColors: UIImageColors
@@ -19,8 +19,8 @@ struct NowPlaying {
     static func archive(nowPlaying: NowPlaying){
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         
-        defaults.setValue(nowPlaying.message, forKey: Keys.kWidgetMessage)
-        defaults.setValue(nowPlaying.author, forKey: Keys.kWidgetAuthor)
+        defaults.setValue(nowPlaying.trackName, forKey: Keys.kWidgetTrackName)
+        defaults.setValue(nowPlaying.artist, forKey: Keys.kWidgetArtist)
         defaults.setValue(nowPlaying.date, forKey: Keys.kWidgetDate)
         
         defaults.setValue(nowPlaying.imageColors.background.toHex(), forKey: Keys.kWidgetImageColorBackground)
@@ -33,8 +33,8 @@ struct NowPlaying {
     static func restore()->NowPlaying?{
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         
-        let message = defaults.string(forKey: Keys.kWidgetMessage) ?? "Mystery of Love"
-        let author = defaults.string(forKey: Keys.kWidgetAuthor) ?? "Sufjan Stevens"
+        let message = defaults.string(forKey: Keys.kWidgetTrackName) ?? "Mystery of Love"
+        let author = defaults.string(forKey: Keys.kWidgetArtist) ?? "Sufjan Stevens"
         let date = defaults.string(forKey: Keys.kWidgetDate) ?? "2017-12-01"
         
         let background = defaults.string(forKey: Keys.kWidgetImageColorBackground) ?? "#2e609d"
@@ -49,6 +49,6 @@ struct NowPlaying {
         
         let imageColors = UIImageColors(background: UIColor(hex: background)!, primary: UIColor(hex: primary)!, secondary: UIColor(hex: secondary)!, detail: UIColor(hex: detail)!)
         
-        return NowPlaying(message: message, author: author, date: date, image: image, imageColors: imageColors)
+        return NowPlaying(trackName: message, artist: author, date: date, image: image, imageColors: imageColors)
     }
 }

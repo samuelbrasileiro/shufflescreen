@@ -13,9 +13,13 @@ class Keys{
     static let kRefreshTokenKey = "refresh-token-key"
     static let kSessionKey = "session-key"
     
+    static let kUser = "user-key"
+    static let kTopArtistsList = "top-artists-list-key"
+    static let kTopTracksList = "top-tracks-list-key"
+    
     static let kWidgetNowPlaying = "widget-now-playing"
-    static let kWidgetMessage = "widget-message"
-    static let kWidgetAuthor = "widget-author"
+    static let kWidgetTrackName = "widget-track-name"
+    static let kWidgetArtist = "widget-artist"
     static let kWidgetDate = "widget-date"
     static let kWidgetImage = "widget-image"
     

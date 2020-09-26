@@ -16,8 +16,7 @@ class DisconnectedView: UIView {
         
         Bundle.main.loadNibNamed("DisconnectedView", owner: self, options: nil)
         self.addSubview(contentView)
-        self.layer.cornerRadius = 5
-        self.layer.masksToBounds = true
+        self.setCornerRadius(10)
     }
     
     override init(frame: CGRect) {

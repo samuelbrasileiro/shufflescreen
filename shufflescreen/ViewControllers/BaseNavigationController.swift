@@ -33,8 +33,7 @@ class BaseNavigationController: UINavigationController {
         let tintedImage = image?.withRenderingMode(.alwaysTemplate)
         appRemoteButton.setImage(tintedImage, for: .normal)
         
-        appRemoteButton.layer.cornerRadius = appRemoteButton.bounds.midX
-        appRemoteButton.layer.masksToBounds = true
+        appRemoteButton.setCornerRadius(appRemoteButton.bounds.midX)
         
         appRemoteButton.addTarget(self, action: #selector(goToAppRemoteView), for: .touchUpInside)
         

@@ -18,7 +18,7 @@ class Recommendations: Codable {
         self.seeds = seeds
     }
     
-    class func fetch(artists: [String], tracks: [String], genres: [String], limit: String, completion: @escaping (Recommendations?) -> Void){
+    class func fetch(artists: [String], tracks: [String], genres: [String], limit: String, completion: @escaping (Result<Recommendations,Error>) -> Void){
         if artists.count + tracks.count + genres.count > 5{
             print("Overpassed limit of five seeds to recommend")
             return
@@ -42,17 +42,19 @@ class Recommendations: Codable {
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
             do {
                 
                 let recommendations = try JSONDecoder().decode(Recommendations.self, from: data)
                 DispatchQueue.main.async {
-                    completion(recommendations)
+                    completion(.success(recommendations))
                 }
             }
             catch {
-                print(error)
-                completion(nil)
+                completion(.failure(error))
             }
         }.resume()
     }

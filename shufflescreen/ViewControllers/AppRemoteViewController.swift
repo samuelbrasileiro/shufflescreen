@@ -25,15 +25,17 @@ class AppRemoteViewController: BaseViewController {
     
     var nowPlaying: NowPlaying?{
         didSet{
+            self.nowPlayingView = NowPlayingView(nowPlaying: self.nowPlaying!)
+            self.child?.view.backgroundColor = .clear
+            self.child?.rootView = self.nowPlayingView!
             
+            if oldValue == nil{ return}
             UIView.animate(withDuration: 2.0) {
                 self.view.backgroundColor = self.nowPlaying!.imageColors.background
                 self.shuffleButton.backgroundColor = self.nowPlaying!.imageColors.detail
                 self.shuffleButton.setTitleColor(self.nowPlaying!.imageColors.background, for: .normal)
                 
-                self.nowPlayingView = NowPlayingView(nowPlaying: self.nowPlaying!)
-                self.child?.view.backgroundColor = .clear
-                self.child?.rootView = self.nowPlayingView!
+                
             }
             
             
@@ -46,7 +48,10 @@ class AppRemoteViewController: BaseViewController {
         
         nowPlaying = NowPlaying.restore()
         nowPlayingView = NowPlayingView(nowPlaying: nowPlaying!)
-        
+        self.shuffleButton.backgroundColor = self.nowPlaying!.imageColors.detail
+        self.shuffleButton.setTitleColor(self.nowPlaying!.imageColors.background, for: .normal)
+        self.view.backgroundColor = self.nowPlaying!.imageColors.background
+
         child = UIHostingController(rootView: nowPlayingView!)
         child!.view.backgroundColor = .clear
         child!.view.translatesAutoresizingMaskIntoConstraints = false
@@ -56,8 +61,7 @@ class AppRemoteViewController: BaseViewController {
         
         self.addChild(child!)
         
-        shuffleButton.layer.masksToBounds = true
-        shuffleButton.layer.cornerRadius = 10
+        shuffleButton.setCornerRadius(10)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updatePlayerState), name: NSNotification.Name(rawValue: "updatePlayerState"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectedToAppRemote), name: NSNotification.Name(rawValue: "connectedToAppRemote"), object: nil)
@@ -88,29 +92,31 @@ class AppRemoteViewController: BaseViewController {
         appRemote.connect()
     }
     @IBAction func shuffleSongButton(_ sender: UIButton) {
-
-        TopTracksList.fetch(timeRange: "medium_term", limit: "5"){ topTracksList in
+        
+        TopTracksList.fetch(timeRange: "medium_term", limit: "5"){ result in
             
-            guard let topTracksList = topTracksList else{ return}
-            
-            Recommendations.fetch(artists: [], tracks: topTracksList.items!.map({$0.id!}), genres: [], limit: "10"){ recommendations in
-                guard let recommendations = recommendations else{ return}
-                for track in recommendations.tracks!{
-                    print(track.name ?? "")
-                }
-                let track = recommendations.tracks!.randomElement()
-                if self.appRemote.isConnected{
-                    print(track!.uri!)
-                    self.appRemote.playerAPI!.play(track!.uri!, asRadio: true){ result, error in
-                        if let error = error{
-                            print(error)
+            if case .success(let topTracksList) = result {
+                
+                Recommendations.fetch(artists: [], tracks: topTracksList.items!.map({$0.id!}), genres: [], limit: "10"){ result in
+                    if case .success(let recommendations) = result {
+                        for track in recommendations.tracks!{
+                            print(track.name ?? "")
+                        }
+                        let track = recommendations.tracks!.randomElement()
+                        if self.appRemote.isConnected{
+                            print(track!.uri!)
+                            self.appRemote.playerAPI?.play(track!.uri!, asRadio: true){ result, error in
+                                if let error = error{
+                                    print(error)
+                                }
+                            }
+                        }
+                        else{
+                            self.connectionIndicatorView.state = .connecting
+                            self.appRemote.authorizeAndPlayURI(track!.uri!)
+                            self.appRemote.connect()
                         }
                     }
-                }
-                else{
-                    self.connectionIndicatorView.state = .connecting
-                    self.appRemote.authorizeAndPlayURI(track!.uri!)
-                    self.appRemote.connect()
                 }
             }
         }
@@ -127,21 +133,25 @@ class AppRemoteViewController: BaseViewController {
             if trackURI == ""{
                 return
             }
-
-            if self.nowPlaying!.message != playerState.track.name{
-
+            
+            if self.nowPlaying!.trackName != playerState.track.name{
+                
                 let trackID = String(trackURI.split(separator: ":").last!)
                 
-                Track.fetch(trackID: trackID){ track in
-                    if let images = track!.album!.images{
-                        
-                        Album.fetchAlbumImage(scale: 300, images: images){ image in
-                            let nowPlaying = NowPlaying(message: track!.name!, author: track!.artists![0].name!, date: track!.album!.releaseDate!, image: image, imageColors: image!.getColors()!)
+                Track.fetch(trackID: trackID){ result in
+                    if case .success(let track) = result {
+                        if let images = track.album!.images{
                             
-                            NowPlaying.archive(nowPlaying: nowPlaying)
-                            
-                            self.nowPlaying = nowPlaying
-
+                            Album.fetchAlbumImage(scale: 300, images: images){ result in
+                                if case .success(let image) = result {
+                                    let nowPlaying = NowPlaying(trackName: track.name!, artist: track.artists![0].name!, date: track.album!.releaseDate!, image: image, imageColors: image.getColors()!)
+                                    
+                                    NowPlaying.archive(nowPlaying: nowPlaying)
+                                    
+                                    self.nowPlaying = nowPlaying
+                                    
+                                }
+                            }
                         }
                     }
                 }
@@ -195,12 +205,12 @@ class AppRemoteViewController: BaseViewController {
                         .animation(.easeInOut(duration: 2))
                     
                     
-                    Text(self.nowPlaying.message)
+                Text(self.nowPlaying.trackName)
                         .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(Color(self.nowPlaying.imageColors.primary))
                         .bold()
                         .animation(.easeInOut(duration: 2))
-                    Text("by \(self.nowPlaying.author)")
+                Text("by \(self.nowPlaying.artist)")
                         .font(.system(size: 18, weight: .light, design: .rounded))
                         .foregroundColor(Color(self.nowPlaying.imageColors.secondary))
                         .animation(.easeInOut(duration: 2))

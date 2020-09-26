@@ -1,5 +1,5 @@
 //
-//  RecommendationsViewController.swift
+//  UserTopsViewController.swift
 //  shufflescreen
 //
 //  Created by Samuel Brasileiro on 09/09/20.
@@ -7,54 +7,69 @@
 //
 
 import UIKit
+import SwiftUI
 
-class RecommendationsViewController: BaseViewController {
+class UserTopsViewController: BaseViewController {
+    
+    struct TopItem{
+        var name: String
+        var image: UIImage?
+    }
+    
     
     var queryType: String = "tracks"
     var queryTimeRange: String = "medium_term"
     var queryLimit: String = "30"
     
+    var topItems: [TopItem]?{
+        didSet{
+            if oldValue == nil{
+                child = UIHostingController(rootView: RecommendationsCollectionView(items: topItems!))
+                child?.view.backgroundColor = .clear
+                child?.view.translatesAutoresizingMaskIntoConstraints = false
+                child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: self.view.bounds.midY + 20, width: 400, height: 360)
+                self.view.addSubview(child!.view)
+            }
+            else{
+                child?.rootView = RecommendationsCollectionView(items: topItems!)
+            }
+        }
+    }
+    
     @IBOutlet weak var typeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var timeRangeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var limitSegmentedControl: UISegmentedControl!
-    
-    @IBOutlet weak var topTextView: UITextView!
-    
+        
+    var recommendationsView: RecommendationsCollectionView?
+    var child: UIHostingController<RecommendationsCollectionView>?
+    @IBOutlet weak var discoverButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
+        discoverButton.setCornerRadius(10)
         
     }
     
     
     @IBAction func discoverButtonAction(_ sender: UIButton) {
         if queryType == "tracks"{
-            TopTracksList.fetch(timeRange: queryTimeRange, limit: queryLimit){ topTracksList in
-                guard let topTracksList = topTracksList else {return}
-                var index = 0
-                self.topTextView.text = ""
-                
-                for item in topTracksList.items!{
-                    index += 1
-                    self.topTextView.text.append(contentsOf: "\(index): " + item.name! + "\n")
+            TopTracksList.fetch(timeRange: queryTimeRange, limit: queryLimit){ result in
+                if case .success(let topTracksList) = result {
+
+                    self.topItems = topTracksList.items!.map{TopItem(name: $0.name!, image: nil)}
+                    //TopTracksList.archive(tracks: topTracksList.items!)
+
                 }
             }
         }
-           
         else if queryType == "artists"{
-            TopArtistsList.fetch(timeRange: queryTimeRange, limit: queryLimit){ topArtistsList in
-                guard let topArtistsList = topArtistsList else {return}
-                
-                var index = 0
-                self.topTextView.text = ""
-                
-                for item in topArtistsList.items!{
-                    index += 1
-                    self.topTextView.text.append(contentsOf: "\(index): " + item.name! + "\n")
+            TopArtistsList.fetch(timeRange: queryTimeRange, limit: queryLimit){ result in
+                if case .success(let topArtistsList) = result {
+                                        
+                    self.topItems = topArtistsList.items!.map{TopItem(name: $0.name!, image: nil)}
+                    //TopArtistsList.archive(artists: topArtistsList.items!)
+
                 }
-            
             }
         }
     }
@@ -92,27 +107,26 @@ class RecommendationsViewController: BaseViewController {
         }
     }
     
-    @IBAction func createPlaylistButton(_ sender: Any) {
+    struct RecommendationsCollectionView: View{
+        var items: [TopItem]
         
-        var topTracksIDs: [String] = []
-        var topArtistsIDs: [String] = []
+        var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
         
-        TopTracksList.fetch(timeRange: "medium_term", limit: "10"){result in
-            guard let topTracksList = result else{return}
-            
-            topTracksIDs = topTracksList.items!.map({$0.id!})
-            
-            TopArtistsList.fetch(timeRange: "medium_term", limit: "10"){result in
-                guard let topArtistsList = result else {return}
+        var body: some View{
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible())], spacing: 6) {
+                    ForEach((0..<items.count), id: \.self) {
+                        Text(items[$0].name)
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(.black))
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                        
+                    }
+                }.background(Color(.systemOrange))
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                 
-                topArtistsIDs = topArtistsList.items!.map({$0.id!})
-                
-                if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PlaylistViewController") as? PlaylistViewController{
-                    vc.artistsSeeds = topArtistsIDs
-                    vc.tracksSeeds = topTracksIDs
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
             }
         }
     }
+    
 }

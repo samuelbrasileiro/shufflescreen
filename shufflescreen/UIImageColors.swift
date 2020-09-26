@@ -407,3 +407,10 @@ extension UIColor {
         }
     
 }
+
+extension UIView{
+    func setCornerRadius(_ radius: CGFloat){
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = radius
+    }
+}

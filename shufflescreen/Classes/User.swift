@@ -39,9 +39,28 @@ class User: Codable {
         self.type = type
         self.uri = uri
     }
+    class func archive(user: User){
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        
+        let userData = try? JSONEncoder().encode(user)
+        
+        defaults.setValue(userData, forKey: Keys.kUser)
+    }
     
+    class func restore()->User?{
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        
+        guard let userData = defaults.data(forKey: Keys.kUser) else{
+            print("could not fetch user from UserDefaults")
+            return nil
+        }
+        
+        let user = try? JSONDecoder().decode(User.self, from: userData)
+        
+        return user
+    }
     
-    class func fetch(completion: @escaping (User?) -> Void) {
+    class func fetch(completion: @escaping (Result<User,Error>) -> Void) {
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         let url = URL(string: "https://api.spotify.com/v1/me")!
         
@@ -49,15 +68,18 @@ class User: Codable {
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
             do {
                 let user = try JSONDecoder().decode(User.self, from: data)
                 DispatchQueue.main.async {
-                    completion(user)
+                    completion(.success(user))
                 }
             } catch {
                 print("error")
-                completion(nil)
+                completion(.failure(error))
             }
         }.resume()
     }

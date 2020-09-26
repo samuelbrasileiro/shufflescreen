@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class PlaylistViewController: BaseViewController {
     
@@ -15,18 +16,36 @@ class PlaylistViewController: BaseViewController {
     
     var recommendedTracks: [Track] = []
     
-    @IBOutlet weak var nameTextField: UITextField!
-    @IBOutlet weak var tracksTextView: UITextView!
+    struct TrackItem{
+        var name: String
+        var image: UIImage?
+    }
     
+    @IBOutlet weak var nameTextField: UITextField!
+
+    @IBOutlet weak var createPlaylistButton: UIButton!
+    
+    var recommendationsView: TracksCollectionView?
+    var child: UIHostingController<TracksCollectionView>?
+    
+    var trackItems: [TrackItem] = []
     var hasCreated = (false,false){
         didSet{
             if hasCreated == (true,true){
-                self.tracksTextView.text = (0..<self.recommendedTracks.count).map({"\($0 + 1): \(self.recommendedTracks[$0].name!)"}).joined(separator: "\n")
+                self.trackItems = recommendedTracks.map{TrackItem(name: $0.name!, image: nil)}
+                
+                child = UIHostingController(rootView: TracksCollectionView(items: trackItems))
+                                child?.view.backgroundColor = .clear
+                                child?.view.translatesAutoresizingMaskIntoConstraints = false
+                                child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: self.view.bounds.midY - 300, width: 400, height: 360)
+                                self.view.addSubview(child!.view)
+                            
             }
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.createPlaylistButton.setCornerRadius(10)
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
         self.view.addGestureRecognizer(gesture)
@@ -40,14 +59,14 @@ class PlaylistViewController: BaseViewController {
             return
         }
         Recommendations.fetch(artists: Array(artistsSeeds![0...2]), tracks: Array(tracksSeeds![0...1]), genres: [], limit: "30"){ result in
-            if let recommendations = result{
+            if case .success(let recommendations) = result {
                 self.recommendedTracks.append(contentsOf: recommendations.tracks!)
                 
                 self.hasCreated.0 = true
             }
         }
         Recommendations.fetch(artists: Array(artistsSeeds![3...4]), tracks: Array(tracksSeeds![2...4]), genres: [], limit: "30"){ result in
-            if let recommendations = result{
+            if case .success(let recommendations) = result {
                 self.recommendedTracks.append(contentsOf: recommendations.tracks!)
                 self.hasCreated.1 = true
             }
@@ -66,40 +85,62 @@ class PlaylistViewController: BaseViewController {
             return
         }
         
-        User.fetch { user in
-            guard let id = user?.id else { return }
+        let user = User.restore()
+        guard let id = user?.id else {
+            print("error ao fetch da id")
+            return
+        }
+        var text = "Shufflescreen Playlist"
+        DispatchQueue.main.async {
+            if self.nameTextField.text != ""{
+                text = self.nameTextField.text!
+            }
             
-            var text = "Shufflescreen Playlist"
-            DispatchQueue.main.async {
-                if self.nameTextField.text != ""{
-                    text = self.nameTextField.text!
-                }
-                
-                let playlist = PlaylistInput(name: text)
-                self.createNewPlaylist(id: id, playlist: playlist) { playlistOutput in
-                    guard let playlistid = playlistOutput?.id else { return }
-                    self.addSongs(id: playlistid) {
-                        print("songs added")
-                        DispatchQueue.main.async {
-                            let alert = UIAlertController(title: "Hey, we created your playlist \(text)!", message: "Would you like to open your playlist in the Spotify app?", preferredStyle: .alert)
-                            alert.addAction(UIAlertAction(title: "Open In App", style: .default, handler: { (action) in
-                                let url = URL(string: "spotify:playlist:" + playlistid)!
-                                if UIApplication.shared.canOpenURL(url) {
-                                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                                }
-                                self.navigationController?.popToRootViewController(animated: true)
-                            }))
-                            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
-                                self.dismiss(animated: true, completion: nil)
-                            }))
-                            self.present(alert, animated: true, completion: nil)
-                        }
+            let playlist = PlaylistInput(name: text)
+            self.createNewPlaylist(id: id, playlist: playlist) { playlistOutput in
+                guard let playlistid = playlistOutput?.id else { return }
+                self.addSongs(id: playlistid) {
+                    print("songs added")
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Hey, we created your playlist \(text)!", message: "Would you like to open your playlist in the Spotify app?", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "Open In App", style: .default, handler: { (action) in
+                            let url = URL(string: "spotify:playlist:" + playlistid)!
+                            if UIApplication.shared.canOpenURL(url) {
+                                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                            }
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }))
+                        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (action) in
+                            self.dismiss(animated: true, completion: nil)
+                        }))
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
             }
         }
     }
     
+    struct TracksCollectionView: View{
+        var items: [TrackItem]
+        
+        var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+        
+        var body: some View{
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.flexible())], spacing: 6) {
+                    ForEach((0..<items.count), id: \.self) {
+                        Text("\($0 + 1). " + items[$0].name)
+                            .font(.system(size: 28, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(.black))
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                        
+                    }
+                }.background(Color(.clear))
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                
+            }
+        }
+    }
     
     
     // MARK: - Create Playlist Requests
@@ -158,5 +199,7 @@ class PlaylistViewController: BaseViewController {
             completion()
         }.resume()
     }
+    
+    
     
 }

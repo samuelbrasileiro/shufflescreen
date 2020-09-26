@@ -63,25 +63,28 @@ class Track: Codable {
     }
     
     
-    class func fetch(trackID: String, completion: @escaping (Track?) -> Void){
+    class func fetch(trackID: String, completion: @escaping (Result<Track,Error>) -> Void){
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
         let url = URL(string: "https://api.spotify.com/v1/tracks/" + trackID)!
         var request = URLRequest(url: url)
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
             do {
                 let track = try JSONDecoder().decode(Track.self, from: data)
                 
                 DispatchQueue.main.async {
-                    completion(track)
+                    completion(.success(track))
                 }
                 
                 
             } catch let error {
                 print(error)
-                completion(nil)
+                completion(.failure(error))
             }
         }.resume()
     }

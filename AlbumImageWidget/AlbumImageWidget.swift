@@ -159,6 +159,6 @@ struct AlbumImageCheckerWidget: Widget {
             AlbumImageWidgetView(entry: entry)
         }.supportedFamilies([.systemSmall, .systemLarge])
         .configurationDisplayName("Album image")
-        .description("Shows what album your Spotify is playing - by Shufflescreen")
+        .description("Shows what album your Spotify is playing - by Samuel")
     }
 }

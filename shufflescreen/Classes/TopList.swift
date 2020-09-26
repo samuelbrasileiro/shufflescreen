@@ -24,8 +24,25 @@ class TopTracksList: Codable {
         self.previous = previous
         self.next = next
     }
-    
-    class func fetch(timeRange: String, limit: String, completion: @escaping (TopTracksList?) -> Void){
+    class func archive(tracks: [Track]){
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        
+        let tracksData = try? JSONEncoder().encode(tracks)
+        
+        defaults.setValue(tracksData, forKey: Keys.kTopTracksList)
+    }
+    class func restore()->[Track]?{
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        guard let tracksData = defaults.data(forKey: Keys.kTopTracksList) else{
+            print("could not fetch top tracks from UserDefaults")
+            return nil
+        }
+        
+        let tracks = try? JSONDecoder().decode([Track].self, from: tracksData)
+        
+        return tracks
+    }
+    class func fetch(timeRange: String, limit: String, completion: @escaping (Result<TopTracksList,Error>) -> Void){
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
 
         var components = URLComponents()
@@ -40,16 +57,18 @@ class TopTracksList: Codable {
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
             do {
                 let topTracksList = try JSONDecoder().decode(TopTracksList.self, from: data)
                 DispatchQueue.main.async {
-                    completion(topTracksList)
+                    completion(.success(topTracksList))
                 }
                 
             } catch let error {
-                print(error)
-                completion(nil)
+                completion(.failure(error))
             }
         }.resume()
     }
@@ -72,7 +91,26 @@ class TopArtistsList: Codable {
         self.next = next
     }
     
-    class func fetch(timeRange: String, limit: String, completion: @escaping (TopArtistsList?) -> Void){
+    class func archive(artists: [Artist]){
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        
+        let artistsData = try? JSONEncoder().encode(artists)
+        
+        defaults.setValue(artistsData, forKey: Keys.kTopArtistsList)
+    }
+    class func restore()->[Artist]?{
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        guard let artistsData = defaults.data(forKey: Keys.kTopArtistsList) else{
+            print("could not fetch top artists from UserDefaults")
+            return nil
+        }
+        
+        let artists = try? JSONDecoder().decode([Artist].self, from: artistsData)
+        
+        return artists
+    }
+    
+    class func fetch(timeRange: String, limit: String, completion: @escaping (Result<TopArtistsList,Error>) -> Void){
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
 
         var components = URLComponents()
@@ -87,16 +125,18 @@ class TopArtistsList: Codable {
         request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else { return }
+            guard let data = data else {
+                completion(.failure(error!))
+                return
+            }
             do {
                 let topArtistsList = try JSONDecoder().decode(TopArtistsList.self, from: data)
                 DispatchQueue.main.async {
-                    completion(topArtistsList)
+                    completion(.success(topArtistsList))
                 }
                 
             } catch let error {
-                print(error)
-                completion(nil)
+                completion(.failure(error))
             }
         }.resume()
     }
