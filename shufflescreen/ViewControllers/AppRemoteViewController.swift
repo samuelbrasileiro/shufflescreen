@@ -25,12 +25,17 @@ class AppRemoteViewController: BaseViewController {
     
     var nowPlaying: NowPlaying?{
         didSet{
-            self.view.backgroundColor = nowPlaying!.imageColors.background
-            shuffleButton.backgroundColor = nowPlaying!.imageColors.detail
-            shuffleButton.setTitleColor(nowPlaying!.imageColors.background, for: .normal)
-
-            nowPlayingView = NowPlayingView(nowPlaying: nowPlaying!)
-            child?.rootView = nowPlayingView!
+            
+            UIView.animate(withDuration: 2.0) {
+                self.view.backgroundColor = self.nowPlaying!.imageColors.background
+                self.shuffleButton.backgroundColor = self.nowPlaying!.imageColors.detail
+                self.shuffleButton.setTitleColor(self.nowPlaying!.imageColors.background, for: .normal)
+                
+                self.nowPlayingView = NowPlayingView(nowPlaying: self.nowPlaying!)
+                self.child?.view.backgroundColor = .clear
+                self.child?.rootView = self.nowPlayingView!
+            }
+            
             
         }
     }
@@ -43,6 +48,7 @@ class AppRemoteViewController: BaseViewController {
         nowPlayingView = NowPlayingView(nowPlaying: nowPlaying!)
         
         child = UIHostingController(rootView: nowPlayingView!)
+        child!.view.backgroundColor = .clear
         child!.view.translatesAutoresizingMaskIntoConstraints = false
         child!.view.frame = CGRect(x: self.view.bounds.midX - 150, y: self.view.bounds.midY - 300, width: 300, height: 500)
         self.view.addSubview(child!.view)
@@ -94,7 +100,7 @@ class AppRemoteViewController: BaseViewController {
                 }
                 let track = recommendations.tracks!.randomElement()
                 if self.appRemote.isConnected{
-
+                    print(track!.uri!)
                     self.appRemote.playerAPI!.play(track!.uri!, asRadio: true){ result, error in
                         if let error = error{
                             print(error)
@@ -181,32 +187,30 @@ class AppRemoteViewController: BaseViewController {
             
             
             VStack(alignment: .leading, spacing: 4) {
-                    
+                
                     Image(data: self.nowPlaying.image?.pngData())!
                         .resizable()
                         .frame(width: 240, height: 240, alignment: .center)
                         .padding()
-                        .animation(.easeInOut(duration: 1))
+                        .animation(.easeInOut(duration: 2))
                     
                     
                     Text(self.nowPlaying.message)
                         .font(.system(size: 28, weight: .bold, design: .rounded))
                         .foregroundColor(Color(self.nowPlaying.imageColors.primary))
                         .bold()
-                        .animation(.easeInOut(duration: 1))
+                        .animation(.easeInOut(duration: 2))
                     Text("by \(self.nowPlaying.author)")
                         .font(.system(size: 18, weight: .light, design: .rounded))
                         .foregroundColor(Color(self.nowPlaying.imageColors.secondary))
-                        .animation(.easeInOut(duration: 1))
+                        .animation(.easeInOut(duration: 2))
                     Text("Released: \(self.nowPlaying.date) ")
                         .font(.system(.caption))
                         .foregroundColor(Color(self.nowPlaying.imageColors.detail))
-                        .animation(.easeInOut(duration: 1))
+                        .animation(.easeInOut(duration: 2))
                     
-                        
-                }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                 
-                .background(Color(self.nowPlaying.imageColors.background))
+            }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             
                 
                 
@@ -221,4 +225,3 @@ class AppRemoteViewController: BaseViewController {
         }
     }
 }
-
