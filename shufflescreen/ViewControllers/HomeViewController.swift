@@ -52,28 +52,9 @@ class HomeViewController: BaseViewController {
     
     @IBAction func createPlaylistButton(_ sender: Any) {
         
-        var topTracksIDs: [String] = []
-        var topArtistsIDs: [String] = []
-        
-        TopTracksList.fetch(timeRange: "medium_term", limit: "10"){result in
+        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PlaylistViewController") as? PlaylistViewController{
             
-            if case .success(let topTracksList) = result {
-                
-                topTracksIDs = topTracksList.items!.map({$0.id!})
-                
-                TopArtistsList.fetch(timeRange: "medium_term", limit: "10"){result in
-                    if case .success(let topArtistsList) = result {
-                        
-                        topArtistsIDs = topArtistsList.items!.map({$0.id!})
-                        
-                        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PlaylistViewController") as? PlaylistViewController{
-                            vc.artistsSeeds = topArtistsIDs
-                            vc.tracksSeeds = topTracksIDs
-                            self.navigationController?.pushViewController(vc, animated: true)
-                        }
-                    }
-                }
-            }
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     

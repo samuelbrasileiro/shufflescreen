@@ -15,7 +15,7 @@ class User: Codable {
     let followers: Followers?
     let href: String?
     let id: String?
-    let images: [AlbumImage]?
+    let images: [SPTImage]?
     let product, type, uri: String?
 
     enum CodingKeys: String, CodingKey {
@@ -26,7 +26,7 @@ class User: Codable {
         case followers, href, id, images, product, type, uri
     }
 
-    init(country: String?, displayName: String?, email: String?, externalUrls: ExternalUrls?, followers: Followers?, href: String?, id: String?, images: [AlbumImage]?, product: String?, type: String?, uri: String?) {
+    init(country: String?, displayName: String?, email: String?, externalUrls: ExternalUrls?, followers: Followers?, href: String?, id: String?, images: [SPTImage]?, product: String?, type: String?, uri: String?) {
         self.country = country
         self.displayName = displayName
         self.email = email

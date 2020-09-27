@@ -6,7 +6,68 @@
 //  Copyright © 2020 Samuel Brasileiro. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class TopItemsBank: ObservableObject{
+    @Published var items: [TopItem]?
+    init() {
+        items = []
+    }
+    func clear(){
+        items = []
+    }
+    func addItem(track: Track){
+        let item = TopItem(name: track.name!, image: nil)
+        self.items!.append(item)
+        let index = self.items!.count - 1
+        SPTImage.fetch(scale: 64, images: track.album!.images!){ result in
+            if case .success(let image) = result{
+                self.items![index] = TopItem(name: item.name, image: image)
+                
+            }
+            else{
+                print("eita po")
+            }
+        }
+    }
+    
+    func addItem(artist: Artist){
+        let item = TopItem(name: artist.name!, image: nil)
+        self.items!.append(item)
+        let index = self.items!.count - 1
+        SPTImage.fetch(scale: 64, images: artist.images!){ result in
+            if case .success(let image) = result{
+                self.items![index] = TopItem(name: item.name, image: image)
+                
+            }
+            else{
+                print("eita po")
+            }
+        }
+    }
+    
+}
+class TopItem: ObservableObject{
+    var name: String
+    @Published var image: UIImage?
+    init(name: String, image: UIImage?){
+        self.name = name
+        self.image = image
+    }
+
+    init(artist: Artist){
+        self.name = artist.name!
+        
+        SPTImage.fetch(scale: 64, images: artist.images!){ result in
+            if case .success(let image) = result{
+                self.image = image
+            }
+            else{
+                print("eita po")
+            }
+        }
+    }
+}
 
 class TopTracksList: Codable {
     let items: [Track]?

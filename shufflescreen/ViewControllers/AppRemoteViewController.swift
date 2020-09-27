@@ -142,7 +142,7 @@ class AppRemoteViewController: BaseViewController {
                     if case .success(let track) = result {
                         if let images = track.album!.images{
                             
-                            Album.fetchAlbumImage(scale: 300, images: images){ result in
+                            SPTImage.fetch(scale: 300, images: images){ result in
                                 if case .success(let image) = result {
                                     let nowPlaying = NowPlaying(trackName: track.name!, artist: track.artists![0].name!, date: track.album!.releaseDate!, image: image, imageColors: image.getColors()!)
                                     

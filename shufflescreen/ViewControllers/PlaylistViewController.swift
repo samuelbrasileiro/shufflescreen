@@ -16,43 +16,94 @@ class PlaylistViewController: BaseViewController {
     
     var recommendedTracks: [Track] = []
     
-    struct TrackItem{
+    class TracksBank: ObservableObject{
+        @Published var items: [TrackItem]?
+        init() {
+            items = []
+        }
+    }
+    class TrackItem{
         var name: String
         var image: UIImage?
+        init(name: String, image: UIImage?){
+            self.name = name
+            self.image = image
+        }
     }
     
     @IBOutlet weak var nameTextField: UITextField!
 
     @IBOutlet weak var createPlaylistButton: UIButton!
+    @IBOutlet weak var generateButton: UIButton!
     
-    var recommendationsView: TracksCollectionView?
     var child: UIHostingController<TracksCollectionView>?
     
-    var trackItems: [TrackItem] = []
+    var bank: TracksBank = .init()
+
     var hasCreated = (false,false){
         didSet{
+            print("enchante")
             if hasCreated == (true,true){
-                self.trackItems = recommendedTracks.map{TrackItem(name: $0.name!, image: nil)}
                 
-                child = UIHostingController(rootView: TracksCollectionView(items: trackItems))
-                                child?.view.backgroundColor = .clear
-                                child?.view.translatesAutoresizingMaskIntoConstraints = false
-                                child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: self.view.bounds.midY - 300, width: 400, height: 360)
-                                self.view.addSubview(child!.view)
-                            
+                
+                
+                
             }
+            
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createPlaylistButton.setCornerRadius(10)
-        
+        self.generateButton.setCornerRadius(10)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(tap(_:)))
         self.view.addGestureRecognizer(gesture)
         nameTextField.text = ""
         nameTextField.placeholder = "Write your playlist name"
         
-        artistsSeeds!.shuffle()        
+        child = UIHostingController(rootView: TracksCollectionView(bank: bank))
+        child?.view.backgroundColor = .clear
+        child?.view.translatesAutoresizingMaskIntoConstraints = false
+        child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: self.view.bounds.midY - 300, width: 400, height: 360)
+        
+        self.view.addSubview(child!.view)
+        
+        
+    }
+    @objc func tap(_ sender: UIGestureRecognizer){
+        self.view.endEditing(true)
+    }
+    
+    @IBAction func generateButtonAction(_ sender: UIButton) {
+        if hasCreated != (false,false) && hasCreated != (true,true){
+            print("wait")
+            return
+        }
+        self.artistsSeeds = []
+        self.tracksSeeds = []
+        self.bank.items = []
+        
+        TopTracksList.fetch(timeRange: "medium_term", limit: "10"){result in
+            
+            if case .success(let topTracksList) = result {
+                
+                self.tracksSeeds = topTracksList.items!.map({$0.id!})
+                
+                TopArtistsList.fetch(timeRange: "medium_term", limit: "10"){result in
+                    if case .success(let topArtistsList) = result {
+                        
+                        self.artistsSeeds = topArtistsList.items!.map({$0.id!})
+                        
+                        self.generate()
+                        
+                    }
+                }
+            }
+        }
+    }
+    
+    func generate(){
+        artistsSeeds!.shuffle()
         tracksSeeds!.shuffle()
         
         if tracksSeeds!.count == 0 || artistsSeeds!.count == 0{
@@ -62,28 +113,34 @@ class PlaylistViewController: BaseViewController {
             if case .success(let recommendations) = result {
                 self.recommendedTracks.append(contentsOf: recommendations.tracks!)
                 
+                self.bank.items!.append(contentsOf:  recommendations.tracks!.map{TrackItem(name: $0.name!, image: nil)})
+                
                 self.hasCreated.0 = true
             }
         }
         Recommendations.fetch(artists: Array(artistsSeeds![3...4]), tracks: Array(tracksSeeds![2...4]), genres: [], limit: "30"){ result in
             if case .success(let recommendations) = result {
                 self.recommendedTracks.append(contentsOf: recommendations.tracks!)
+                
+                self.bank.items!.append(contentsOf:  recommendations.tracks!.map{TrackItem(name: $0.name!, image: nil)})
+                
                 self.hasCreated.1 = true
             }
             
         }
     }
-    @objc func tap(_ sender: UIGestureRecognizer){
-        self.view.endEditing(true)
-    }
-    
-    
     
     @IBAction func createPlaylistButtonAction(_ sender: UIButton) {
         if hasCreated != (true,true){
             print("espera terminar de criar, po")
+            let alert = UIAlertController(title: "Ei, pô", message: "Espera terminar de criar a playlist, beleza?", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+            
+            self.present(alert, animated: true)
             return
         }
+        hasCreated = (false,false)
         
         let user = User.restore()
         guard let id = user?.id else {
@@ -121,15 +178,15 @@ class PlaylistViewController: BaseViewController {
     }
     
     struct TracksCollectionView: View{
-        var items: [TrackItem]
+        @ObservedObject var bank: TracksBank
         
         var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
         
         var body: some View{
             ScrollView {
                 LazyVGrid(columns: [GridItem(.flexible())], spacing: 6) {
-                    ForEach((0..<items.count), id: \.self) {
-                        Text("\($0 + 1). " + items[$0].name)
+                    ForEach((0..<bank.items!.count), id: \.self) {
+                        Text("\($0 + 1). " + bank.items![$0].name)
                             .font(.system(size: 28, weight: .bold, design: .rounded))
                             .foregroundColor(Color(.black))
                             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
