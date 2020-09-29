@@ -9,13 +9,17 @@
 import Foundation
 
 class Keys{
-    static let kAccessTokenKey = "access-token-key"
-    static let kRefreshTokenKey = "refresh-token-key"
-    static let kSessionKey = "session-key"
+    static let kAccessToken = "access-token-key"
+    static let kRefreshToken = "refresh-token-key"
+    static let kSession = "session-key"
     
     static let kUser = "user-key"
     static let kTopArtistsList = "top-artists-list-key"
     static let kTopTracksList = "top-tracks-list-key"
+    
+    static let kICloudCode = "iCloud-code-key"
+    static let kICloudRecordName = "iCloud-record-name-key"
+    static let kICloudModificationDate = "iCloud-modification-date-key"
     
     static let kWidgetNowPlaying = "widget-now-playing"
     static let kWidgetTrackName = "widget-track-name"

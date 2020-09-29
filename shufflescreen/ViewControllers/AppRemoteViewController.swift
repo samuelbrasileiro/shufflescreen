@@ -23,20 +23,12 @@ class AppRemoteViewController: BaseViewController {
     var child: UIHostingController<NowPlayingView>?
     private var connectionIndicatorView = ConnectionStatusIndicatorView()
     
-    var nowPlaying: NowPlaying?{
+    var nowPlayingBank: NowPlayingBank?{
         didSet{
-            self.nowPlayingView = NowPlayingView(nowPlaying: self.nowPlaying!)
-            self.child?.view.backgroundColor = .clear
-            self.child?.rootView = self.nowPlayingView!
+            
             
             if oldValue == nil{ return}
-            UIView.animate(withDuration: 2.0) {
-                self.view.backgroundColor = self.nowPlaying!.imageColors.background
-                self.shuffleButton.backgroundColor = self.nowPlaying!.imageColors.detail
-                self.shuffleButton.setTitleColor(self.nowPlaying!.imageColors.background, for: .normal)
-                
-                
-            }
+            
             
             
         }
@@ -46,18 +38,19 @@ class AppRemoteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        nowPlaying = NowPlaying.restore()
-        nowPlayingView = NowPlayingView(nowPlaying: nowPlaying!)
-        self.shuffleButton.backgroundColor = self.nowPlaying!.imageColors.detail
-        self.shuffleButton.setTitleColor(self.nowPlaying!.imageColors.background, for: .normal)
-        self.view.backgroundColor = self.nowPlaying!.imageColors.background
+        nowPlayingBank = NowPlayingBank(nowPlaying: NowPlaying.restore()!)
+        self.child?.view.backgroundColor = .clear
 
-        child = UIHostingController(rootView: nowPlayingView!)
+        self.shuffleButton.backgroundColor = self.nowPlayingBank?.nowPlaying.imageColors.detail
+        self.shuffleButton.setTitleColor(self.nowPlayingBank?.nowPlaying.imageColors.background, for: .normal)
+        self.view.backgroundColor = self.nowPlayingBank?.nowPlaying.imageColors.background
+
+        child = UIHostingController(rootView: NowPlayingView(bank: nowPlayingBank!))
         child!.view.backgroundColor = .clear
-        child!.view.translatesAutoresizingMaskIntoConstraints = false
+        child!.view.translatesAutoresizingMaskIntoConstraints = true
         child!.view.frame = CGRect(x: self.view.bounds.midX - 150, y: self.view.bounds.midY - 300, width: 300, height: 500)
+        print(child!.view.frame)
         self.view.addSubview(child!.view)
-        
         
         self.addChild(child!)
         
@@ -134,12 +127,15 @@ class AppRemoteViewController: BaseViewController {
                 return
             }
             
-            if self.nowPlaying!.trackName != playerState.track.name{
+            if self.nowPlayingBank?.nowPlaying.trackName != playerState.track.name{
                 
                 let trackID = String(trackURI.split(separator: ":").last!)
                 
                 Track.fetch(trackID: trackID){ result in
                     if case .success(let track) = result {
+                        let initialNP = NowPlaying(trackName: track.name!, artist: track.artists![0].name!, date: track.album!.releaseDate!, image: self.nowPlayingBank?.nowPlaying.image, imageColors: (self.nowPlayingBank?.nowPlaying.imageColors)!)
+                        
+                        self.nowPlayingBank?.nowPlaying = initialNP
                         if let images = track.album!.images{
                             
                             SPTImage.fetch(scale: 300, images: images){ result in
@@ -148,8 +144,14 @@ class AppRemoteViewController: BaseViewController {
                                     
                                     NowPlaying.archive(nowPlaying: nowPlaying)
                                     
-                                    self.nowPlaying = nowPlaying
-                                    
+                                    self.nowPlayingBank?.nowPlaying = nowPlaying
+                                    UIView.animate(withDuration: 2.0) {
+                                        self.view.backgroundColor = self.nowPlayingBank?.nowPlaying.imageColors.background
+                                        self.shuffleButton.backgroundColor = self.nowPlayingBank?.nowPlaying.imageColors.detail
+                                        self.shuffleButton.setTitleColor(self.nowPlayingBank?.nowPlaying.imageColors.background, for: .normal)
+                                        
+                                        
+                                    }
                                 }
                             }
                         }
@@ -190,45 +192,51 @@ class AppRemoteViewController: BaseViewController {
             
         }
     }
-    
+    class NowPlayingBank: ObservableObject{
+        @Published var nowPlaying: NowPlaying
+        init(nowPlaying: NowPlaying) {
+            self.nowPlaying = nowPlaying
+        }
+    }
     struct NowPlayingView : View {
-        var nowPlaying: NowPlaying
+        @ObservedObject var bank: NowPlayingBank
         var body: some View {
-            
+            HStack{
             
             VStack(alignment: .leading, spacing: 4) {
+                Image(data: self.bank.nowPlaying.image?.pngData())!
+                    .resizable()
+                    .frame(width: 240, height: 240, alignment: .center)
+                    .padding()
+                    .animation(.spring()
+                    )
                 
-                    Image(data: self.nowPlaying.image?.pngData())!
-                        .resizable()
-                        .frame(width: 240, height: 240, alignment: .center)
-                        .padding()
-                        .animation(.easeInOut(duration: 2))
-                    
-                    
-                Text(self.nowPlaying.trackName)
-                        .font(.system(size: 28, weight: .bold, design: .rounded))
-                        .foregroundColor(Color(self.nowPlaying.imageColors.primary))
-                        .bold()
-                        .animation(.easeInOut(duration: 2))
-                Text("by \(self.nowPlaying.artist)")
-                        .font(.system(size: 18, weight: .light, design: .rounded))
-                        .foregroundColor(Color(self.nowPlaying.imageColors.secondary))
-                        .animation(.easeInOut(duration: 2))
-                    Text("Released: \(self.nowPlaying.date) ")
-                        .font(.system(.caption))
-                        .foregroundColor(Color(self.nowPlaying.imageColors.detail))
-                        .animation(.easeInOut(duration: 2))
-                    
+                
+                Text(self.bank.nowPlaying.trackName)
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundColor(Color(self.bank.nowPlaying.imageColors.primary))
+                    .bold()
+                    .animation(.easeInOut(duration: 2))
+                Text("by \(self.bank.nowPlaying.artist)")
+                    .font(.system(size: 18, weight: .light, design: .rounded))
+                    .foregroundColor(Color(self.bank.nowPlaying.imageColors.secondary))
+                    .animation(.easeInOut(duration: 2))
+                Text("Released: \(self.bank.nowPlaying.date) ")
+                    .font(.system(.caption))
+                    .foregroundColor(Color(self.bank.nowPlaying.imageColors.detail))
+                    .animation(.easeInOut(duration: 2))
+                
                 
             }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             
-                
-                
+            }
+            
+            
             
         }
-
+        
         static func formatHour(date: Date) -> String {
-
+            
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm"
             return formatter.string(from: date)

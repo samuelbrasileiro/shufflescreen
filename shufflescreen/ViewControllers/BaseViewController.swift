@@ -29,6 +29,7 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.overrideUserInterfaceStyle = .light
         disconnectedView.alpha = 0.8
         disconnectedView.frame = CGRect(x: self.view.bounds.midX - 170, y: 80, width: 340, height: 100)
         

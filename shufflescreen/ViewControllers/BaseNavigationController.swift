@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseNavigationController: UINavigationController {
+class BaseNavigationController: UINavigationController{
 
     var sceneDelegate: SceneDelegate{
         guard let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate else {
@@ -25,7 +25,7 @@ class BaseNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        navigationBar.tintColor = .systemOrange
         appRemoteButton.frame = CGRect(origin: CGPoint(x: self.view.bounds.width-74, y: self.view.bounds.height - 200), size: CGSize(width: 64, height: 64))
         appRemoteButton.backgroundColor = .black
         
@@ -54,8 +54,10 @@ class BaseNavigationController: UINavigationController {
     
     @objc func goToAppRemoteView(){
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "AppRemoteViewController")
-                
-        self.pushViewController(vc, animated: true)
+        vc.modalPresentationStyle = .formSheet
+        //vc.transitioningDelegate = self
+        vc.preferredContentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height * (2/3))
+        self.present(vc, animated: true)
     }
     
     @objc func connectedToAppRemote(){
@@ -68,5 +70,6 @@ class BaseNavigationController: UINavigationController {
     
     @objc func couldNotConnectToAppRemote(){
         appRemoteButton.tintColor = .systemGray3
+        
     }
 }

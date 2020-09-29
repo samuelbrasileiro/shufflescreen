@@ -13,24 +13,7 @@ class PlaylistViewController: BaseViewController {
     
     var artistsSeeds: [String]?
     var tracksSeeds: [String]?
-    
-    var recommendedTracks: [Track] = []
-    
-    class TracksBank: ObservableObject{
-        @Published var items: [TrackItem]?
-        init() {
-            items = []
-        }
-    }
-    class TrackItem{
-        var name: String
-        var image: UIImage?
-        init(name: String, image: UIImage?){
-            self.name = name
-            self.image = image
-        }
-    }
-    
+        
     @IBOutlet weak var nameTextField: UITextField!
 
     @IBOutlet weak var createPlaylistButton: UIButton!
@@ -38,15 +21,12 @@ class PlaylistViewController: BaseViewController {
     
     var child: UIHostingController<TracksCollectionView>?
     
-    var bank: TracksBank = .init()
+    var bank: TopItemsBank = .init()
 
     var hasCreated = (false,false){
         didSet{
             print("enchante")
             if hasCreated == (true,true){
-                
-                
-                
                 
             }
             
@@ -60,6 +40,7 @@ class PlaylistViewController: BaseViewController {
         self.view.addGestureRecognizer(gesture)
         nameTextField.text = ""
         nameTextField.placeholder = "Write your playlist name"
+        nameTextField.overrideUserInterfaceStyle = .dark
         
         child = UIHostingController(rootView: TracksCollectionView(bank: bank))
         child?.view.backgroundColor = .clear
@@ -68,10 +49,24 @@ class PlaylistViewController: BaseViewController {
         
         self.view.addSubview(child!.view)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
     }
     @objc func tap(_ sender: UIGestureRecognizer){
         self.view.endEditing(true)
+    }
+    @objc func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {return}
+        let bottomOfTextField = nameTextField.convert(nameTextField.bounds, to: self.view).maxY;
+        let topOfKeyboard = self.view.frame.height - keyboardSize.height
+        
+        if bottomOfTextField > topOfKeyboard {
+            self.view.frame.origin.y = 0 - keyboardSize.height/2
+        }
+    }
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y = 0
     }
     
     @IBAction func generateButtonAction(_ sender: UIButton) {
@@ -111,18 +106,20 @@ class PlaylistViewController: BaseViewController {
         }
         Recommendations.fetch(artists: Array(artistsSeeds![0...2]), tracks: Array(tracksSeeds![0...1]), genres: [], limit: "30"){ result in
             if case .success(let recommendations) = result {
-                self.recommendedTracks.append(contentsOf: recommendations.tracks!)
                 
-                self.bank.items!.append(contentsOf:  recommendations.tracks!.map{TrackItem(name: $0.name!, image: nil)})
+                for item in recommendations.tracks!{
+                    self.bank.addItem(track: item)
+                }
                 
                 self.hasCreated.0 = true
             }
         }
         Recommendations.fetch(artists: Array(artistsSeeds![3...4]), tracks: Array(tracksSeeds![2...4]), genres: [], limit: "30"){ result in
             if case .success(let recommendations) = result {
-                self.recommendedTracks.append(contentsOf: recommendations.tracks!)
                 
-                self.bank.items!.append(contentsOf:  recommendations.tracks!.map{TrackItem(name: $0.name!, image: nil)})
+                for item in recommendations.tracks!{
+                    self.bank.addItem(track: item)
+                }
                 
                 self.hasCreated.1 = true
             }
@@ -178,23 +175,45 @@ class PlaylistViewController: BaseViewController {
     }
     
     struct TracksCollectionView: View{
-        @ObservedObject var bank: TracksBank
-        
-        var gridItemLayout = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-        
+        @ObservedObject var bank: TopItemsBank
+                
         var body: some View{
             ScrollView {
-                LazyVGrid(columns: [GridItem(.flexible())], spacing: 6) {
-                    ForEach((0..<bank.items!.count), id: \.self) {
-                        Text("\($0 + 1). " + bank.items![$0].name)
-                            .font(.system(size: 28, weight: .bold, design: .rounded))
-                            .foregroundColor(Color(.black))
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
-                        
+                LazyVStack(alignment: .leading, spacing: 8) {
+                    ForEach((0..<bank.items!.count), id: \.self){ index in
+                        HStack(alignment: .center, spacing: 6){
+                            Link(destination: URL(string: bank.items![index].uri!)!){
+                                (bank.items![index].image == nil ?
+                                    Image("spotify") : Image(uiImage: bank.items![index].image!))
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(minWidth: 0, maxWidth: 40, minHeight: 0, maxHeight: 40, alignment: .leading)
+                                
+                                Text("\(index + 1). " + bank.items![index].name)
+                                    .lineLimit(2)
+                                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                                    .foregroundColor(Color(.black))
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                                    
+                                
+                            }
+                            Spacer(minLength: 10)
+                            Button(action: {
+                                bank.items!.remove(at: index)
+                            }){
+                                
+                                Image(systemName: "multiply.circle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(minWidth: 0, maxWidth: 20, minHeight: 0, maxHeight: 20, alignment: .leading)
+                                    .foregroundColor(Color(.black))
+                            }
+                            Spacer(minLength: 10)
+                        }
+                        Divider()
                     }
-                }.background(Color(.clear))
+                }.background(Color(.systemOrange))
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
-                
             }
         }
     }
@@ -208,7 +227,7 @@ class PlaylistViewController: BaseViewController {
         let url = URL(string: "https://api.spotify.com/v1/users/\(id)/playlists")!
         var request = URLRequest(url: url)
         
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessToken)!, forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         do {
@@ -241,10 +260,11 @@ class PlaylistViewController: BaseViewController {
         components.scheme = "https"
         components.host = "api.spotify.com"
         components.path = "/v1/playlists/\(id)/tracks"
-        let joinedTracksURIs = recommendedTracks.map({$0.uri!}).joined(separator: ",")
+        
+        let joinedTracksURIs = bank.items!.map({$0.uri!}).joined(separator: ",")
         components.queryItems = [URLQueryItem(name: "uris", value: joinedTracksURIs)]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessToken)!, forHTTPHeaderField: "Authorization")
         request.httpMethod = "POST"
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let response = response as? HTTPURLResponse else { return }

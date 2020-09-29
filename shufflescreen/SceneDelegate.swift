@@ -8,18 +8,23 @@
 
 import UIKit
 import WidgetKit
+import CloudKit
 
-let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelegate {
     
     var window: UIWindow?
     var reachability: Reachability!
+    let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
     
-    let SpotifyClientID = "c7e5c5b3c1164878aaf84f3c14187411"
-    let SpotifyRedirectURL = URL(string: "shufflescreen://spotify-login-callback")!
+    let publicDatabase = CKContainer(identifier: "iCloud.samuel.shufflescreen").publicCloudDatabase
+    
     
     lazy var configuration: SPTConfiguration = {
+        let SpotifyClientID = "c7e5c5b3c1164878aaf84f3c14187411"
+        let SpotifyRedirectURL = URL(string: "shufflescreen://spotify-login-callback")!
+        
         let configuration = SPTConfiguration(clientID: SpotifyClientID, redirectURL: SpotifyRedirectURL)
         configuration.playURI = ""
         if let tokenSwapURL = URL(string: "https://shufflescreen.herokuapp.com/api/token"),
@@ -41,7 +46,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     lazy var appRemote: SPTAppRemote = {
         let appRemote = SPTAppRemote(configuration: self.configuration, logLevel: .error)
         
-        appRemote.connectionParameters.accessToken = defaults.string(forKey: Keys.kAccessTokenKey)
+        appRemote.connectionParameters.accessToken = defaults.string(forKey: Keys.kAccessToken)
         appRemote.delegate = self
         return appRemote
     }()
@@ -49,7 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     var didRenewSession: Bool = false{
         didSet{
             if didRenewSession == true{
-                LoadingOverlay.shared.hideOverlayView()
+                //LoadingOverlay.shared.hideOverlayView()
             }
         }
     }
@@ -66,7 +71,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
         DispatchQueue.main.async {
             print("Não foi possível estabelecer uma sessão.", error)
-            LoadingOverlay.shared.hideOverlayView()
+            //LoadingOverlay.shared.hideOverlayView()
         }
     }
     
@@ -82,6 +87,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             self.didRenewSession = true
             self.archiveSession(session)
             
+            let modificationDate = self.defaults.value(forKey: Keys.kICloudModificationDate) as! Date
+            
+            if Date() > Calendar.current.date(byAdding: .day, value: 1, to: modificationDate)!{
+                ICloudTopItem.updateTops()
+            }
+            
             NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
         }
     }
@@ -90,10 +101,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         appRemote.connectionParameters.accessToken = session.accessToken
         appRemote.connect()
         
+        
         print("Access token: \(session.accessToken), expires at \(session.expirationDate)")
         
         self.didRenewSession = true
         archiveSession(session)
+        
+        
         
         NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
     }
@@ -175,7 +189,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             NotificationCenter.default.post(name: Notification.Name("deviceIsConnected"), object: nil)
             
             if didRenewSession{
-                LoadingOverlay.shared.hideOverlayView()
+                //LoadingOverlay.shared.hideOverlayView()
             }
             if reachability.connection == .wifi {
                 print("Conectado via WiFi")
@@ -194,11 +208,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     func archiveSession(_ session: SPTSession) {
         do {
             
-            defaults.set(session.accessToken, forKey: Keys.kAccessTokenKey)
-            defaults.set(session.refreshToken, forKey: Keys.kRefreshTokenKey)
+            defaults.set(session.accessToken, forKey: Keys.kAccessToken)
+            defaults.set(session.refreshToken, forKey: Keys.kRefreshToken)
             
             let sessionData = try NSKeyedArchiver.archivedData(withRootObject: session, requiringSecureCoding: true)
-            defaults.set(sessionData, forKey: Keys.kSessionKey)
+            defaults.set(sessionData, forKey: Keys.kSession)
             
             
         } catch {
@@ -207,7 +221,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     }
     
     private func restoreSession() {
-        guard let sessionData = defaults.data(forKey: Keys.kSessionKey) else { return }
+        guard let sessionData = defaults.data(forKey: Keys.kSession) else { return }
         do {
             let session = try NSKeyedUnarchiver.unarchivedObject(ofClass: SPTSession.self, from: sessionData)
             sessionManager.session = session

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		35129477250BA02D00B7479D /* ConnectionStatusIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */; };
-		35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35129478250BF6CB00B7479D /* LoadingOverlay.swift */; };
 		351D49CD251E1C160030A464 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351D49CC251E1C160030A464 /* Keys.swift */; };
 		351D49F2251E4EE40030A464 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FA24E251BD3CE00702498 /* WidgetKit.framework */; };
 		351D49F3251E4EE40030A464 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 357FA250251BD3CE00702498 /* SwiftUI.framework */; };
@@ -54,6 +53,10 @@
 		352174B3251BE1D400AAE095 /* UIImageColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174B2251BE1D400AAE095 /* UIImageColors.swift */; };
 		352174C1251BE7FC00AAE095 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352174C0251BE7FC00AAE095 /* Player.swift */; };
 		354ABC14251C348E00635D50 /* SpotifyiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 354ABC13251C348E00635D50 /* SpotifyiOS.framework */; };
+		355E9900252397B800623874 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8B25091BB500F1DEF7 /* Reachability.swift */; };
+		355E9901252397B800623874 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8B25091BB500F1DEF7 /* Reachability.swift */; };
+		355E99062523995C00623874 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 355E99052523995C00623874 /* CloudKit.framework */; };
+		355E990825239D1F00623874 /* CodableCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 355E990725239D1F00623874 /* CodableCloud.swift */; };
 		35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
 		35756CA52507EF8F00DA2C11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
 		3576D82B250884990063BB8E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576D82A250884990063BB8E /* BaseViewController.swift */; };
@@ -113,7 +116,6 @@
 
 /* Begin PBXFileReference section */
 		35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusIndicatorView.swift; sourceTree = "<group>"; };
-		35129478250BF6CB00B7479D /* LoadingOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlay.swift; sourceTree = "<group>"; };
 		351D49CC251E1C160030A464 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		351D49F1251E4EE40030A464 /* NowPlayingWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NowPlayingWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		351D49F5251E4EE40030A464 /* NowPlayingWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingWidget.swift; sourceTree = "<group>"; };
@@ -133,6 +135,8 @@
 		352174B2251BE1D400AAE095 /* UIImageColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageColors.swift; sourceTree = "<group>"; };
 		352174C0251BE7FC00AAE095 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		354ABC13251C348E00635D50 /* SpotifyiOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyiOS.framework; sourceTree = "<group>"; };
+		355E99052523995C00623874 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		355E990725239D1F00623874 /* CodableCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableCloud.swift; sourceTree = "<group>"; };
 		35756CA22507EC7F00DA2C11 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 		35756CA42507EF8F00DA2C11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3576D82A250884990063BB8E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				354ABC14251C348E00635D50 /* SpotifyiOS.framework in Frameworks */,
+				355E99062523995C00623874 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +207,6 @@
 				351D49F7251E4EE40030A464 /* NowPlayingWidget.intentdefinition */,
 				351D49F8251E4EE50030A464 /* Assets.xcassets */,
 				351D49FA251E4EE50030A464 /* Info.plist */,
-				351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */,
 			);
 			path = NowPlayingWidget;
 			sourceTree = "<group>";
@@ -216,6 +220,17 @@
 				351D4A2F251E51630030A464 /* Info.plist */,
 			);
 			path = AlbumImageWidget;
+			sourceTree = "<group>";
+		};
+		355E98FF2523978B00623874 /* Extra */ = {
+			isa = PBXGroup;
+			children = (
+				357EEA8B25091BB500F1DEF7 /* Reachability.swift */,
+				352174B2251BE1D400AAE095 /* UIImageColors.swift */,
+				351D4A1A251E502B0030A464 /* ImageSwiftUI.swift */,
+				355E990725239D1F00623874 /* CodableCloud.swift */,
+			);
+			path = Extra;
 			sourceTree = "<group>";
 		};
 		35756CA62507EFFF00DA2C11 /* Classes */ = {
@@ -241,7 +256,6 @@
 				357EEA9325093A7E00F1DEF7 /* DisconnectedView.swift */,
 				357EEA9C250AB97600F1DEF7 /* LateralButton.swift */,
 				35129476250BA02D00B7479D /* ConnectionStatusIndicatorView.swift */,
-				35129478250BF6CB00B7479D /* LoadingOverlay.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -249,6 +263,7 @@
 		357FA24D251BD3CE00702498 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				355E99052523995C00623874 /* CloudKit.framework */,
 				354ABC13251C348E00635D50 /* SpotifyiOS.framework */,
 				357FA24E251BD3CE00702498 /* WidgetKit.framework */,
 				357FA250251BD3CE00702498 /* SwiftUI.framework */,
@@ -297,15 +312,14 @@
 		7E47484625052C8B0063F4E8 /* shufflescreen */ = {
 			isa = PBXGroup;
 			children = (
-				352174B2251BE1D400AAE095 /* UIImageColors.swift */,
 				3521748F251BD8E000AAE095 /* shufflescreen.entitlements */,
 				7E47484725052C8B0063F4E8 /* AppDelegate.swift */,
 				7E47484925052C8B0063F4E8 /* SceneDelegate.swift */,
-				357EEA8B25091BB500F1DEF7 /* Reachability.swift */,
 				7E47484D25052C8B0063F4E8 /* Main.storyboard */,
 				357EEA9525093B2A00F1DEF7 /* Views */,
 				35F09D4F2508726400E68251 /* ViewControllers */,
 				35756CA62507EFFF00DA2C11 /* Classes */,
+				355E98FF2523978B00623874 /* Extra */,
 				7E47485025052C930063F4E8 /* Assets.xcassets */,
 				7E47485225052C930063F4E8 /* LaunchScreen.storyboard */,
 				7E47485525052C930063F4E8 /* Info.plist */,
@@ -455,6 +469,7 @@
 				351D49F6251E4EE40030A464 /* NowPlayingWidget.swift in Sources */,
 				351D4A09251E4F260030A464 /* Recommendations.swift in Sources */,
 				351D4A1B251E502B0030A464 /* ImageSwiftUI.swift in Sources */,
+				355E9900252397B800623874 /* Reachability.swift in Sources */,
 				351D4A0D251E4F260030A464 /* User.swift in Sources */,
 				351D4A61251E890F0030A464 /* NowPlaying.swift in Sources */,
 				351D4A0A251E4F260030A464 /* Track.swift in Sources */,
@@ -476,6 +491,7 @@
 				351D4A30251E51630030A464 /* AlbumImageWidget.intentdefinition in Sources */,
 				351D4A41251E51840030A464 /* User.swift in Sources */,
 				351D4A3F251E51840030A464 /* Player.swift in Sources */,
+				355E9901252397B800623874 /* Reachability.swift in Sources */,
 				351D4A2B251E51610030A464 /* AlbumImageWidget.swift in Sources */,
 				351D4A62251E890F0030A464 /* NowPlaying.swift in Sources */,
 				351D4A3B251E51840030A464 /* ImageSwiftUI.swift in Sources */,
@@ -495,6 +511,7 @@
 				357EEA8C25091BB500F1DEF7 /* Reachability.swift in Sources */,
 				352174C1251BE7FC00AAE095 /* Player.swift in Sources */,
 				7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */,
+				355E990825239D1F00623874 /* CodableCloud.swift in Sources */,
 				35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */,
 				35129477250BA02D00B7479D /* ConnectionStatusIndicatorView.swift in Sources */,
 				351D49FC251E4EE50030A464 /* NowPlayingWidget.intentdefinition in Sources */,
@@ -502,7 +519,6 @@
 				357EEA902509290C00F1DEF7 /* Support Classes.swift in Sources */,
 				357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */,
 				357EEA972509B5B100F1DEF7 /* PlaylistViewController.swift in Sources */,
-				35129479250BF6CB00B7479D /* LoadingOverlay.swift in Sources */,
 				351D4A66251E8D1F0030A464 /* ImageSwiftUI.swift in Sources */,
 				357EEA9425093A7E00F1DEF7 /* DisconnectedView.swift in Sources */,
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,

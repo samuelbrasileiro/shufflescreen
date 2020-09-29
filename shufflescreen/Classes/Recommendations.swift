@@ -39,7 +39,7 @@ class Recommendations: Codable {
             URLQueryItem(name: "genre_tracks", value: joinedGenres)
         ]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessToken)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {

@@ -6,15 +6,23 @@
 //  Copyright © 2020 Samuel Brasileiro. All rights reserved.
 //
 
-import UIKit
+import SwiftUI
 
-struct NowPlaying {
+class NowPlaying: ObservableObject {
     
     let trackName: String
     let artist: String
     let date: String
-    let image: UIImage?
-    let imageColors: UIImageColors
+    @Published var image: UIImage?
+    var imageColors: UIImageColors
+    
+    init(trackName: String, artist: String, date: String, image: UIImage?, imageColors: UIImageColors){
+        self.trackName = trackName
+        self.artist = artist
+        self.date = date
+        self.image = image
+        self.imageColors = imageColors
+    }
     
     static func archive(nowPlaying: NowPlaying){
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!

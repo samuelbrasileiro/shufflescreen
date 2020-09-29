@@ -26,7 +26,11 @@ class UserTopsViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.overrideUserInterfaceStyle = .light
+        //typeSegmentedControl.overrideUserInterfaceStyle = .light
+        //timeRangeSegmentedControl.overrideUserInterfaceStyle = .light
+        //limitSegmentedControl.overrideUserInterfaceStyle = .light
+        
         child = UIHostingController(rootView: RecommendationsCollectionView(bank: bank))
         child?.view.backgroundColor = .clear
         child?.view.translatesAutoresizingMaskIntoConstraints = false
@@ -110,19 +114,20 @@ class UserTopsViewController: BaseViewController {
                 LazyVStack(alignment: .leading, spacing: 8) {
                     ForEach((0..<bank.items!.count), id: \.self){ index in
                         HStack(alignment: .center, spacing: 6){
-                            
+                            Link(destination: URL(string: bank.items![index].uri!)!){
                             (bank.items![index].image == nil ?
-                                    Image("spotify") : Image(uiImage: bank.items![index].image!))
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(minWidth: 0, maxWidth: 40, minHeight: 0, maxHeight: 40, alignment: .leading)
-                                
-                                Text(bank.items![index].name)
-                                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                                    .foregroundColor(Color(.black))
-                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                                Image("spotify") : Image(uiImage: bank.items![index].image!))
+                                .resizable()
+                                .frame(minWidth: 0, maxWidth: 40, minHeight: 0, maxHeight: 40, alignment: .leading)
+                                .aspectRatio(contentMode: .fill)
+                            
+                            Text("\(index + 1). " + bank.items![index].name)
+                                .font(.system(size: 28, weight: .bold, design: .rounded))
+                                .foregroundColor(Color(.black))
+                                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .leading)
+                            }
                         }
-
+                        
                         
                     }
                     

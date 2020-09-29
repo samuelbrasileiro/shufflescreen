@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import CloudKit
 
 class TopItemsBank: ObservableObject{
+    
     @Published var items: [TopItem]?
     init() {
         items = []
@@ -17,12 +19,12 @@ class TopItemsBank: ObservableObject{
         items = []
     }
     func addItem(track: Track){
-        let item = TopItem(name: track.name!, image: nil)
+        let item = TopItem(name: track.name!, image: nil, uri: track.uri, id: track.id)
         self.items!.append(item)
         let index = self.items!.count - 1
         SPTImage.fetch(scale: 64, images: track.album!.images!){ result in
             if case .success(let image) = result{
-                self.items![index] = TopItem(name: item.name, image: image)
+                self.items![index] = TopItem(name: item.name, image: image, uri: item.uri, id: item.id)
                 
             }
             else{
@@ -32,13 +34,20 @@ class TopItemsBank: ObservableObject{
     }
     
     func addItem(artist: Artist){
-        let item = TopItem(name: artist.name!, image: nil)
+        let item = TopItem(name: artist.name!, image: nil, uri: artist.uri, id: artist.id)
         self.items!.append(item)
         let index = self.items!.count - 1
+        
+       
+        let sortedImages = artist.images!.sorted{$0.height! < $1.height!}
+        let image = sortedImages[0]
+        
+        print("artists.append(Artist(name: \"\(artist.name!)\", imageURL: \"\(image.url!)\", uri: \"\(artist.uri!)\"))")
+        
         SPTImage.fetch(scale: 64, images: artist.images!){ result in
             if case .success(let image) = result{
-                self.items![index] = TopItem(name: item.name, image: image)
-                
+                self.items![index].image = image
+                self.items![index] = TopItem(name: item.name, image: image, uri: item.uri, id: item.id)
             }
             else{
                 print("eita po")
@@ -47,25 +56,16 @@ class TopItemsBank: ObservableObject{
     }
     
 }
-class TopItem: ObservableObject{
+class TopItem{
     var name: String
-    @Published var image: UIImage?
-    init(name: String, image: UIImage?){
+    var image: UIImage?
+    var uri: String?
+    var id: String?
+    init(name: String, image: UIImage?, uri: String?, id: String?){
         self.name = name
         self.image = image
-    }
-
-    init(artist: Artist){
-        self.name = artist.name!
-        
-        SPTImage.fetch(scale: 64, images: artist.images!){ result in
-            if case .success(let image) = result{
-                self.image = image
-            }
-            else{
-                print("eita po")
-            }
-        }
+        self.uri = uri
+        self.id = id
     }
 }
 
@@ -115,7 +115,7 @@ class TopTracksList: Codable {
             URLQueryItem(name: "limit", value: limit)
         ]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessToken)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {
@@ -183,7 +183,7 @@ class TopArtistsList: Codable {
             URLQueryItem(name: "limit", value: limit)
         ]
         var request = URLRequest(url: components.url!)
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessToken)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {
@@ -202,4 +202,43 @@ class TopArtistsList: Codable {
         }.resume()
     }
     
+}
+
+class ICloudTopItem{
+    static func updateTops(){
+        let publicDatabase = CKContainer(identifier: "iCloud.samuel.shufflescreen").publicCloudDatabase
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        
+        let recordName = defaults.string(forKey: Keys.kICloudRecordName)!
+        let recordID = CKRecord.ID(recordName: recordName)
+        
+        TopTracksList.fetch(timeRange: "medium_term", limit: "50"){ result in
+            if case .success(let topTracksList) = result{
+                TopArtistsList.fetch(timeRange: "medium_term", limit: "50"){ result in
+                    if case .success(let topArtistsList) = result{
+                        
+                        publicDatabase.fetch(withRecordID: recordID){ record, error in
+                            
+                            if let record = record, error == nil {
+                                //update your record here
+                                let tracksIDs = topTracksList.items!.map{$0.id}
+                                let artistsIDs = topArtistsList.items!.map{$0.id}
+                                
+                                record.setValue(tracksIDs, forKey: "trackIDs")
+                                record.setValue(artistsIDs, forKey: "artistsIDs")
+                                
+                                publicDatabase.save(record){ _, error in
+                                    if error == nil{
+                                        print("atualizou")
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        }
+        
+    }
 }

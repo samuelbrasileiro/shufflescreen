@@ -65,7 +65,7 @@ class User: Codable {
         let url = URL(string: "https://api.spotify.com/v1/me")!
         
         var request = URLRequest(url: url)
-        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessTokenKey)!, forHTTPHeaderField: "Authorization")
+        request.setValue("Bearer " + defaults.string(forKey: Keys.kAccessToken)!, forHTTPHeaderField: "Authorization")
         
         URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {
