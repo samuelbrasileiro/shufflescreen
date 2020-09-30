@@ -85,6 +85,9 @@ class FriendsBank: ObservableObject{
                     self.myRecord = record
                     
                     print("baixo bixes")
+                    
+                    self.downloadTopItems()
+                    
                 }
                 
             }
@@ -93,6 +96,40 @@ class FriendsBank: ObservableObject{
                 self.friendCode = ""
             }
         }
+    }
+    
+    func downloadTopItems(){
+        let myArtistsIDs = self.myRecord!["artistsIDs"] as! [String]
+        let myTracksIDs = self.myRecord!["trackIDs"] as! [String]
+        
+        let friendArtistsIDs = self.friendRecord!["artistsIDs"] as! [String]
+        let friendTracksIDs = self.friendRecord!["trackIDs"] as! [String]
+        
+        let interleavedArtists = zip(myArtistsIDs, friendArtistsIDs).flatMap { [$0, $1] }
+        let interleavedArtistsWithPriority = (0 ..< interleavedArtists.count).map{(interleavedArtists[$0], $0, 1)}
+        
+        let normalizedArtists = interleavedArtistsWithPriority.reduce([String:(Int,Int)]()) {
+            var dict = $0
+            dict[$1.0] = (dict[$1.0] ?? (0,0))
+            dict[$1.0]!.0 += $1.1/2
+            print($1.1)
+            dict[$1.0]!.1 += $1.2
+            return dict
+            }.map{$0}
+
+        let orderedArtists = normalizedArtists.sorted{
+            if $0.value.1 == $1.value.1{
+                return $0.value.0 < $1.value.0
+            }
+            else{
+                return $0.value.1 > $1.value.1
+            }
+        }
+        print(orderedArtists)
+        
+        let myTracks = [Track]()
+        let friendTracks = [Track]()
+        
     }
     
     func fetchFriendByCode(_ completion: @escaping (CKRecord?) -> ()){
