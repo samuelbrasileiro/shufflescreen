@@ -204,12 +204,14 @@ class AppRemoteViewController: BaseViewController {
             HStack{
             
             VStack(alignment: .leading, spacing: 4) {
-                Image(data: self.bank.nowPlaying.image?.pngData())!
-                    .resizable()
-                    .frame(width: 240, height: 240, alignment: .center)
-                    .padding()
-                    .animation(.spring()
-                    )
+                if let image = self.bank.nowPlaying.image{
+                    Image(uiImage: image)
+                        .resizable()
+                        .frame(width: 240, height: 240, alignment: .center)
+                        .padding()
+                        .animation(.spring()
+                        )
+                }
                 
                 
                 Text(self.bank.nowPlaying.trackName)

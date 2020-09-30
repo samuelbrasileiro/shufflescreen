@@ -20,7 +20,6 @@ class UserTopsViewController: BaseViewController {
     @IBOutlet weak var timeRangeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var limitSegmentedControl: UISegmentedControl!
         
-    var recommendationsView: RecommendationsCollectionView?
     var child: UIHostingController<RecommendationsCollectionView>?
     @IBOutlet weak var discoverButton: UIButton!
     

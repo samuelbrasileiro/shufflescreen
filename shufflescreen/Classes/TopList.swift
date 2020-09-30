@@ -24,8 +24,9 @@ class TopItemsBank: ObservableObject{
         let index = self.items!.count - 1
         SPTImage.fetch(scale: 64, images: track.album!.images!){ result in
             if case .success(let image) = result{
-                self.items![index] = TopItem(name: item.name, image: image, uri: item.uri, id: item.id)
-                
+                if index < self.items!.count{
+                    self.items![index] = TopItem(name: item.name, image: image, uri: item.uri, id: item.id)
+                }
             }
             else{
                 print("eita po")

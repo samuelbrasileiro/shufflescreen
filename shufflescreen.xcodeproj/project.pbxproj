@@ -73,6 +73,7 @@
 		357EEA99250AB56600F1DEF7 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA98250AB56600F1DEF7 /* BaseNavigationController.swift */; };
 		357EEA9B250AB7FD00F1DEF7 /* AppRemoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA9A250AB7FD00F1DEF7 /* AppRemoteViewController.swift */; };
 		357EEA9D250AB97600F1DEF7 /* LateralButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA9C250AB97600F1DEF7 /* LateralButton.swift */; };
+		358CCCFF2523CABB00A81724 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 358CCCFE2523CABB00A81724 /* FriendsViewController.swift */; };
 		35F09D4E2508703E00E68251 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35F09D4D2508703E00E68251 /* HomeViewController.swift */; };
 		7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484725052C8B0063F4E8 /* AppDelegate.swift */; };
 		7E47484A25052C8B0063F4E8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E47484925052C8B0063F4E8 /* SceneDelegate.swift */; };
@@ -155,6 +156,7 @@
 		357EEA9C250AB97600F1DEF7 /* LateralButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LateralButton.swift; sourceTree = "<group>"; };
 		357FA24E251BD3CE00702498 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		357FA250251BD3CE00702498 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		358CCCFE2523CABB00A81724 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		35F09D4D2508703E00E68251 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		7E47484425052C8B0063F4E8 /* shufflescreen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shufflescreen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E47484725052C8B0063F4E8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				357EEA98250AB56600F1DEF7 /* BaseNavigationController.swift */,
 				3576D82A250884990063BB8E /* BaseViewController.swift */,
 				35F09D4D2508703E00E68251 /* HomeViewController.swift */,
+				358CCCFE2523CABB00A81724 /* FriendsViewController.swift */,
 				7E47484B25052C8B0063F4E8 /* LoginViewController.swift */,
 				357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */,
 				357EEA962509B5B100F1DEF7 /* PlaylistViewController.swift */,
@@ -509,6 +512,7 @@
 				3576D82B250884990063BB8E /* BaseViewController.swift in Sources */,
 				7E47484C25052C8B0063F4E8 /* LoginViewController.swift in Sources */,
 				357EEA8C25091BB500F1DEF7 /* Reachability.swift in Sources */,
+				358CCCFF2523CABB00A81724 /* FriendsViewController.swift in Sources */,
 				352174C1251BE7FC00AAE095 /* Player.swift in Sources */,
 				7E47484825052C8B0063F4E8 /* AppDelegate.swift in Sources */,
 				355E990825239D1F00623874 /* CodableCloud.swift in Sources */,

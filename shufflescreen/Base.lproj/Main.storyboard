@@ -85,7 +85,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BPr-i6-bSS">
-                                <rect key="frame" x="105" y="610" width="205" height="50"/>
+                                <rect key="frame" x="105" y="518" width="205" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
@@ -105,7 +105,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8tc-Cf-6KW">
-                                <rect key="frame" x="105" y="682" width="205" height="50"/>
+                                <rect key="frame" x="105" y="593" width="205" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
@@ -113,7 +113,7 @@
                                     <color key="titleColor" systemColor="systemOrangeColor"/>
                                 </state>
                                 <connections>
-                                    <action selector="createPlaylistButton:" destination="Evb-3u-sI4" eventType="touchUpInside" id="Rkc-A6-A6N"/>
+                                    <segue destination="MDl-Go-RlW" kind="show" id="lD6-3G-Lzb"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="followers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2FC-22-ROd">
@@ -131,13 +131,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aeN-rL-Q08">
-                                <rect key="frame" x="105" y="754" width="205" height="50"/>
+                                <rect key="frame" x="105" y="666" width="205" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                 <state key="normal" title="Shuffle with friends">
                                     <color key="titleColor" systemColor="systemOrangeColor"/>
                                 </state>
+                                <connections>
+                                    <segue destination="6ex-5g-xps" kind="show" id="rg6-05-gO2"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ndd-Et-iPI"/>
@@ -149,6 +152,7 @@
                         <outlet property="displayNameLabel" destination="cuc-3a-JMV" id="m0V-jE-bZi"/>
                         <outlet property="followersCountLabel" destination="2FC-22-ROd" id="6Yj-P6-YB2"/>
                         <outlet property="shufflePlaylistButton" destination="8tc-Cf-6KW" id="jcm-dK-TEj"/>
+                        <outlet property="shuffleWithFriendsButton" destination="aeN-rL-Q08" id="neT-jF-9ZO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b56-O6-MwQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -286,7 +290,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OdH-Eb-L9s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086.9565217391305" y="133.92857142857142"/>
+            <point key="canvasLocation" x="2025" y="-583"/>
         </scene>
         <!--Playlist View Controller-->
         <scene sceneID="DUL-sh-gCN">
@@ -349,7 +353,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQl-u3-df0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2921.739130434783" y="133.92857142857142"/>
+            <point key="canvasLocation" x="2025" y="134"/>
+        </scene>
+        <!--Friends View Controller-->
+        <scene sceneID="vtp-Sd-mc5">
+            <objects>
+                <viewController storyboardIdentifier="FriendsViewController" id="6ex-5g-xps" customClass="FriendsViewController" customModule="shufflescreen" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LAT-d1-zvW">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="bCx-RA-D3I"/>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="yyE-pS-axR"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6aN-KV-j7o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2025" y="838"/>
         </scene>
     </scenes>
     <resources>

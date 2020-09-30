@@ -21,6 +21,7 @@ class HomeViewController: BaseViewController {
     
     @IBOutlet weak var discoverTopsButton: UIButton!
     @IBOutlet weak var shufflePlaylistButton: UIButton!
+    @IBOutlet weak var shuffleWithFriendsButton: UIButton!
     
     var user: User?
     
@@ -29,7 +30,7 @@ class HomeViewController: BaseViewController {
         
         discoverTopsButton.setCornerRadius(10)
         shufflePlaylistButton.setCornerRadius(10)
-        
+        shuffleWithFriendsButton.setCornerRadius(10)
         if let user = User.restore(){
             self.user = user
             
@@ -51,20 +52,13 @@ class HomeViewController: BaseViewController {
         }
     }
     
-
+    
     func showDetails(){
         self.displayNameLabel.text = "E aí, " + user!.displayName!.split(separator: " ")[0] + "?"
         
         self.followersCountLabel.text = "Tas com " + String(user!.followers!.total!) + " seguidores!"
     }
     
-    @IBAction func createPlaylistButton(_ sender: Any) {
-        
-        if let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "PlaylistViewController") as? PlaylistViewController{
-            
-            self.navigationController?.pushViewController(vc, animated: true)
-        }
-    }
     
     func archiveCloudKit(user: User){
         let record = CKRecord(recordType: "SPTUser")
