@@ -113,28 +113,18 @@ Explore your favorite songs and artists and create a playlist based on what you 
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="O spotify não está tocando nada" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-3l-b1g">
-                                <rect key="frame" x="63" y="103" width="248" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="O spotify não está tocando nada" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zeq-3l-b1g">
+                                <rect key="frame" x="83.5" y="100" width="247" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lB-x6-4Rb">
-                                <rect key="frame" x="114" y="132" width="147" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                <state key="normal" title="Começar a tocar">
-                                    <color key="titleColor" systemColor="systemGreenColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="connectToAppRemote:" destination="d6X-zv-EXN" eventType="touchUpInside" id="2HG-B7-pS9"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FuL-rR-BrN">
-                                <rect key="frame" x="119" y="673" width="136" height="52"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FuL-rR-BrN">
+                                <rect key="frame" x="157" y="721" width="100" height="41"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="cFi-c0-GBK"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                 <state key="normal" title="Shuffle">
                                     <color key="titleColor" systemColor="systemGreenColor"/>
@@ -143,9 +133,27 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                     <action selector="shuffleSongButton:" destination="d6X-zv-EXN" eventType="touchUpInside" id="nAI-FY-sQB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0lB-x6-4Rb">
+                                <rect key="frame" x="146.5" y="131" width="121" height="30"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Começar a tocar">
+                                    <color key="titleColor" systemColor="systemGreenColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectToAppRemote:" destination="d6X-zv-EXN" eventType="touchUpInside" id="2HG-B7-pS9"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="OO6-ML-dkF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="zeq-3l-b1g" firstAttribute="top" secondItem="OO6-ML-dkF" secondAttribute="top" constant="56" id="6Vm-Ub-HnI"/>
+                            <constraint firstItem="FuL-rR-BrN" firstAttribute="centerX" secondItem="Msg-zq-r4r" secondAttribute="centerX" id="FJx-Vt-rOy"/>
+                            <constraint firstItem="0lB-x6-4Rb" firstAttribute="top" secondItem="zeq-3l-b1g" secondAttribute="bottom" constant="10" id="RYC-w2-z7V"/>
+                            <constraint firstItem="OO6-ML-dkF" firstAttribute="bottom" secondItem="FuL-rR-BrN" secondAttribute="bottom" constant="100" id="SFp-3I-w6v"/>
+                            <constraint firstItem="zeq-3l-b1g" firstAttribute="centerX" secondItem="Msg-zq-r4r" secondAttribute="centerX" id="iDk-kj-QXe"/>
+                            <constraint firstItem="0lB-x6-4Rb" firstAttribute="centerX" secondItem="Msg-zq-r4r" secondAttribute="centerX" id="qQD-40-wg4"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="connectToAppRemoteButton" destination="0lB-x6-4Rb" id="Rzy-Sj-gnG"/>
@@ -255,11 +263,32 @@ Explore your favorite songs and artists and create a playlist based on what you 
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3e-2n-8LP">
-                                <rect key="frame" x="84" y="768" width="248" height="66"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="just for you" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lsm-5N-xzq">
+                                <rect key="frame" x="109.5" y="44" width="195" height="46"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write its name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ij-Y1-C9e">
+                                <rect key="frame" x="81" y="631" width="252" height="34"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="252" id="iaf-ga-dCF"/>
+                                </constraints>
+                                <color key="textColor" systemColor="systemOrangeColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C3e-2n-8LP">
+                                <rect key="frame" x="105.5" y="795" width="203" height="45"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="203" id="78w-P0-7c4"/>
+                                    <constraint firstAttribute="height" constant="45" id="Nqp-vQ-5Ry"/>
+                                </constraints>
                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <state key="normal" title="Push to Spotify">
                                     <color key="titleColor" systemColor="systemOrangeColor"/>
                                 </state>
@@ -267,15 +296,12 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                     <action selector="createPlaylistButtonAction:" destination="MDl-Go-RlW" eventType="touchUpInside" id="SWq-ve-SEm"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="just for you" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lsm-5N-xzq">
-                                <rect key="frame" x="109.5" y="44" width="195" height="46"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gR-Mg-pCN">
-                                <rect key="frame" x="84" y="663" width="248" height="64"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gR-Mg-pCN">
+                                <rect key="frame" x="105" y="721" width="204" height="46"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="204" id="n8D-7q-fVP"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <state key="normal" title="Generate">
                                     <color key="titleColor" systemColor="systemOrangeColor"/>
@@ -284,26 +310,18 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                     <action selector="generateButtonAction:" destination="MDl-Go-RlW" eventType="touchUpInside" id="i8e-5R-l2L"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Write its name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6ij-Y1-C9e">
-                                <rect key="frame" x="48" y="588" width="320" height="34"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" systemColor="labelColor"/>
-                                <color key="textColor" systemColor="systemOrangeColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
-                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fjA-su-ehw"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
-                            <constraint firstItem="C3e-2n-8LP" firstAttribute="centerX" secondItem="fjA-su-ehw" secondAttribute="centerX" constant="1" id="4Tj-6x-Dhn"/>
-                            <constraint firstItem="C3e-2n-8LP" firstAttribute="top" secondItem="9gR-Mg-pCN" secondAttribute="bottom" constant="41" id="SWU-sq-1jU"/>
-                            <constraint firstItem="9gR-Mg-pCN" firstAttribute="top" secondItem="6ij-Y1-C9e" secondAttribute="bottom" constant="41" id="al3-rK-JhO"/>
-                            <constraint firstItem="6ij-Y1-C9e" firstAttribute="centerX" secondItem="fjA-su-ehw" secondAttribute="centerX" constant="1" id="n2J-KI-MnR"/>
+                            <constraint firstItem="fjA-su-ehw" firstAttribute="bottom" secondItem="C3e-2n-8LP" secondAttribute="bottom" constant="22" id="B1O-zd-tpS"/>
+                            <constraint firstItem="C3e-2n-8LP" firstAttribute="centerX" secondItem="HT5-Hl-6Ot" secondAttribute="centerX" id="I4V-e8-FBG"/>
+                            <constraint firstItem="9gR-Mg-pCN" firstAttribute="top" secondItem="6ij-Y1-C9e" secondAttribute="bottom" constant="56" id="Rt2-zQ-co6"/>
+                            <constraint firstItem="6ij-Y1-C9e" firstAttribute="centerX" secondItem="HT5-Hl-6Ot" secondAttribute="centerX" id="lb3-hX-XdL"/>
+                            <constraint firstItem="C3e-2n-8LP" firstAttribute="top" secondItem="9gR-Mg-pCN" secondAttribute="bottom" constant="28" id="not-8i-p9T"/>
                             <constraint firstItem="Lsm-5N-xzq" firstAttribute="top" secondItem="fjA-su-ehw" secondAttribute="top" id="s1S-zR-ehf"/>
-                            <constraint firstItem="6ij-Y1-C9e" firstAttribute="top" secondItem="fjA-su-ehw" secondAttribute="top" constant="500" id="ubd-36-s6G"/>
                             <constraint firstItem="Lsm-5N-xzq" firstAttribute="centerX" secondItem="fjA-su-ehw" secondAttribute="centerX" id="xBw-Pa-RH7"/>
-                            <constraint firstItem="9gR-Mg-pCN" firstAttribute="centerX" secondItem="fjA-su-ehw" secondAttribute="centerX" constant="1" id="xlv-8n-wy4"/>
+                            <constraint firstItem="9gR-Mg-pCN" firstAttribute="centerX" secondItem="fjA-su-ehw" secondAttribute="centerX" id="xlv-8n-wy4"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="fgA-WS-on8"/>
@@ -316,7 +334,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cQl-u3-df0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2071.0144927536235" y="133.25892857142856"/>
+            <point key="canvasLocation" x="2024.8" y="133.74384236453201"/>
         </scene>
         <!--Friends View Controller-->
         <scene sceneID="vtp-Sd-mc5">

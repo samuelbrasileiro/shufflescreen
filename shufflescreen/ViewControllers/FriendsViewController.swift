@@ -20,7 +20,7 @@ class FriendsViewController: BaseViewController{
         
         child = UIHostingController(rootView: FriendsView(bank: bank))
         child?.view.backgroundColor = .clear
-        child?.view.translatesAutoresizingMaskIntoConstraints = true
+        child?.view.translatesAutoresizingMaskIntoConstraints = false
         child?.overrideUserInterfaceStyle = .dark
         child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: 90, width: 400, height: self.view.bounds.height - 90 - 30)
         self.view.addSubview(child!.view)

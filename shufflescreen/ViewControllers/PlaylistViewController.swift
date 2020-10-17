@@ -46,10 +46,17 @@ class PlaylistViewController: BaseViewController {
         
         child = UIHostingController(rootView: TracksCollectionView(bank: bank))
         child?.view.backgroundColor = .clear
-        child?.view.translatesAutoresizingMaskIntoConstraints = true
-        child?.view.frame = CGRect(x: 20, y: self.justForYouLabel.frame.maxY + 40, width: self.view.bounds.width - 40, height: self.nameTextField.frame.minY - self.justForYouLabel.frame.maxY - 60)
-        
+        child?.view.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(child!.view)
+        
+        let constraints = [
+            child!.view.topAnchor.constraint(equalTo: justForYouLabel.bottomAnchor, constant: 10),
+            child!.view.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0),
+            child!.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            child!.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -5),
+            child!.view.bottomAnchor.constraint(lessThanOrEqualTo: self.nameTextField.topAnchor, constant: -15)
+        ]
+        NSLayoutConstraint.activate(constraints)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)

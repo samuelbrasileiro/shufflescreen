@@ -26,15 +26,20 @@ class UserTopsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.overrideUserInterfaceStyle = .light
-        //typeSegmentedControl.overrideUserInterfaceStyle = .light
-        //timeRangeSegmentedControl.overrideUserInterfaceStyle = .light
-        //limitSegmentedControl.overrideUserInterfaceStyle = .light
-        
+
         child = UIHostingController(rootView: RecommendationsCollectionView(bank: bank))
         child?.view.backgroundColor = .clear
         child?.view.translatesAutoresizingMaskIntoConstraints = false
-        child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: self.view.bounds.midY + 20, width: 400, height: 360)
         self.view.addSubview(child!.view)
+        let constraints = [
+            child!.view.topAnchor.constraint(equalTo: discoverButton.bottomAnchor, constant: 10),
+            child!.view.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0),
+            child!.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10),
+            child!.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -5),
+            child!.view.bottomAnchor.constraint(lessThanOrEqualTo: self.view.bottomAnchor, constant: -15)
+        ]
+
+        NSLayoutConstraint.activate(constraints)
         
         discoverButton.setCornerRadius(10)
         
