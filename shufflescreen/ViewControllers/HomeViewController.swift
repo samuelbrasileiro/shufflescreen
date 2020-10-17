@@ -8,34 +8,76 @@
 
 import UIKit
 import CloudKit
+import SwiftUI
 
-class HomeViewController: BaseViewController {
+
+protocol HomeDelegate{
+    func pushVC(identifier: String)
     
-    let publicDatabase = CKContainer(identifier: "iCloud.samuel.shufflescreen").publicCloudDatabase
-    let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+}
+struct HomeView: View{
     
-    @IBOutlet weak var displayNameLabel: UILabel!
+    @ObservedObject var bank: HomeBank
+    var delegate: HomeDelegate?
     
-    @IBOutlet weak var followersCountLabel: UILabel!
+    var body: some View{
+        VStack{
+            Spacer(minLength: 40)
+            Text("Shuffle")
+                .font(.system(size: 80, weight: .bold, design: .rounded))
+                .padding()
+            
+            Text("E aí, \(bank.user == nil ? "beleza" : String(bank.user!.displayName!.split(separator: " ")[0]))?")
+                .font(.system(size: 40, weight: .bold, design: .rounded))
+                .frame(alignment: .leading)
+            Text(bank.user == nil ? "Carregando conta..." : "Você está com \(bank.user!.followers!.total!) seguidores!")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .lineLimit(2)
+                .frame(alignment: .leading)
+            Spacer()
+            Button("Discover Tops"){
+                delegate?.pushVC(identifier: "UserTopsViewController")
+            }
+            .font(.system(size: 20, weight: .bold, design: .rounded))
+            .frame(width: 200, height: 30, alignment: .center)
+            .padding()
+            .foregroundColor(Color.orange)
+            .background(Color.black)
+            .cornerRadius(10)
+            
+            Button("Shuffle for me"){
+                delegate?.pushVC(identifier: "PlaylistViewController")
+            }
+            .font(.system(size: 20, weight: .bold, design: .rounded))
+            .frame(width: 200, height: 30, alignment: .center)
+            .padding()
+            .foregroundColor(Color.orange)
+            .background(Color.black)
+            .cornerRadius(10)
+            Button("Shuffle with friends"){
+                delegate?.pushVC(identifier: "FriendsViewController")
+            }
+            .font(.system(size: 20, weight: .bold, design: .rounded))
+            .frame(width: 200, height: 30, alignment: .center)
+            .padding()
+            .foregroundColor(Color.orange)
+            .background(Color.black)
+            .cornerRadius(10)
+            Spacer(minLength: 20)
+        }
+        .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        .background(Color.orange)
+    }
+}
+
+class HomeBank: ObservableObject{
+    @Published var user: User?
     
-    
-    @IBOutlet weak var discoverTopsButton: UIButton!
-    @IBOutlet weak var shufflePlaylistButton: UIButton!
-    @IBOutlet weak var shuffleWithFriendsButton: UIButton!
-    
-    var user: User?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init(){
         
-        discoverTopsButton.setCornerRadius(10)
-        shufflePlaylistButton.setCornerRadius(10)
-        shuffleWithFriendsButton.setCornerRadius(10)
+        
         if let user = User.restore(){
             self.user = user
-            
-            self.showDetails()
-            
         }
         else{
             User.fetch{ result in
@@ -44,23 +86,16 @@ class HomeViewController: BaseViewController {
                     self.user = user
                     User.archive(user: user)
                     
-                    self.showDetails()
-                    
                     self.archiveCloudKit(user: user)
+                    
                 }
             }
         }
     }
-    
-    
-    func showDetails(){
-        self.displayNameLabel.text = "E aí, " + user!.displayName!.split(separator: " ")[0] + "?"
-        
-        self.followersCountLabel.text = "Tas com " + String(user!.followers!.total!) + " seguidores!"
-    }
-    
-    
     func archiveCloudKit(user: User){
+        let publicDatabase = CKContainer(identifier: "iCloud.samuel.shufflescreen").publicCloudDatabase
+        let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
+        
         let record = CKRecord(recordType: "SPTUser")
         
         record.setValue(user.displayName, forKey: "name")
@@ -74,7 +109,7 @@ class HomeViewController: BaseViewController {
         defaults.setValue(Date(), forKey: Keys.kICloudModificationDate)
         defaults.setValue(record.recordID.recordName, forKey: Keys.kICloudRecordName)
         
-        self.publicDatabase.save(record) { (savedRecord, error) in
+        publicDatabase.save(record) { (savedRecord, error) in
             
             DispatchQueue.main.async {
                 if error == nil {
@@ -85,6 +120,32 @@ class HomeViewController: BaseViewController {
                 }
             }
         }
+    }
+
+}
+
+class HomeViewController: BaseViewController, HomeDelegate {
+    func pushVC(identifier: String) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: identifier)
+        self.navigationController!.pushViewController(vc, animated: true)
+        
+    }
+    
+    
+    var child: UIHostingController<HomeView>?
+    var bank: HomeBank = .init()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        var homeView = HomeView(bank: bank)
+        homeView.delegate = self
+        child = UIHostingController(rootView: homeView)
+        
+        child?.view.backgroundColor = .clear
+        child?.view.translatesAutoresizingMaskIntoConstraints = true
+        child?.overrideUserInterfaceStyle = .light
+        child?.view.frame = self.view.safeAreaLayoutGuide.layoutFrame
+        self.view.addSubview(child!.view)
     }
     
 }

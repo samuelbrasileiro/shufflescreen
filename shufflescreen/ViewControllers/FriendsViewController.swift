@@ -407,14 +407,14 @@ struct FriendsView: View{
                     }
                 }.background(Color(.systemOrange))
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
-            }.background(Color(.red))
+            }
             
             if bank.hasGenerated{
                 Button("Push to Spotify"){
                     bank.pushToSpotify()
                 }
                 .padding(.horizontal, 10.0)
-                .padding()
+                .padding(5)
                 .font(.system(size: 28, weight: .bold, design: .rounded))
                 .foregroundColor(Color(.systemOrange))
                 .background(Color(.black))

@@ -19,6 +19,8 @@ class PlaylistViewController: BaseViewController {
     @IBOutlet weak var createPlaylistButton: UIButton!
     @IBOutlet weak var generateButton: UIButton!
     
+    @IBOutlet weak var justForYouLabel: UILabel!
+    
     var child: UIHostingController<TracksCollectionView>?
     
     var bank: TopItemsBank = .init()
@@ -44,8 +46,8 @@ class PlaylistViewController: BaseViewController {
         
         child = UIHostingController(rootView: TracksCollectionView(bank: bank))
         child?.view.backgroundColor = .clear
-        child?.view.translatesAutoresizingMaskIntoConstraints = false
-        child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: self.view.bounds.midY - 300, width: 400, height: 360)
+        child?.view.translatesAutoresizingMaskIntoConstraints = true
+        child?.view.frame = CGRect(x: 20, y: self.justForYouLabel.frame.maxY + 40, width: self.view.bounds.width - 40, height: self.nameTextField.frame.minY - self.justForYouLabel.frame.maxY - 60)
         
         self.view.addSubview(child!.view)
         
