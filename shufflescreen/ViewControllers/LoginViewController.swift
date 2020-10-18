@@ -18,7 +18,6 @@ class LoginViewController: BaseViewController {
         // Do any additional setup after loading the view.
         loadingActivityIndicator.stopAnimating()
         NotificationCenter.default.addObserver(self, selector: #selector(segueFromLogin), name: NSNotification.Name(rawValue: "sessionConnected"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(spotifyNotInstalled), name: NSNotification.Name(rawValue: "SpotifyNotInstalled"), object: nil)
     }
     
     
@@ -27,11 +26,7 @@ class LoginViewController: BaseViewController {
         NotificationCenter.default.post(name: Notification.Name("loginButtonPressed"), object: nil)
         
     }
-    @objc func spotifyNotInstalled(){
-        let alert = UIAlertController(title: "Download Spotify App", message: "To Continue, you need to download spotify app.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .cancel))
-        self.present(alert, animated: true)
-    }
+
     @objc func segueFromLogin(){
         DispatchQueue.main.async {
             self.performSegue(withIdentifier: "loginToHome", sender: self)

@@ -29,6 +29,8 @@ class AppRemoteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
         nowPlayingBank = NowPlayingBank(nowPlaying: NowPlaying.restore()!)
         self.child?.view.backgroundColor = .clear
 
@@ -78,13 +80,35 @@ class AppRemoteViewController: BaseViewController {
         
     }
     @IBAction func connectToAppRemote(_ sender: UIButton) {
+        if isSpotifyNotInstalled(){
+            return
+        }
+
         connectionIndicatorView.state = .connecting
         
         
         appRemote.authorizeAndPlayURI("")
         appRemote.connect()
     }
+    
+    @objc func isSpotifyNotInstalled()->Bool{
+            
+        if !UIApplication.shared.canOpenURL(URL(string: "spotify://")!){
+            let alert = UIAlertController(title: "Download Spotify App", message: "To Continue, you need to download spotify app.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+            self.present(alert, animated: true)
+            return false
+        }
+        else{
+            return true
+        }
+        
+    }
     @IBAction func shuffleSongButton(_ sender: UIButton) {
+        
+        if isSpotifyNotInstalled(){
+            return
+        }
         
         TopTracksList.fetch(timeRange: "medium_term", limit: "5"){ result in
             

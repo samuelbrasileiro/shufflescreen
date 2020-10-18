@@ -118,21 +118,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         
         let scope: SPTScope = [.userReadPlaybackState, .userReadCurrentlyPlaying, .appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
         
-        if let appURL = URL(string: "spotify://") {
-            
-            if !UIApplication.shared.canOpenURL(appURL){
-                NotificationCenter.default.post(name: Notification.Name("SpotifyNotInstalled"), object: nil)
-                return
-            }
-            
-        }
+        
         if #available(iOS 11, *) {
             // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
             
-            sessionManager.initiateSession(with: scope, options: .clientOnly)
+            sessionManager.initiateSession(with: scope, options: .default)
         } else {
             // Use this on iOS versions < 11 to use SFSafariViewController
-            sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
+            sessionManager.initiateSession(with: scope, options: .default, presenting: viewController.self)
         }
     }
     
