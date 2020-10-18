@@ -174,7 +174,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Pf-FC-Ahv">
-                                <rect key="frame" x="90.5" y="179.5" width="233" height="127"/>
+                                <rect key="frame" x="90.5" y="139.5" width="233" height="127"/>
                                 <subviews>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="t2b-YY-5Ho">
                                         <rect key="frame" x="0.0" y="0.0" width="233" height="32"/>
@@ -214,7 +214,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TfP-Ka-KWz">
-                                <rect key="frame" x="118" y="336.5" width="178" height="49"/>
+                                <rect key="frame" x="118" y="296.5" width="178" height="49"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <inset key="contentEdgeInsets" minX="40" minY="10" maxX="40" maxY="10"/>
@@ -226,7 +226,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover Your Tops" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zt-Bm-77g">
-                                <rect key="frame" x="40" y="104" width="334.5" height="45.5"/>
+                                <rect key="frame" x="40" y="64" width="334.5" height="45.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="38"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -237,7 +237,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                         <constraints>
                             <constraint firstItem="4zt-Bm-77g" firstAttribute="centerX" secondItem="doW-aZ-Za1" secondAttribute="centerX" id="7PM-bf-QOF"/>
                             <constraint firstItem="TfP-Ka-KWz" firstAttribute="top" secondItem="6Pf-FC-Ahv" secondAttribute="bottom" constant="30" id="IR1-k7-Sel"/>
-                            <constraint firstItem="4zt-Bm-77g" firstAttribute="top" secondItem="doW-aZ-Za1" secondAttribute="top" constant="60" id="MEp-bS-aG9"/>
+                            <constraint firstItem="4zt-Bm-77g" firstAttribute="top" secondItem="doW-aZ-Za1" secondAttribute="top" constant="20" id="MEp-bS-aG9"/>
                             <constraint firstItem="6Pf-FC-Ahv" firstAttribute="centerX" secondItem="doW-aZ-Za1" secondAttribute="centerX" id="Ucw-Wg-r7W"/>
                             <constraint firstItem="TfP-Ka-KWz" firstAttribute="centerX" secondItem="MsG-zJ-v1H" secondAttribute="centerX" id="VjL-Li-0Gg"/>
                             <constraint firstItem="6Pf-FC-Ahv" firstAttribute="top" secondItem="4zt-Bm-77g" secondAttribute="bottom" constant="30" id="qcv-Zf-56g"/>
@@ -274,7 +274,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" systemColor="labelColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="252" id="iaf-ga-dCF"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="252" id="iaf-ga-dCF"/>
                                 </constraints>
                                 <color key="textColor" systemColor="systemOrangeColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -284,7 +284,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                 <rect key="frame" x="105.5" y="795" width="203" height="45"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="203" id="78w-P0-7c4"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="203" id="78w-P0-7c4"/>
                                     <constraint firstAttribute="height" constant="45" id="Nqp-vQ-5Ry"/>
                                 </constraints>
                                 <edgeInsets key="layoutMargins" top="8" left="8" bottom="8" right="8"/>
@@ -300,7 +300,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                 <rect key="frame" x="105" y="721" width="204" height="46"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="204" id="n8D-7q-fVP"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="204" id="n8D-7q-fVP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                 <state key="normal" title="Generate">

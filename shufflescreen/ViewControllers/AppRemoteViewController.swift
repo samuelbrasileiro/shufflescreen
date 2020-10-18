@@ -23,16 +23,7 @@ class AppRemoteViewController: BaseViewController {
     var child: UIHostingController<NowPlayingView>?
     private var connectionIndicatorView = ConnectionStatusIndicatorView()
     
-    var nowPlayingBank: NowPlayingBank?{
-        didSet{
-            
-            
-            if oldValue == nil{ return}
-            
-            
-            
-        }
-    }
+    var nowPlayingBank: NowPlayingBank?
 
     
     override func viewDidLoad() {
@@ -47,12 +38,21 @@ class AppRemoteViewController: BaseViewController {
 
         child = UIHostingController(rootView: NowPlayingView(bank: nowPlayingBank!))
         child!.view.backgroundColor = .clear
-        child!.view.translatesAutoresizingMaskIntoConstraints = true
-        child!.view.frame = CGRect(x: self.view.bounds.midX - 150, y: self.view.bounds.midY - 300, width: 300, height: 500)
+        child!.view.translatesAutoresizingMaskIntoConstraints = false
+//        child!.view.frame = CGRect(x: self.view.bounds.midX - 150, y: self.view.bounds.midY - 300, width: 300, height: 500)
         print(child!.view.frame)
         self.view.addSubview(child!.view)
-        
         self.addChild(child!)
+        self.view.sendSubviewToBack(child!.view)
+        
+        let constraints = [
+            child!.view.topAnchor.constraint(equalTo: self.connectToAppRemoteButton.bottomAnchor, constant: 20),
+            child!.view.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
+            child!.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 60),
+            child!.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -60),
+            child!.view.bottomAnchor.constraint(lessThanOrEqualTo: self.shuffleButton.topAnchor, constant: -20)
+        ]
+        NSLayoutConstraint.activate(constraints)
         
         shuffleButton.setCornerRadius(10)
         
@@ -201,8 +201,7 @@ class AppRemoteViewController: BaseViewController {
     struct NowPlayingView : View {
         @ObservedObject var bank: NowPlayingBank
         var body: some View {
-            HStack{
-            
+
             VStack(alignment: .leading, spacing: 4) {
                 if let image = self.bank.nowPlaying.image{
                     Image(uiImage: image)
@@ -231,8 +230,7 @@ class AppRemoteViewController: BaseViewController {
                 
             }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             
-            }
-            
+            .background(Color.clear)
             
             
         }

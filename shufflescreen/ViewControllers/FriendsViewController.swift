@@ -22,8 +22,16 @@ class FriendsViewController: BaseViewController{
         child?.view.backgroundColor = .clear
         child?.view.translatesAutoresizingMaskIntoConstraints = false
         child?.overrideUserInterfaceStyle = .dark
-        child?.view.frame = CGRect(x: self.view.bounds.midX - 200, y: 90, width: 400, height: self.view.bounds.height - 90 - 30)
         self.view.addSubview(child!.view)
+
+        let constraints = [
+            child!.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            child!.view.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
+            child!.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
+            child!.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
+            child!.view.bottomAnchor.constraint(lessThanOrEqualTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
     
 }
@@ -179,7 +187,7 @@ class FriendsBank: ObservableObject{
             dict[$1.0]!.1 += $1.2
             return dict
             }.map{$0}
-
+        
         let ordered = normalized.sorted{
             if $0.value.1 == $1.value.1{
                 return $0.value.0 < $1.value.0
@@ -188,7 +196,12 @@ class FriendsBank: ObservableObject{
                 return $0.value.1 > $1.value.1
             }
         }
-        return [String](ordered.map{$0.key}[0..<5])
+        if ordered.first!.value.1 <= 1{
+            return [String](ordered.map{$0.key}[0..<5])
+        }
+        else{
+            return [String](ordered.filter{$0.value.1 > 1}.map{$0.key}[0..<5])
+        }
     }
     
     
@@ -365,7 +378,7 @@ struct FriendsView: View{
             .padding(.horizontal, 21.0)
             .padding()
                 .font(.system(size: 28, weight: .bold, design: .rounded))
-            .foregroundColor(Color(.systemOrange))
+            .foregroundColor(Color.orange)
             .background(Color(.black))
             .cornerRadius(20)
             .padding()
@@ -405,7 +418,7 @@ struct FriendsView: View{
                         }
                         Divider()
                     }
-                }.background(Color(.systemOrange))
+                }.background(Color.clear)
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
             }
             
@@ -416,7 +429,7 @@ struct FriendsView: View{
                 .padding(.horizontal, 10.0)
                 .padding(5)
                 .font(.system(size: 28, weight: .bold, design: .rounded))
-                .foregroundColor(Color(.systemOrange))
+                .foregroundColor(Color.orange)
                 .background(Color(.black))
                 .cornerRadius(20)
                 .padding()
@@ -425,7 +438,7 @@ struct FriendsView: View{
             
             
             
-        }.background(Color.orange)
+        }.background(Color.clear)
         .alert(isPresented: $bank.friendDoesNotExist) {
             Alert(title: Text("This code is invalid"), message: Text("Please write another one"), dismissButton: .default(Text("Got it!")))
         }
