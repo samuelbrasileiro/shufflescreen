@@ -36,9 +36,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="87c-5Q-LTJ">
-                                <rect key="frame" x="197" y="670" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="87c-5Q-LTJ">
+                                <rect key="frame" x="188.5" y="653" width="37" height="37"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shuffle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qna-Ca-omJ">
                                 <rect key="frame" x="92.5" y="279" width="229" height="82.5"/>
@@ -85,7 +84,9 @@ Explore your favorite songs and artists and create a playlist based on what you 
                             <constraint firstItem="xfQ-2n-75C" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XIT-Jh-P2N"/>
                             <constraint firstItem="OhC-RM-TuG" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="YOV-de-6GM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xfQ-2n-75C" secondAttribute="trailing" id="aI0-aE-Vs5"/>
+                            <constraint firstItem="87c-5Q-LTJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rtJ-aH-GOp"/>
                             <constraint firstItem="xfQ-2n-75C" firstAttribute="top" secondItem="Qna-Ca-omJ" secondAttribute="bottom" constant="60" id="rxf-Sr-YDf"/>
+                            <constraint firstItem="OhC-RM-TuG" firstAttribute="top" secondItem="87c-5Q-LTJ" secondAttribute="bottom" constant="28" id="tOL-lv-5qF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="nef-dP-DPf"/>

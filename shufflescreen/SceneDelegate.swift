@@ -71,6 +71,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     func sessionManager(manager: SPTSessionManager, didFailWith error: Error) {
         DispatchQueue.main.async {
             print("Não foi possível estabelecer uma sessão.", error)
+            
             //LoadingOverlay.shared.hideOverlayView()
         }
     }
@@ -114,17 +115,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     
     @objc func createSession(){
         
+        
+        let scope: SPTScope = [.userReadPlaybackState, .userReadCurrentlyPlaying, .appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
+        
+        if let appURL = URL(string: "spotify://") {
             
-            let scope: SPTScope = [.userReadPlaybackState, .userReadCurrentlyPlaying, .appRemoteControl, .playlistReadPrivate, .playlistReadCollaborative, .userLibraryRead, .playlistModifyPublic, .userFollowRead, .userTopRead]
-
-            if #available(iOS 11, *) {
-                // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
-                
-                sessionManager.initiateSession(with: scope, options: .clientOnly)
-            } else {
-                // Use this on iOS versions < 11 to use SFSafariViewController
-                sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
+            if !UIApplication.shared.canOpenURL(appURL){
+                NotificationCenter.default.post(name: Notification.Name("SpotifyNotInstalled"), object: nil)
+                return
             }
+            
+        }
+        if #available(iOS 11, *) {
+            // Use this on iOS 11 and above to take advantage of SFAuthenticationSession
+            
+            sessionManager.initiateSession(with: scope, options: .clientOnly)
+        } else {
+            // Use this on iOS versions < 11 to use SFSafariViewController
+            sessionManager.initiateSession(with: scope, options: .clientOnly, presenting: viewController.self)
+        }
     }
     
     //AO BOTAR NO FOREGROUND
