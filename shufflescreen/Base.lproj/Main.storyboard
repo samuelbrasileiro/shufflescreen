@@ -41,13 +41,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shuffle" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qna-Ca-omJ">
-                                <rect key="frame" x="92.5" y="151" width="229" height="82.5"/>
+                                <rect key="frame" x="92.5" y="279" width="229" height="82.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="69"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfQ-2n-75C">
-                                <rect key="frame" x="10" y="293.5" width="394" height="95.5"/>
+                                <rect key="frame" x="10" y="421.5" width="394" height="95.5"/>
                                 <string key="text">Extend your experience in Spotify:
 Explore your favorite songs and artists and create a playlist based on what you and a friend would like!</string>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
@@ -65,11 +65,20 @@ Explore your favorite songs and artists and create a playlist based on what you 
                                     <action selector="loginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ri8-w4-g9X"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="shuffle" translatesAutoresizingMaskIntoConstraints="NO" id="52F-T2-zjL">
+                                <rect key="frame" x="119.5" y="74" width="175" height="175"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="175" id="0Du-7M-tqu"/>
+                                    <constraint firstAttribute="width" constant="175" id="9r0-pT-tRh"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemOrangeColor"/>
                         <constraints>
-                            <constraint firstItem="Qna-Ca-omJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="107" id="DXh-FA-aTq"/>
+                            <constraint firstItem="52F-T2-zjL" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9FW-B6-d2p"/>
+                            <constraint firstItem="52F-T2-zjL" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="B5H-R3-Fwb"/>
+                            <constraint firstItem="Qna-Ca-omJ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="235" id="DXh-FA-aTq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OhC-RM-TuG" secondAttribute="bottom" constant="80" id="Erd-tJ-Sf1"/>
                             <constraint firstItem="xfQ-2n-75C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Oi9-VH-5rF"/>
                             <constraint firstItem="Qna-Ca-omJ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="VVl-IF-RCY"/>
@@ -355,6 +364,7 @@ Explore your favorite songs and artists and create a playlist based on what you 
     </scenes>
     <resources>
         <image name="login" width="806" height="141"/>
+        <image name="shuffle" width="512" height="512"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

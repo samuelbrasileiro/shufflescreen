@@ -54,6 +54,7 @@ class UserTopsViewController: BaseViewController {
 
                     for item in topTracksList.items!{
                         self.bank.addItem(track: item)
+                        print("artists.append(Artist(name: \"\(item.name!)\", imageURL: \"\(item.album!.images![0].url!)\", uri: \"\(item.uri!)\"))")
                     }
                     //TopTracksList.archive(tracks: topTracksList.items!)
 

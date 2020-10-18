@@ -22,15 +22,20 @@ struct HomeView: View{
     
     var body: some View{
         VStack{
-            Spacer(minLength: 40)
+            Image("shuffle")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(minWidth: 0, maxWidth: 175, minHeight: 0, maxHeight: 175, alignment: .center)
+            
             Text("Shuffle")
                 .font(.system(size: 80, weight: .bold, design: .rounded))
-                .padding()
+                .padding(.top, -25.0)
+                
             
-            Text("E aí, \(bank.user == nil ? "beleza" : String(bank.user!.displayName!.split(separator: " ")[0]))?")
+            Text( "\(Locale.current.regionCode == "BR" ? "E aí" : "What's up"), \(bank.user == nil ? "User" : String(bank.user!.displayName!.split(separator: " ")[0]))?")
                 .font(.system(size: 40, weight: .bold, design: .rounded))
                 .frame(alignment: .leading)
-            Text(bank.user == nil ? "Carregando conta..." : "Você está com \(bank.user!.followers!.total!) seguidores!")
+            Text(bank.user == nil ? "Loading..." : "\(Locale.current.regionCode == "BR" ? "Você está com" : "You have") \(bank.user!.followers!.total!) \(Locale.current.regionCode == "BR" ? "seguidores" : "followers")!")
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .lineLimit(2)
                 .frame(alignment: .leading)
@@ -65,7 +70,7 @@ struct HomeView: View{
             .cornerRadius(10)
             Spacer(minLength: 20)
         }
-        .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxHeight: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/, maxHeight: .infinity, alignment: .center)
         .background(Color.orange)
     }
 }
@@ -74,8 +79,6 @@ class HomeBank: ObservableObject{
     @Published var user: User?
     
     init(){
-        
-        
         if let user = User.restore(){
             self.user = user
         }
@@ -92,6 +95,7 @@ class HomeBank: ObservableObject{
             }
         }
     }
+    
     func archiveCloudKit(user: User){
         let publicDatabase = CKContainer(identifier: "iCloud.samuel.shufflescreen").publicCloudDatabase
         let defaults = UserDefaults(suiteName: "group.samuel.shufflescreen.app")!
@@ -142,11 +146,20 @@ class HomeViewController: BaseViewController, HomeDelegate {
         child = UIHostingController(rootView: homeView)
         
         child?.view.backgroundColor = .clear
-        child?.view.translatesAutoresizingMaskIntoConstraints = true
+        child?.view.translatesAutoresizingMaskIntoConstraints = false
         child?.overrideUserInterfaceStyle = .light
-        child?.view.frame = self.view.safeAreaLayoutGuide.layoutFrame
+        
         self.view.addSubview(child!.view)
+        
+        let constraints = [
+            child!.view.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            child!.view.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor, constant: 0),
+            child!.view.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            child!.view.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            child!.view.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+        ]
+        NSLayoutConstraint.activate(constraints)
+        
     }
     
 }
-
