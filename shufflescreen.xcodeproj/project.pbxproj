@@ -60,7 +60,7 @@
 		35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA22507EC7F00DA2C11 /* Recommendations.swift */; };
 		35756CA52507EF8F00DA2C11 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35756CA42507EF8F00DA2C11 /* User.swift */; };
 		3576D82B250884990063BB8E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3576D82A250884990063BB8E /* BaseViewController.swift */; };
-		357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */; };
+		357EEA842509074500F1DEF7 /* UserTopsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA832509074500F1DEF7 /* UserTopsViewController.swift */; };
 		357EEA86250909D800F1DEF7 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA85250909D800F1DEF7 /* Track.swift */; };
 		357EEA88250909F900F1DEF7 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA87250909F900F1DEF7 /* Artist.swift */; };
 		357EEA8A25090EA200F1DEF7 /* TopList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357EEA8925090EA200F1DEF7 /* TopList.swift */; };
@@ -141,7 +141,7 @@
 		35756CA22507EC7F00DA2C11 /* Recommendations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recommendations.swift; sourceTree = "<group>"; };
 		35756CA42507EF8F00DA2C11 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3576D82A250884990063BB8E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationsViewController.swift; sourceTree = "<group>"; };
+		357EEA832509074500F1DEF7 /* UserTopsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTopsViewController.swift; sourceTree = "<group>"; };
 		357EEA85250909D800F1DEF7 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		357EEA87250909F900F1DEF7 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		357EEA8925090EA200F1DEF7 /* TopList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopList.swift; sourceTree = "<group>"; };
@@ -281,7 +281,7 @@
 				35F09D4D2508703E00E68251 /* HomeViewController.swift */,
 				358CCCFE2523CABB00A81724 /* FriendsViewController.swift */,
 				7E47484B25052C8B0063F4E8 /* LoginViewController.swift */,
-				357EEA832509074500F1DEF7 /* RecommendationsViewController.swift */,
+				357EEA832509074500F1DEF7 /* UserTopsViewController.swift */,
 				357EEA962509B5B100F1DEF7 /* PlaylistViewController.swift */,
 				357EEA9A250AB7FD00F1DEF7 /* AppRemoteViewController.swift */,
 			);
@@ -528,7 +528,7 @@
 				357EEA86250909D800F1DEF7 /* Track.swift in Sources */,
 				351D49CD251E1C160030A464 /* Keys.swift in Sources */,
 				352174B3251BE1D400AAE095 /* UIImageColors.swift in Sources */,
-				357EEA842509074500F1DEF7 /* RecommendationsViewController.swift in Sources */,
+				357EEA842509074500F1DEF7 /* UserTopsViewController.swift in Sources */,
 				357EEA8A25090EA200F1DEF7 /* TopList.swift in Sources */,
 				35756CA32507EC7F00DA2C11 /* Recommendations.swift in Sources */,
 				351D4A60251E890F0030A464 /* NowPlaying.swift in Sources */,
@@ -581,7 +581,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = NowPlayingWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -594,6 +594,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.NowPlayingWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -609,7 +610,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = NowPlayingWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -622,6 +623,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.NowPlayingWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -637,7 +639,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = AlbumImageWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -650,6 +652,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.AlbumImageWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -665,7 +668,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = AlbumImageWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,6 +681,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen.AlbumImageWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -809,7 +813,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = shufflescreen/shufflescreen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -821,6 +825,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -837,7 +842,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = shufflescreen/shufflescreen.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = P63952MS7L;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -849,6 +854,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.01;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = samuel.shufflescreen;
 				PRODUCT_NAME = "$(TARGET_NAME)";

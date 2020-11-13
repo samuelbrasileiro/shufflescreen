@@ -125,7 +125,11 @@ class UserTopsViewController: BaseViewController {
                                 .resizable()
                                 .frame(minWidth: 0, maxWidth: 40, minHeight: 0, maxHeight: 40, alignment: .leading)
                                 .aspectRatio(contentMode: .fill)
-                            
+                                .cornerRadius(12)
+                                .overlay(RoundedRectangle(cornerRadius: 12)
+                                            .stroke(Color.black, lineWidth: 2))
+                                .padding([.leading, .top], 4)
+                                
                             Text("\(index + 1). " + bank.items![index].name)
                                 .font(.system(size: 28, weight: .bold, design: .rounded))
                                 .foregroundColor(Color(.black))

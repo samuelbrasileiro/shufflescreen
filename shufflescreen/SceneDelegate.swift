@@ -81,7 +81,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             //self.appRemote.authorizeAndPlayURI(self.configuration.playURI!)
             
             self.appRemote.connectionParameters.accessToken = session.accessToken
-            self.appRemote.connect()
+            //self.appRemote.connect()
             
             print("renewed", session)
             
@@ -92,6 +92,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
             
             if Date() > Calendar.current.date(byAdding: .day, value: 1, to: modificationDate)!{
                 ICloudTopItem.updateTops()
+                
+                User.fetch{ result in
+                    if case .success(let user) = result {
+                        print("User salvo de novo")
+                        User.archive(user: user)
+                    }
+                }
+                
             }
             
             NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
@@ -102,7 +110,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         appRemote.connectionParameters.accessToken = session.accessToken
         appRemote.connect()
         
-        
+        self.appRemote.playerAPI?.pause{ result, error in
+            
+        }
         print("Access token: \(session.accessToken), expires at \(session.expirationDate)")
         
         self.didRenewSession = true
@@ -111,6 +121,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
         
         
         NotificationCenter.default.post(name: Notification.Name("sessionConnected"), object: nil)
+        
     }
     
     @objc func createSession(){
@@ -160,7 +171,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, SPTSessionManagerDelega
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         //scene did begin
-
+        
         restoreSession()
         if sessionManager.session != nil{
             sessionManager.renewSession()

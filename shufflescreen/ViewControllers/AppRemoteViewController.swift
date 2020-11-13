@@ -97,10 +97,10 @@ class AppRemoteViewController: BaseViewController {
             let alert = UIAlertController(title: "Download Spotify App", message: "To Continue, you need to download spotify app.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel))
             self.present(alert, animated: true)
-            return false
+            return true
         }
         else{
-            return true
+            return false
         }
         
     }

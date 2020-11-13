@@ -13,12 +13,11 @@ import SwiftUI
 
 protocol HomeDelegate{
     func pushVC(identifier: String)
-    
+    func getSessionManager() -> SPTSessionManager
 }
 struct HomeView: View{
     
     @ObservedObject var bank: HomeBank
-    var delegate: HomeDelegate?
     
     var body: some View{
         VStack{
@@ -30,18 +29,21 @@ struct HomeView: View{
             Text("Shuffle")
                 .font(.system(size: 80, weight: .bold, design: .rounded))
                 .padding(.top, -25.0)
-                
+            
             
             Text( "\(Locale.current.regionCode == "BR" ? "E aí" : "What's up"), \(bank.user == nil ? "User" : String(bank.user!.displayName!.split(separator: " ")[0]))?")
                 .font(.system(size: 40, weight: .bold, design: .rounded))
                 .frame(alignment: .leading)
-            Text(bank.user == nil ? "Loading..." : "\(Locale.current.regionCode == "BR" ? "Você está com" : "You have") \(bank.user!.followers!.total!) \(Locale.current.regionCode == "BR" ? "seguidores" : "followers")!")
+            Text(!bank.didAccessTokenLoad ? "Loading Access..." :
+                    "You have \(bank.user!.followers!.total!) followers!")
                 .font(.system(size: 20, weight: .bold, design: .rounded))
                 .lineLimit(2)
                 .frame(alignment: .leading)
             Spacer()
             Button("Discover Tops"){
-                delegate?.pushVC(identifier: "UserTopsViewController")
+                if bank.didAccessTokenLoad{
+                    bank.delegate?.pushVC(identifier: "UserTopsViewController")
+                }
             }
             .font(.system(size: 20, weight: .bold, design: .rounded))
             .frame(width: 200, height: 30, alignment: .center)
@@ -51,7 +53,9 @@ struct HomeView: View{
             .cornerRadius(10)
             
             Button("Shuffle for me"){
-                delegate?.pushVC(identifier: "PlaylistViewController")
+                if bank.didAccessTokenLoad{
+                    bank.delegate?.pushVC(identifier: "PlaylistViewController")
+                }
             }
             .font(.system(size: 20, weight: .bold, design: .rounded))
             .frame(width: 200, height: 30, alignment: .center)
@@ -60,7 +64,9 @@ struct HomeView: View{
             .background(Color.black)
             .cornerRadius(10)
             Button("Shuffle with friends"){
-                delegate?.pushVC(identifier: "FriendsViewController")
+                if bank.didAccessTokenLoad{
+                    bank.delegate?.pushVC(identifier: "FriendsViewController")
+                }
             }
             .font(.system(size: 20, weight: .bold, design: .rounded))
             .frame(width: 200, height: 30, alignment: .center)
@@ -76,7 +82,12 @@ struct HomeView: View{
 }
 
 class HomeBank: ObservableObject{
+    
     @Published var user: User?
+    
+    @Published var didAccessTokenLoad: Bool = false
+    
+    var delegate: HomeDelegate?
     
     init(){
         if let user = User.restore(){
@@ -94,6 +105,14 @@ class HomeBank: ObservableObject{
                 }
             }
         }
+        
+        Timer.scheduledTimer(withTimeInterval: 3, repeats: true) { timer in
+            if !(self.delegate?.getSessionManager().session!.isExpired)!{
+                self.didAccessTokenLoad = true
+                timer.invalidate()
+            }
+        }
+        
     }
     
     func archiveCloudKit(user: User){
@@ -125,10 +144,14 @@ class HomeBank: ObservableObject{
             }
         }
     }
-
+    
 }
 
 class HomeViewController: BaseViewController, HomeDelegate {
+    func getSessionManager() -> SPTSessionManager {
+        return sessionManager
+    }
+    
     func pushVC(identifier: String) {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: identifier)
         self.navigationController!.pushViewController(vc, animated: true)
@@ -141,8 +164,9 @@ class HomeViewController: BaseViewController, HomeDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var homeView = HomeView(bank: bank)
-        homeView.delegate = self
+        bank.delegate = self
+        let homeView = HomeView(bank: bank)
+        
         child = UIHostingController(rootView: homeView)
         
         child?.view.backgroundColor = .clear

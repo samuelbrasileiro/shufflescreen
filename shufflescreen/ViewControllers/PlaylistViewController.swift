@@ -197,7 +197,11 @@ class PlaylistViewController: BaseViewController {
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(minWidth: 0, maxWidth: 40, minHeight: 0, maxHeight: 40, alignment: .leading)
-                                
+                                    .cornerRadius(12)
+                                    .overlay(RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.black, lineWidth: 2))
+                                    .padding([.leading, .top], 4)
+                                    
                                 Text("\(index + 1). " + bank.items![index].name)
                                     .lineLimit(2)
                                     .font(.system(size: 28, weight: .bold, design: .rounded))

@@ -78,7 +78,7 @@ class ExternalUrls: Codable {
 
 struct PlaylistInput: Codable {
     var name: String
-    var description: String = "Playlist criada baseado no seu gosto por Samuel :)"
+    var description: String = "Created and powered by Shufflescreen"
     var isPublic: Bool = true
     enum CodingKeys: String, CodingKey {
         case name

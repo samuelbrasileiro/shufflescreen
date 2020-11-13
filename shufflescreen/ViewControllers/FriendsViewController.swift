@@ -177,6 +177,16 @@ class FriendsBank: ObservableObject{
     }
     
     func sortPriorizer(array1: [String], array2: [String])->[String]{
+        let max = min(array1.count, array2.count)
+        var array1 = array1
+        var array2 = array2
+        
+        if array1.count > max{
+            array1 = [String](array1[0..<max])
+        }
+        if array2.count > max{
+            array2 = [String](array2[0..<max])
+        }
         let interleaved = zip(array1, array2).flatMap { [$0, $1] }
         let interleavedWithPriority = (0 ..< interleaved.count).map{(interleaved[$0], $0, 1)}
         
@@ -196,12 +206,10 @@ class FriendsBank: ObservableObject{
                 return $0.value.1 > $1.value.1
             }
         }
-        if ordered.first!.value.1 <= 1{
-            return [String](ordered.map{$0.key}[0..<5])
-        }
-        else{
-            return [String](ordered.filter{$0.value.1 > 1}.map{$0.key}[0..<5])
-        }
+        
+        return [String](ordered.map{$0.key}[0..<5])
+        
+        
     }
     
     
@@ -211,7 +219,7 @@ class FriendsBank: ObservableObject{
         
         let query = CKQuery(recordType: "SPTUser", predicate: predicate)
         
-        publicDatabase.perform(query, inZoneWith: .default){results, error in
+        publicDatabase.perform(query, inZoneWith: .none){results, error in
             DispatchQueue.main.async {
                 
                 if error != nil{
@@ -228,7 +236,7 @@ class FriendsBank: ObservableObject{
                         completion(results![0])
                     }
                     else{//anormalidade
-                        
+                        print("gggggggggg")
                     //    let sortedResults = results!.sorted{$0.modificationDate! < $1.modificationDate!}
                         completion(nil)
                     }
@@ -394,6 +402,10 @@ struct FriendsView: View{
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(minWidth: 0, maxWidth: 40, minHeight: 0, maxHeight: 40, alignment: .leading)
+                                    .cornerRadius(12)
+                                    .overlay(RoundedRectangle(cornerRadius: 12)
+                                                .stroke(Color.black, lineWidth: 2))
+                                    .padding([.leading, .top], 4)
                                 
                                 Text("\(index + 1). " + bank.items![index].name)
                                     .lineLimit(2)
